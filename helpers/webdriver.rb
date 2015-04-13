@@ -120,14 +120,14 @@ class WebDriver
   def open(url)
     url = 'http://' + url unless url.include?('http') || url.include?('file://')
     open_success = false
-    begin
+    loop do
       begin
         @driver.navigate.to url
-        open_success = true
+        break
       rescue Timeout::Error
         @driver.navigate.refresh
       end
-    end until open_success
+    end
     LoggerHelper.print_to_log("Opened page: #{url}")
   end
 
