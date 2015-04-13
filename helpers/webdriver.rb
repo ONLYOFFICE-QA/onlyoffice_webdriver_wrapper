@@ -1068,13 +1068,13 @@ class WebDriver
     if @browser == :ie
       @driver.elements(:xpath, xpath_several_elements).map { |element| element.attribute_value(attribute) }.compact
     else
-      @driver.find_elements(:xpath, xpath_several_elements).map { |element|
+      @driver.find_elements(:xpath, xpath_several_elements).map do |element|
         el_style = element.attribute('style')
         unless el_style.empty?
           found_style = el_style.split(';').find { |curr_param| curr_param.include?(style) }
           found_style.gsub(/\s?#{ style }:/, '') unless found_style.nil?
         end
-      }.compact
+      end.compact
     end
   end
 
