@@ -4,7 +4,7 @@ require 'selenium-webdriver'
 require 'htmlentities'
 require 'uri'
 require_relative 'headless_helper'
-require_relative '../Helpers/FileHelper'
+require_relative 'file_helper'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver

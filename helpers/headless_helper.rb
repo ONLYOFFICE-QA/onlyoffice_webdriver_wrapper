@@ -1,6 +1,6 @@
 # encoding: utf-8
-require_relative '../Helpers/LoggerHelper'
-require_relative '../Helpers/LinuxHelper'
+require_relative 'logger_helper'
+require_relative 'linux_helper'
 require 'headless'
 
 # Class for using headless gem
