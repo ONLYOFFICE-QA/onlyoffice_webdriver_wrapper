@@ -119,7 +119,6 @@ class WebDriver
 
   def open(url)
     url = 'http://' + url unless url.include?('http') || url.include?('file://')
-    open_success = false
     loop do
       begin
         @driver.navigate.to url
