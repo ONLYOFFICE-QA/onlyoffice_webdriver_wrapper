@@ -1079,22 +1079,22 @@ class WebDriver
   end
 
   def set_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." +
+    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "#{ attribute }=\"#{ attribute_value }\";")
   end
 
   def set_style_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." +
+    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "style.#{ attribute }=\"#{ attribute_value }\"")
   end
 
   def set_style_attribute(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate('#{ xpath }',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." +
+    execute_javascript("document.evaluate('#{ xpath }',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
                            "singleNodeValue.style.#{ attribute }=\"#{ attribute_value }\"")
   end
 
   def remove_attribute(xpath, attribute)
-    execute_javascript("document.evaluate(\"#{ xpath }\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." +
+    execute_javascript("document.evaluate(\"#{ xpath }\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
                            "singleNodeValue.removeAttribute('#{ attribute }');")
   end
 
