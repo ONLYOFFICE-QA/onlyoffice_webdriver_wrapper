@@ -368,7 +368,7 @@ class WebDriver
   def get_url
     @driver.current_url
   rescue Selenium::WebDriver::Error::NoSuchDriverError
-    fail 'Browser is crushed or hangup'
+    raise 'Browser is crushed or hangup'
   end
 
   def refresh
@@ -965,7 +965,7 @@ class WebDriver
       rescue Timeout::Error
         LoggerHelper.print_to_log('Raise TimeoutError in the select_top_frame method')
       rescue Exception => e
-        fail "Browser is crushed or hangup with error: #{e}"
+        raise "Browser is crushed or hangup with error: #{e}"
       end
     end
   end
