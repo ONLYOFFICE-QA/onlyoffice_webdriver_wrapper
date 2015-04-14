@@ -58,7 +58,7 @@ class WebDriver
         }
         if remote_server.nil?
           begin
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w[--start-maximized test-type]
+            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
             if @headless.running?
               @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
             end
@@ -66,7 +66,7 @@ class WebDriver
           rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
             LinuxHelper.kill_all('chromedriver')
             sleep 5
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w[--start-maximized test-type]
+            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
             if @headless.running?
               @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
             end
