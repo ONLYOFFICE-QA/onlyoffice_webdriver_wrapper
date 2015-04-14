@@ -155,11 +155,9 @@ class WebDriver
   end
 
   def get_element_by_css_selector(object_identification)
-    begin
-      @driver.find_element(:css, object_identification)
-    rescue
-      nil
-    end
+    @driver.find_element(:css, object_identification)
+  rescue
+    nil
   end
 
   def alert_confirm
@@ -330,11 +328,9 @@ class WebDriver
   end
 
   def execute_javascript(script)
-    begin
-      @driver.execute_script(script)
-    rescue Exception => e
-      webdriver_error("Exception #{e} in execute_javascript: #{script}")
-    end
+    @driver.execute_script(script)
+  rescue Exception => e
+    webdriver_error("Exception #{e} in execute_javascript: #{script}")
   end
 
   def select_from_list(xpath_value, value)
@@ -370,11 +366,9 @@ class WebDriver
   end
 
   def get_url
-    begin
-      @driver.current_url
-    rescue Selenium::WebDriver::Error::NoSuchDriverError
-      fail 'Browser is crushed or hangup'
-    end
+    @driver.current_url
+  rescue Selenium::WebDriver::Error::NoSuchDriverError
+    fail 'Browser is crushed or hangup'
   end
 
   def refresh
@@ -771,20 +765,18 @@ class WebDriver
   end
 
   def element_present?(xpath_name)
-    begin
-      if xpath_name.is_a?(PageObject::Elements::Element)
-        return xpath_name.visible?
+    if xpath_name.is_a?(PageObject::Elements::Element)
+      return xpath_name.visible?
+    else
+      if @browser != :ie
+        @driver.find_element(:xpath, xpath_name)
       else
-        if @browser != :ie
-          @driver.find_element(:xpath, xpath_name)
-        else
-          @driver.element(:xpath, xpath_name).to_subtype
-        end
-        return true
+        @driver.element(:xpath, xpath_name).to_subtype
       end
-    rescue Exception
-      return false
+      return true
     end
+  rescue Exception
+    return false
   end
 
   def wait_until_element_present(xpath_name)
