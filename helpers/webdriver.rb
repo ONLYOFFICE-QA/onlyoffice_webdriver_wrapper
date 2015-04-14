@@ -51,10 +51,10 @@ class WebDriver
         end
       when :chrome
         prefs = {
-            download: {
-                prompt_for_download: false,
-                default_directory: @download_directory
-            }
+          download: {
+            prompt_for_download: false,
+            default_directory: @download_directory
+          }
         }
         if remote_server.nil?
           begin
@@ -75,8 +75,8 @@ class WebDriver
         else
           caps = Selenium::WebDriver::Remote::Capabilities.chrome
           caps['chromeOptions'] = {
-              profile: data['zip'],
-              extensions: data['extensions']
+            profile: data['zip'],
+            extensions: data['extensions']
           }
           @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
         end
