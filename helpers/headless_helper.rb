@@ -9,7 +9,7 @@ class HeadlessHelper
   attr_accessor :resolution_x
   attr_accessor :resolution_y
 
-  def initialize(resolution_x = 1680, resolution_y = 1050)
+  def initialize(resolution_x = 1681, resolution_y = 1050)
     @headless_instance = nil
     @resolution_x = resolution_x
     @resolution_y = resolution_y
