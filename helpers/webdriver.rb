@@ -321,7 +321,7 @@ class WebDriver
   end
 
   def get_text_array(array_elements)
-    array_elements.map { |current_element| get_text(current_element) }
+    get_elements(array_elements).map { |current_element| get_text(current_element) }
   end
 
   def get_element_by_parameter(elements, parameter_name, value)
@@ -868,11 +868,12 @@ class WebDriver
     end
   end
 
-  def get_elements(xpath_name, only_visible = true)
+  def get_elements(objects_identification, only_visible = true)
+    return objects_identification if objects_identification.is_a?(Array)
     if @browser == :ie
-      elements = @driver.elements(:xpath, xpath_name)
+      elements = @driver.elements(:xpath, objects_identification)
     else
-      elements = @driver.find_elements(:xpath, xpath_name)
+      elements = @driver.find_elements(:xpath, objects_identification)
       if only_visible
         elements.each do |current|
           elements.delete(current) unless @browser == :firefox || current.displayed?
