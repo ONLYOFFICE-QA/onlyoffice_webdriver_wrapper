@@ -138,20 +138,14 @@ class WebDriver
   end
 
   def get_element(object_identification)
-    if object_identification.is_a?(PageObject::Elements::Element)
-      object_identification
+    return object_identification unless is_a?(String)
+    if @browser == :ie
+      @driver.element(:xpath, object_identification).to_subtype
     else
-      begin
-        element = if @browser == :ie
-                    @driver.element(:xpath, object_identification).to_subtype
-                  else
-                    @driver.find_element(:xpath, object_identification)
-                  end
-      rescue
-        element = nil
-      end
-      element
+      @driver.find_element(:xpath, object_identification)
     end
+  rescue
+    nil
   end
 
   def get_element_by_css_selector(object_identification)
@@ -781,17 +775,19 @@ class WebDriver
 
   def element_present?(xpath_name)
     if xpath_name.is_a?(PageObject::Elements::Element)
-      return xpath_name.visible?
+      xpath_name.visible?
+    elsif xpath_name.is_a?(Selenium::WebDriver::Element)
+      xpath_name.displayed?
     else
       if @browser != :ie
         @driver.find_element(:xpath, xpath_name)
       else
         @driver.element(:xpath, xpath_name).to_subtype
       end
-      return true
+      true
     end
   rescue Exception
-    return false
+    false
   end
 
   def wait_until_element_present(xpath_name)
