@@ -138,7 +138,7 @@ class WebDriver
   end
 
   def get_element(object_identification)
-    return object_identification unless is_a?(String)
+    return object_identification unless object_identification.is_a?(String)
     if @browser == :ie
       @driver.element(:xpath, object_identification).to_subtype
     else
