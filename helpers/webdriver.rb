@@ -138,20 +138,14 @@ class WebDriver
   end
 
   def get_element(object_identification)
-    if object_identification.is_a?(PageObject::Elements::Element)
-      object_identification
+    return object_identification unless object_identification.is_a?(String)
+    if @browser == :ie
+      @driver.element(:xpath, object_identification).to_subtype
     else
-      begin
-        element = if @browser == :ie
-                    @driver.element(:xpath, object_identification).to_subtype
-                  else
-                    @driver.find_element(:xpath, object_identification)
-                  end
-      rescue
-        element = nil
-      end
-      element
+      @driver.find_element(:xpath, object_identification)
     end
+  rescue
+    nil
   end
 
   def get_element_by_css_selector(object_identification)
@@ -321,7 +315,7 @@ class WebDriver
   end
 
   def get_text_array(array_elements)
-    array_elements.map { |current_element| get_text(current_element) }
+    get_elements(array_elements).map { |current_element| get_text(current_element) }
   end
 
   def get_element_by_parameter(elements, parameter_name, value)
@@ -781,17 +775,19 @@ class WebDriver
 
   def element_present?(xpath_name)
     if xpath_name.is_a?(PageObject::Elements::Element)
-      return xpath_name.visible?
+      xpath_name.visible?
+    elsif xpath_name.is_a?(Selenium::WebDriver::Element)
+      xpath_name.displayed?
     else
       if @browser != :ie
         @driver.find_element(:xpath, xpath_name)
       else
         @driver.element(:xpath, xpath_name).to_subtype
       end
-      return true
+      true
     end
   rescue Exception
-    return false
+    false
   end
 
   def wait_until_element_present(xpath_name)
@@ -868,11 +864,12 @@ class WebDriver
     end
   end
 
-  def get_elements(xpath_name, only_visible = true)
+  def get_elements(objects_identification, only_visible = true)
+    return objects_identification if objects_identification.is_a?(Array)
     if @browser == :ie
-      elements = @driver.elements(:xpath, xpath_name)
+      elements = @driver.elements(:xpath, objects_identification)
     else
-      elements = @driver.find_elements(:xpath, xpath_name)
+      elements = @driver.find_elements(:xpath, objects_identification)
       if only_visible
         elements.each do |current|
           elements.delete(current) unless @browser == :firefox || current.displayed?
