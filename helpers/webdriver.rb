@@ -31,85 +31,85 @@ class WebDriver
     @browser = browser
     @ip_of_remote_server = remote_server
     case browser
-      when :firefox
-        profile = Selenium::WebDriver::Firefox::Profile.new
-        profile['browser.download.folderList'] = 2
-        profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
-        profile['browser.download.dir'] = @download_directory
-        profile['browser.download.manager.showWhenStarting'] = false
-        profile['dom.disable_window_move_resize'] = false
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
-          @driver.manage.window.maximize
+    when :firefox
+      profile = Selenium::WebDriver::Firefox::Profile.new
+      profile['browser.download.folderList'] = 2
+      profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
+      profile['browser.download.dir'] = @download_directory
+      profile['browser.download.manager.showWhenStarting'] = false
+      profile['dom.disable_window_move_resize'] = false
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
+        @driver.manage.window.maximize
+        if @headless.running?
+          @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
+        end
+      else
+        capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
+        @driver = Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + remote_server + ':4444/wd/hub'
+        @ip_of_remote_server = remote_server
+      end
+    when :chrome
+      prefs = {
+        download: {
+          prompt_for_download: false,
+          default_directory: @download_directory
+        }
+      }
+      if remote_server.nil?
+        begin
+          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
           if @headless.running?
             @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
-        else
-          capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
-          @driver = Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + remote_server + ':4444/wd/hub'
-          @ip_of_remote_server = remote_server
-        end
-      when :chrome
-        prefs = {
-          download: {
-            prompt_for_download: false,
-            default_directory: @download_directory
-          }
-        }
-        if remote_server.nil?
-          begin
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
-          rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
-            LinuxHelper.kill_all('chromedriver')
-            sleep 5
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
+          @driver
+        rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
+          LinuxHelper.kill_all('chromedriver')
+          sleep 5
+          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
+          if @headless.running?
+            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.chrome
-          caps['chromeOptions'] = {
-            profile: data['zip'],
-            extensions: data['extensions']
-          }
-          @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
+          @driver
         end
-      when :opera
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :opera
-        else
-          fail 'ForMe:Implement remote for opera'
-        end
-      when :internet_explorer, :ie
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :internet_explorer
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer
-          caps.native_events = true
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :safari
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :safari
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.safari
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :htmlunit
-        caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
-        @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
       else
-        fail 'Unknown Browser: ' + browser.to_s
+        caps = Selenium::WebDriver::Remote::Capabilities.chrome
+        caps['chromeOptions'] = {
+          profile: data['zip'],
+          extensions: data['extensions']
+        }
+        @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
+      end
+    when :opera
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :opera
+      else
+        fail 'ForMe:Implement remote for opera'
+      end
+    when :internet_explorer, :ie
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :internet_explorer
+      else
+        caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer
+        caps.native_events = true
+        @driver = Selenium::WebDriver.for(:remote,
+                                          url: 'http://' + remote_server + ':4444/wd/hub',
+                                          desired_capabilities: caps)
+      end
+    when :safari
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :safari
+      else
+        caps = Selenium::WebDriver::Remote::Capabilities.safari
+        @driver = Selenium::WebDriver.for(:remote,
+                                          url: 'http://' + remote_server + ':4444/wd/hub',
+                                          desired_capabilities: caps)
+      end
+    when :htmlunit
+      caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
+      @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
+    else
+      fail 'Unknown Browser: ' + browser.to_s
     end
   end
 
