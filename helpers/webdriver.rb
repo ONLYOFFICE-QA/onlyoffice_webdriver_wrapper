@@ -1121,7 +1121,7 @@ class WebDriver
   end
 
   def webdriver_error(exception, error_message = nil)
-    if exception.is_a?(String) # Если не указан error_message
+    if exception.is_a?(String) # If there is no error_message
       error_message = exception
       exception = RuntimeError
     end
