@@ -392,7 +392,7 @@ class WebDriver
 
   def self.host_name_by_full_url(full_url)
     uri = URI(full_url)
-    (uri.port == 80 || uri.port == 443) ? "#{ uri.scheme }://#{ uri.host }" : "#{ uri.scheme }://#{ uri.host }:#{ uri.port }"
+    (uri.port == 80 || uri.port == 443) ? "#{uri.scheme}://#{uri.host}" : "#{uri.scheme}://#{uri.host}:#{uri.port}"
   end
 
   def get_host_name
@@ -485,7 +485,7 @@ class WebDriver
   end
 
   def add_class_by_jquery(selector, class_name)
-    execute_javascript("$('#{ selector }').addClass('#{ class_name }');")
+    execute_javascript("$('#{selector}').addClass('#{class_name}');")
   end
 
   # Perform drag'n'drop action in one element (for example on big canvas area)
@@ -556,18 +556,18 @@ class WebDriver
   def click_on_locator(xpath_name, non_iframe = false, by_fire_event = true, by_javascript = false)
     element = get_element(xpath_name)
     if element.nil?
-      webdriver_error("Element with xpath: #{ xpath_name } not found")
+      webdriver_error("Element with xpath: #{xpath_name} not found")
     else
       if @browser != :ie
         if by_javascript
-          execute_javascript("document.evaluate(\"#{ xpath_name }\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
+          execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
         else
           begin
             element.click
           rescue Selenium::WebDriver::Error::ElementNotVisibleError
-            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{ xpath_name }")
+            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
           rescue Exception => e
-            webdriver_error("UnknownError #{ e.message } #{ xpath_name }")
+            webdriver_error("UnknownError #{e.message} #{xpath_name}")
           end
         end
       else
@@ -706,7 +706,7 @@ class WebDriver
   end
 
   def click_on_one_of_several_with_display_by_number(xpath_several_elements, number)
-    @driver.find_elements(:xpath, "#{ xpath_several_elements }[#{ number }]").each do |current_element|
+    @driver.find_elements(:xpath, "#{xpath_several_elements}[#{number}]").each do |current_element|
       if current_element.displayed?
         current_element.click
         return true
@@ -736,7 +736,7 @@ class WebDriver
   end
 
   def click_on_one_of_several_xpath_by_number(xpath, number_of_element, by_javascript = false)
-    click_on_locator("(#{ xpath })[#{ number_of_element }]", false, true, by_javascript)
+    click_on_locator("(#{xpath})[#{number_of_element}]", false, true, by_javascript)
   end
 
   def move_to_element(element)
@@ -846,7 +846,7 @@ class WebDriver
           return element if element.displayed?
         end
       rescue Selenium::WebDriver::Error::InvalidSelectorError
-        webdriver_error("get_element_by_display(#{ xpath_name }): invalid selector: Unable to locate an element with the xpath expression")
+        webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
       end
     end
   end
@@ -920,7 +920,7 @@ class WebDriver
       time += 1
     end
     if time >= timeout
-      webdriver_error("Element #{ xpath_name } not visible for #{ timeout } seconds")
+      webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
     end
   end
 
@@ -942,7 +942,7 @@ class WebDriver
   end
 
   def remove_element(xpath)
-    execute_javascript("element = document.evaluate(\"#{ xpath }\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
+    execute_javascript("element = document.evaluate(\"#{xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
   end
 
   def get_all_elements_on_web_page
@@ -962,7 +962,7 @@ class WebDriver
       rescue Selenium::WebDriver::Error::NoSuchElementError
         LoggerHelper.print_to_log('Raise NoSuchElementError in the select_frame method')
       rescue Exception => e
-        webdriver_error("Raise unkwnown exception: #{ e }")
+        webdriver_error("Raise unkwnown exception: #{e}")
       end
     end
   end
@@ -1008,7 +1008,7 @@ class WebDriver
   end
 
   def get_text_by_js(xpath)
-    execute_javascript("return document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().innerHTML")
+    execute_javascript("return document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().innerHTML")
   end
 
   def get_text_of_several_elements(xpath_several_elements)
@@ -1041,7 +1041,7 @@ class WebDriver
     element = xpath_name.is_a?(Selenium::WebDriver::Element) ? xpath_name : get_element(xpath_name)
 
     if element.nil?
-      webdriver_error("Webdriver.get_attribute(#{ xpath_name }, #{ attribute }) failed because element not found")
+      webdriver_error("Webdriver.get_attribute(#{xpath_name}, #{attribute}) failed because element not found")
     else
       (@browser == :ie) ? element.attribute_value(attribute) : element.attribute(attribute)
     end
@@ -1083,23 +1083,23 @@ class WebDriver
   end
 
   def set_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                           "#{ attribute }=\"#{ attribute_value }\";")
+    execute_javascript("document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+                           "#{attribute}=\"#{attribute_value}\";")
   end
 
   def set_style_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                           "style.#{ attribute }=\"#{ attribute_value }\"")
+    execute_javascript("document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+                           "style.#{attribute}=\"#{attribute_value}\"")
   end
 
   def set_style_attribute(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate('#{ xpath }',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                           "singleNodeValue.style.#{ attribute }=\"#{ attribute_value }\"")
+    execute_javascript("document.evaluate('#{xpath}',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
+                           "singleNodeValue.style.#{attribute}=\"#{attribute_value}\"")
   end
 
   def remove_attribute(xpath, attribute)
-    execute_javascript("document.evaluate(\"#{ xpath }\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                           "singleNodeValue.removeAttribute('#{ attribute }');")
+    execute_javascript("document.evaluate(\"#{xpath}\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
+                           "singleNodeValue.removeAttribute('#{attribute}');")
   end
 
   def select_text_from_page(xpath_name)
@@ -1136,11 +1136,11 @@ class WebDriver
     end
     select_top_frame
     current_url = get_url
-    fail exception, "#{ error_message }\n\nPage address: #{current_url}\n\nError #{ webdriver_screenshot }"
+    fail exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
   end
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
-    path_to_screenshot = "#{LinuxHelper.shared_folder}screenshot/WebdriverError/#{ screenshot_name }.png"
+    path_to_screenshot = "#{LinuxHelper.shared_folder}screenshot/WebdriverError/#{screenshot_name}.png"
     path_for_report = LinuxHelper.screenshot_path(screenshot_name)
     begin
       get_screenshot(path_to_screenshot)
@@ -1151,7 +1151,7 @@ class WebDriver
         LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{@headless.take_screenshot(path_to_screenshot)}")
       end
     end
-    "screenshot: #{ path_for_report }"
+    "screenshot: #{path_for_report}"
   end
 
   def wait_until(timeout = ::PageObject.default_page_wait, message = nil, &block)
@@ -1160,7 +1160,7 @@ class WebDriver
       wait.until(&block)
       wait.until { execute_javascript('return document.readyState;') == 'complete' }
     rescue Selenium::WebDriver::Error::TimeOutError
-      webdriver_error("Wait until timeout: #{ timeout } seconds in")
+      webdriver_error("Wait until timeout: #{timeout} seconds in")
     end
   end
 
