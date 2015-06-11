@@ -155,9 +155,8 @@ class WebDriver
   end
 
   def alert_confirm
-    unless @browser == :ie
-      @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
-    end
+    return if @browser == :ie
+    @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
   end
 
   # Check if alert exists
@@ -365,9 +364,8 @@ class WebDriver
   end
 
   def get_all_combo_box_values(xpath_name)
-    unless @browser == :ie
-      @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
-    end
+    return if @browser == :ie
+    @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
   end
 
   def get_url
@@ -463,12 +461,11 @@ class WebDriver
     xpath.gsub!("'", "\"")
     execute_javascript('document.evaluate( \'' + xpath.to_s +
                            '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
-    if move_to_center
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
-    end
+    return unless move_to_center
+    execute_javascript('document.evaluate( \'' + xpath.to_s +
+                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
+    execute_javascript('document.evaluate( \'' + xpath.to_s +
+                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
   end
 
   def remove_event(event_name)
@@ -914,9 +911,8 @@ class WebDriver
       sleep(1)
       time += 1
     end
-    if time >= timeout
-      webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
-    end
+    return unless time >= timeout
+    webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
   end
 
   def one_of_several_elements_displayed?(xpath_several_elements)

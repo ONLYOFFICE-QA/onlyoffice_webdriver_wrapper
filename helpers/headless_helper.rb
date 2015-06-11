@@ -24,28 +24,26 @@ class HeadlessHelper
     else
       create_session = true
     end
-    if create_session
-      LoggerHelper.print_to_log('Starting Headless Session')
-      begin
-        @headless_instance = Headless.new(reuse: false,
-                                          destroy_at_exit: true,
-                                          dimensions: "#{@resolution_x}x#{@resolution_y}x24")
-      rescue Exception => e
-        LoggerHelper.print_to_log("xvfb not started with problem #{e}")
-        RspecHelper.clean_up(true)
-        @headless_instance = Headless.new(reuse: false,
-                                          destroy_at_exit: true,
-                                          dimensions: "#{@resolution_x}x#{@resolution_y}x24")
-      end
-      @headless_instance.start
+    return unless create_session
+    LoggerHelper.print_to_log('Starting Headless Session')
+    begin
+      @headless_instance = Headless.new(reuse: false,
+                                        destroy_at_exit: true,
+                                        dimensions: "#{@resolution_x}x#{@resolution_y}x24")
+    rescue Exception => e
+      LoggerHelper.print_to_log("xvfb not started with problem #{e}")
+      RspecHelper.clean_up(true)
+      @headless_instance = Headless.new(reuse: false,
+                                        destroy_at_exit: true,
+                                        dimensions: "#{@resolution_x}x#{@resolution_y}x24")
     end
+    @headless_instance.start
   end
 
   def stop
-    unless @headless_instance.nil?
-      LoggerHelper.print_to_log('Stopping Headless Session')
-      @headless_instance.destroy
-    end
+    return if @headless_instance.nil?
+    LoggerHelper.print_to_log('Stopping Headless Session')
+    @headless_instance.destroy
   end
 
   def running?
@@ -53,9 +51,8 @@ class HeadlessHelper
   end
 
   def take_screenshot(scr_path = '/tmp/screenshot.png')
-    unless @headless_instance.nil?
-      @headless_instance.take_screenshot(scr_path)
-      LoggerHelper.print_to_log("Took Screenshot to file: #{scr_path}")
-    end
+    return if @headless_instance.nil?
+    @headless_instance.take_screenshot(scr_path)
+    LoggerHelper.print_to_log("Took Screenshot to file: #{scr_path}")
   end
 end
