@@ -343,17 +343,13 @@ class WebDriver
   end
 
   def select_from_list(xpath_value, value)
-    option_present = false
-
     @driver.find_element(:xpath, xpath_value).find_elements(tag_name: 'li').each do |element|
-      if element.text == value.to_s
-        option_present = true
-        element.click
-        break
-      end
+      next unless element.text == value.to_s
+      element.click
+      return true
     end
 
-    webdriver_error("select_from_list: Option #{value} in list #{xpath_value} not found") unless option_present
+    webdriver_error("select_from_list: Option #{value} in list #{xpath_value} not found")
   end
 
   def select_from_list_elements(value, elements_value)
@@ -663,14 +659,13 @@ class WebDriver
 
   def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
     @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-      if text_to_click.to_s == current_element.attribute('innerHTML')
-        begin
-          current_element.click
-        rescue Exception => e
-          webdriver_error("Error in click_on_one_of_several_by_text(#{xpath_several_elements}, #{text_to_click}): #{e.message}")
-        end
-        return true
+      next unless text_to_click.to_s == current_element.attribute('innerHTML')
+      begin
+        current_element.click
+      rescue Exception => e
+        webdriver_error("Error in click_on_one_of_several_by_text(#{xpath_several_elements}, #{text_to_click}): #{e.message}")
       end
+      return true
     end
     false
   end
