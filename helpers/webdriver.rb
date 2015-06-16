@@ -31,85 +31,85 @@ class WebDriver
     @browser = browser
     @ip_of_remote_server = remote_server
     case browser
-      when :firefox
-        profile = Selenium::WebDriver::Firefox::Profile.new
-        profile['browser.download.folderList'] = 2
-        profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
-        profile['browser.download.dir'] = @download_directory
-        profile['browser.download.manager.showWhenStarting'] = false
-        profile['dom.disable_window_move_resize'] = false
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
-          @driver.manage.window.maximize
+    when :firefox
+      profile = Selenium::WebDriver::Firefox::Profile.new
+      profile['browser.download.folderList'] = 2
+      profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
+      profile['browser.download.dir'] = @download_directory
+      profile['browser.download.manager.showWhenStarting'] = false
+      profile['dom.disable_window_move_resize'] = false
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
+        @driver.manage.window.maximize
+        if @headless.running?
+          @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
+        end
+      else
+        capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
+        @driver = Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + remote_server + ':4444/wd/hub'
+        @ip_of_remote_server = remote_server
+      end
+    when :chrome
+      prefs = {
+        download: {
+          prompt_for_download: false,
+          default_directory: @download_directory
+        }
+      }
+      if remote_server.nil?
+        begin
+          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
           if @headless.running?
             @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
-        else
-          capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
-          @driver = Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + remote_server + ':4444/wd/hub'
-          @ip_of_remote_server = remote_server
-        end
-      when :chrome
-        prefs = {
-          download: {
-            prompt_for_download: false,
-            default_directory: @download_directory
-          }
-        }
-        if remote_server.nil?
-          begin
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
-          rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
-            LinuxHelper.kill_all('chromedriver')
-            sleep 5
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
+          @driver
+        rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
+          LinuxHelper.kill_all('chromedriver')
+          sleep 5
+          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
+          if @headless.running?
+            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.chrome
-          caps['chromeOptions'] = {
-            profile: data['zip'],
-            extensions: data['extensions']
-          }
-          @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
+          @driver
         end
-      when :opera
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :opera
-        else
-          fail 'ForMe:Implement remote for opera'
-        end
-      when :internet_explorer, :ie
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :internet_explorer
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer
-          caps.native_events = true
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :safari
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :safari
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.safari
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :htmlunit
-        caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
-        @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
       else
-        fail 'Unknown Browser: ' + browser.to_s
+        caps = Selenium::WebDriver::Remote::Capabilities.chrome
+        caps['chromeOptions'] = {
+          profile: data['zip'],
+          extensions: data['extensions']
+        }
+        @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
+      end
+    when :opera
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :opera
+      else
+        fail 'ForMe:Implement remote for opera'
+      end
+    when :internet_explorer, :ie
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :internet_explorer
+      else
+        caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer
+        caps.native_events = true
+        @driver = Selenium::WebDriver.for(:remote,
+                                          url: 'http://' + remote_server + ':4444/wd/hub',
+                                          desired_capabilities: caps)
+      end
+    when :safari
+      if remote_server.nil?
+        @driver = Selenium::WebDriver.for :safari
+      else
+        caps = Selenium::WebDriver::Remote::Capabilities.safari
+        @driver = Selenium::WebDriver.for(:remote,
+                                          url: 'http://' + remote_server + ':4444/wd/hub',
+                                          desired_capabilities: caps)
+      end
+    when :htmlunit
+      caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
+      @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
+    else
+      fail 'Unknown Browser: ' + browser.to_s
     end
   end
 
@@ -155,9 +155,8 @@ class WebDriver
   end
 
   def alert_confirm
-    unless @browser == :ie
-      @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
-    end
+    return if @browser == :ie
+    @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
   end
 
   # Check if alert exists
@@ -343,17 +342,13 @@ class WebDriver
   end
 
   def select_from_list(xpath_value, value)
-    option_present = false
-
     @driver.find_element(:xpath, xpath_value).find_elements(tag_name: 'li').each do |element|
-      if element.text == value.to_s
-        option_present = true
-        element.click
-        break
-      end
+      next unless element.text == value.to_s
+      element.click
+      return true
     end
 
-    webdriver_error("select_from_list: Option #{value} in list #{xpath_value} not found") unless option_present
+    webdriver_error("select_from_list: Option #{value} in list #{xpath_value} not found")
   end
 
   def select_from_list_elements(value, elements_value)
@@ -369,9 +364,8 @@ class WebDriver
   end
 
   def get_all_combo_box_values(xpath_name)
-    unless @browser == :ie
-      @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
-    end
+    return if @browser == :ie
+    @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
   end
 
   def get_url
@@ -392,7 +386,7 @@ class WebDriver
 
   def self.host_name_by_full_url(full_url)
     uri = URI(full_url)
-    (uri.port == 80 || uri.port == 443) ? "#{ uri.scheme }://#{ uri.host }" : "#{ uri.scheme }://#{ uri.host }:#{ uri.port }"
+    (uri.port == 80 || uri.port == 443) ? "#{uri.scheme}://#{uri.host}" : "#{uri.scheme}://#{uri.host}:#{uri.port}"
   end
 
   def get_host_name
@@ -467,12 +461,11 @@ class WebDriver
     xpath.gsub!("'", "\"")
     execute_javascript('document.evaluate( \'' + xpath.to_s +
                            '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
-    if move_to_center
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
-    end
+    return unless move_to_center
+    execute_javascript('document.evaluate( \'' + xpath.to_s +
+                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
+    execute_javascript('document.evaluate( \'' + xpath.to_s +
+                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
   end
 
   def remove_event(event_name)
@@ -485,7 +478,7 @@ class WebDriver
   end
 
   def add_class_by_jquery(selector, class_name)
-    execute_javascript("$('#{ selector }').addClass('#{ class_name }');")
+    execute_javascript("$('#{selector}').addClass('#{class_name}');")
   end
 
   # Perform drag'n'drop action in one element (for example on big canvas area)
@@ -556,18 +549,18 @@ class WebDriver
   def click_on_locator(xpath_name, non_iframe = false, by_fire_event = true, by_javascript = false)
     element = get_element(xpath_name)
     if element.nil?
-      webdriver_error("Element with xpath: #{ xpath_name } not found")
+      webdriver_error("Element with xpath: #{xpath_name} not found")
     else
       if @browser != :ie
         if by_javascript
-          execute_javascript("document.evaluate(\"#{ xpath_name }\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
+          execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
         else
           begin
             element.click
           rescue Selenium::WebDriver::Error::ElementNotVisibleError
-            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{ xpath_name }")
+            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
           rescue Exception => e
-            webdriver_error("UnknownError #{ e.message } #{ xpath_name }")
+            webdriver_error("UnknownError #{e.message} #{xpath_name}")
           end
         end
       else
@@ -663,14 +656,13 @@ class WebDriver
 
   def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
     @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-      if text_to_click.to_s == current_element.attribute('innerHTML')
-        begin
-          current_element.click
-        rescue Exception => e
-          webdriver_error("Error in click_on_one_of_several_by_text(#{xpath_several_elements}, #{text_to_click}): #{e.message}")
-        end
-        return true
+      next unless text_to_click.to_s == current_element.attribute('innerHTML')
+      begin
+        current_element.click
+      rescue Exception => e
+        webdriver_error("Error in click_on_one_of_several_by_text(#{xpath_several_elements}, #{text_to_click}): #{e.message}")
       end
+      return true
     end
     false
   end
@@ -706,7 +698,7 @@ class WebDriver
   end
 
   def click_on_one_of_several_with_display_by_number(xpath_several_elements, number)
-    @driver.find_elements(:xpath, "#{ xpath_several_elements }[#{ number }]").each do |current_element|
+    @driver.find_elements(:xpath, "#{xpath_several_elements}[#{number}]").each do |current_element|
       if current_element.displayed?
         current_element.click
         return true
@@ -736,7 +728,7 @@ class WebDriver
   end
 
   def click_on_one_of_several_xpath_by_number(xpath, number_of_element, by_javascript = false)
-    click_on_locator("(#{ xpath })[#{ number_of_element }]", false, true, by_javascript)
+    click_on_locator("(#{xpath})[#{number_of_element}]", false, true, by_javascript)
   end
 
   def move_to_element(element)
@@ -846,7 +838,7 @@ class WebDriver
           return element if element.displayed?
         end
       rescue Selenium::WebDriver::Error::InvalidSelectorError
-        webdriver_error("get_element_by_display(#{ xpath_name }): invalid selector: Unable to locate an element with the xpath expression")
+        webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
       end
     end
   end
@@ -919,9 +911,8 @@ class WebDriver
       sleep(1)
       time += 1
     end
-    if time >= timeout
-      webdriver_error("Element #{ xpath_name } not visible for #{ timeout } seconds")
-    end
+    return unless time >= timeout
+    webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
   end
 
   def one_of_several_elements_displayed?(xpath_several_elements)
@@ -942,7 +933,7 @@ class WebDriver
   end
 
   def remove_element(xpath)
-    execute_javascript("element = document.evaluate(\"#{ xpath }\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
+    execute_javascript("element = document.evaluate(\"#{xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
   end
 
   def get_all_elements_on_web_page
@@ -962,7 +953,7 @@ class WebDriver
       rescue Selenium::WebDriver::Error::NoSuchElementError
         LoggerHelper.print_to_log('Raise NoSuchElementError in the select_frame method')
       rescue Exception => e
-        webdriver_error("Raise unkwnown exception: #{ e }")
+        webdriver_error("Raise unkwnown exception: #{e}")
       end
     end
   end
@@ -1008,7 +999,7 @@ class WebDriver
   end
 
   def get_text_by_js(xpath)
-    execute_javascript("return document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().innerHTML")
+    execute_javascript("return document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().innerHTML")
   end
 
   def get_text_of_several_elements(xpath_several_elements)
@@ -1041,7 +1032,7 @@ class WebDriver
     element = xpath_name.is_a?(Selenium::WebDriver::Element) ? xpath_name : get_element(xpath_name)
 
     if element.nil?
-      webdriver_error("Webdriver.get_attribute(#{ xpath_name }, #{ attribute }) failed because element not found")
+      webdriver_error("Webdriver.get_attribute(#{xpath_name}, #{attribute}) failed because element not found")
     else
       (@browser == :ie) ? element.attribute_value(attribute) : element.attribute(attribute)
     end
@@ -1083,23 +1074,23 @@ class WebDriver
   end
 
   def set_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                           "#{ attribute }=\"#{ attribute_value }\";")
+    execute_javascript("document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+                           "#{attribute}=\"#{attribute_value}\";")
   end
 
   def set_style_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{ xpath.gsub("\"", "'") }\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                           "style.#{ attribute }=\"#{ attribute_value }\"")
+    execute_javascript("document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+                           "style.#{attribute}=\"#{attribute_value}\"")
   end
 
   def set_style_attribute(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate('#{ xpath }',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                           "singleNodeValue.style.#{ attribute }=\"#{ attribute_value }\"")
+    execute_javascript("document.evaluate('#{xpath}',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
+                           "singleNodeValue.style.#{attribute}=\"#{attribute_value}\"")
   end
 
   def remove_attribute(xpath, attribute)
-    execute_javascript("document.evaluate(\"#{ xpath }\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                           "singleNodeValue.removeAttribute('#{ attribute }');")
+    execute_javascript("document.evaluate(\"#{xpath}\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
+                           "singleNodeValue.removeAttribute('#{attribute}');")
   end
 
   def select_text_from_page(xpath_name)
@@ -1130,17 +1121,17 @@ class WebDriver
   end
 
   def webdriver_error(exception, error_message = nil)
-    if exception.is_a?(String) # Если не указан error_message
+    if exception.is_a?(String) # If there is no error_message
       error_message = exception
       exception = RuntimeError
     end
     select_top_frame
     current_url = get_url
-    fail exception, "#{ error_message }\n\nPage address: #{current_url}\n\nError #{ webdriver_screenshot }"
+    fail exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
   end
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
-    path_to_screenshot = "#{LinuxHelper.shared_folder}screenshot/WebdriverError/#{ screenshot_name }.png"
+    path_to_screenshot = "#{LinuxHelper.shared_folder}screenshot/WebdriverError/#{screenshot_name}.png"
     path_for_report = LinuxHelper.screenshot_path(screenshot_name)
     begin
       get_screenshot(path_to_screenshot)
@@ -1151,7 +1142,7 @@ class WebDriver
         LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{@headless.take_screenshot(path_to_screenshot)}")
       end
     end
-    "screenshot: #{ path_for_report }"
+    "screenshot: #{path_for_report}"
   end
 
   def wait_until(timeout = ::PageObject.default_page_wait, message = nil, &block)
@@ -1160,7 +1151,7 @@ class WebDriver
       wait.until(&block)
       wait.until { execute_javascript('return document.readyState;') == 'complete' }
     rescue Selenium::WebDriver::Error::TimeOutError
-      webdriver_error("Wait until timeout: #{ timeout } seconds in")
+      webdriver_error("Wait until timeout: #{timeout} seconds in")
     end
   end
 
