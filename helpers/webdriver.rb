@@ -999,7 +999,7 @@ class WebDriver
   end
 
   def get_text_by_js(xpath)
-    execute_javascript("return document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().innerHTML")
+    execute_javascript("return document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
   end
 
   def get_text_of_several_elements(xpath_several_elements)
