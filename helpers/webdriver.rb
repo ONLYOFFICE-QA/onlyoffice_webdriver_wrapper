@@ -299,7 +299,7 @@ class WebDriver
         if (@browser != :chrome && !by_action) || by_element_send_key
           send_keys(element, symbol, :element_send_key)
         else
-          send_keys(element, symbol, :action)
+          send_keys(element, symbol, by_action)
         end
       else
         if text_to_send != ''
