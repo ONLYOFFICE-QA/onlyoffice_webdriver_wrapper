@@ -1157,6 +1157,7 @@ class WebDriver
 
   def wait_file_for_download(file_name, timeout = TIMEOUT_FILE_DOWNLOAD)
     full_file_name = "#{@download_directory}/#{file_name}"
+    full_file_name = file_name if file_name[0] == '/'
     counter = 0
     while !File.exist?(full_file_name) && counter < timeout
       LoggerHelper.print_to_log("Waiting for download file #{full_file_name} for #{counter} of #{timeout}")
