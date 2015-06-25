@@ -54,6 +54,11 @@ class WebDriver
         download: {
           prompt_for_download: false,
           default_directory: @download_directory
+        },
+        profile: {
+          default_content_settings: {
+            'multiple-automatic-downloads' => 1
+          }
         }
       }
       if remote_server.nil?
@@ -460,12 +465,12 @@ class WebDriver
   def set_style_show_by_xpath(xpath, move_to_center = false)
     xpath.gsub!("'", "\"")
     execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
+                         '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
     return unless move_to_center
     execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
+                         '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
     execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
+                         '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
   end
 
   def remove_event(event_name)
