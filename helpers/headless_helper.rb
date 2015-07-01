@@ -42,7 +42,7 @@ class HeadlessHelper
   def stop
     return unless running?
     LoggerHelper.print_to_log('Stopping Headless Session')
-    @headless_instance.destroy
+    headless_instance.destroy
   end
 
   def running?
