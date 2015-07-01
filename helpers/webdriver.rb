@@ -118,6 +118,13 @@ class WebDriver
     end
   end
 
+  def browser_size
+    size_struct = @driver.manage.window.size
+    size = CursorPoint.new(size_struct.width, size_struct.height)
+    LoggerHelper.print_to_log("browser_size: #{size}")
+    size
+  end
+
   def add_web_console_error(log)
     WebDriver.web_console_error = log
   end
