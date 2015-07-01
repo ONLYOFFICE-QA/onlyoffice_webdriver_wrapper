@@ -443,7 +443,7 @@ class WebDriver
       sleep 1
       counter += 1
     end
-    webdriver_error('choose_tab: Popup window not found') if counter >= TIMEOUT_WAIT_ELEMENT
+    webdriver_error("choose_tab: Tab number = #{tab_number} not found") if counter >= TIMEOUT_WAIT_ELEMENT
     @driver.switch_to.window(@driver.window_handles[tab_number - 1])
   end
 
