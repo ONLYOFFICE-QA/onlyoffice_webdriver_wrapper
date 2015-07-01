@@ -428,6 +428,14 @@ class WebDriver
     end
   end
 
+  # Get tab count
+  # @return [Integer] count of tabs in opened session
+  def tab_count
+    tab_count = @driver.window_handles.length
+    LoggerHelper.print_to_log("tab_count: #{tab_count}")
+    tab_count
+  end
+
   def choose_tab(tab_number)
     sleep 1 while @driver.window_handles.length < 2
     @driver.switch_to.window(@driver.window_handles[tab_number - 1])
