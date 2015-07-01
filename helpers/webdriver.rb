@@ -415,7 +415,7 @@ class WebDriver
   def switch_to_popup
     if @browser != :ie
       counter = 0
-      while @driver.window_handles.length < 2 && counter < 30
+      while tab_count < 2 && counter < 30
         sleep 1
         counter += 1
       end
@@ -437,7 +437,7 @@ class WebDriver
   end
 
   def choose_tab(tab_number)
-    sleep 1 while @driver.window_handles.length < 2
+    sleep 1 while tab_count < 2
     @driver.switch_to.window(@driver.window_handles[tab_number - 1])
   end
 
