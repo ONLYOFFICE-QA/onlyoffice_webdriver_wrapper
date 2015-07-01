@@ -979,12 +979,6 @@ class WebDriver
     end
   end
 
-  def get_current_frame
-    /<title>(.+)<\/title>/.match(get_page_source)[1]
-  rescue
-    ''
-  end
-
   # Get text of current element
   # @param [String] xpath_name name of xpath
   # @param [true, false] wait_until_visible wait until element visible [@default = true]
