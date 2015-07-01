@@ -153,12 +153,6 @@ class WebDriver
     nil
   end
 
-  def get_element_by_css_selector(object_identification)
-    @driver.find_element(:css, object_identification)
-  rescue
-    nil
-  end
-
   def alert_confirm
     return if @browser == :ie
     @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
