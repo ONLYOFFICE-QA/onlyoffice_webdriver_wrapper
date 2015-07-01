@@ -438,7 +438,12 @@ class WebDriver
   end
 
   def choose_tab(tab_number)
-    sleep 1 while tab_count < 2
+    counter = 0
+    while tab_count < 2 && counter < TIMEOUT_WAIT_ELEMENT
+      sleep 1
+      counter += 1
+    end
+    webdriver_error("choose_tab: Tab number = #{tab_number} not found") if counter >= TIMEOUT_WAIT_ELEMENT
     @driver.switch_to.window(@driver.window_handles[tab_number - 1])
   end
 
