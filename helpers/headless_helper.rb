@@ -27,32 +27,32 @@ class HeadlessHelper
     return unless create_session
     LoggerHelper.print_to_log('Starting Headless Session')
     begin
-      @headless_instance = Headless.new(reuse: false,
-                                        destroy_at_exit: true,
-                                        dimensions: "#{@resolution_x}x#{@resolution_y}x24")
+      headless_instance = Headless.new(reuse: false,
+                                       destroy_at_exit: true,
+                                       dimensions: "#{@resolution_x}x#{@resolution_y}x24")
     rescue Exception => e
       LoggerHelper.print_to_log("xvfb not started with problem #{e}")
       RspecHelper.clean_up(true)
-      @headless_instance = Headless.new(reuse: false,
-                                        destroy_at_exit: true,
-                                        dimensions: "#{@resolution_x}x#{@resolution_y}x24")
+      headless_instance = Headless.new(reuse: false,
+                                       destroy_at_exit: true,
+                                       dimensions: "#{@resolution_x}x#{@resolution_y}x24")
     end
-    @headless_instance.start
+    headless_instance.start
   end
 
   def stop
-    return if @headless_instance.nil?
+    return if headless_instance.nil?
     LoggerHelper.print_to_log('Stopping Headless Session')
     @headless_instance.destroy
   end
 
   def running?
-    !@headless_instance.nil?
+    !headless_instance.nil?
   end
 
   def take_screenshot(scr_path = '/tmp/screenshot.png')
-    return if @headless_instance.nil?
-    @headless_instance.take_screenshot(scr_path)
+    return if headless_instance.nil?
+    headless_instance.take_screenshot(scr_path)
     LoggerHelper.print_to_log("Took Screenshot to file: #{scr_path}")
   end
 end

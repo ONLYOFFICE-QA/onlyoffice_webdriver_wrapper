@@ -153,12 +153,6 @@ class WebDriver
     nil
   end
 
-  def get_element_by_css_selector(object_identification)
-    @driver.find_element(:css, object_identification)
-  rescue
-    nil
-  end
-
   def alert_confirm
     return if @browser == :ie
     @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
@@ -949,13 +943,6 @@ class WebDriver
     execute_javascript("element = document.evaluate(\"#{xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
   end
 
-  def get_all_elements_on_web_page
-    @driver.find_elements(:xpath, "//*[not(contains(@style,'display:none')) and not(@id='logo')
-                                               and not(@id='td_backButton') and not(@id='td_print') and not(@title='Back')
-                                               and not(@title='Print (Ctrl+P)') and not(@class='ToolbarIcon ToolbarPrint')
-                                               and not(ancestor::*[@id='logo']) and not(ancestor::*[@id='td_backButton'])]")
-  end
-
   # Select frame as current
   # @param [String] xpath_name name of current xpath
   def select_frame(xpath_name = '//iframe', count_of_frames = 1)
@@ -984,12 +971,6 @@ class WebDriver
         raise "Browser is crushed or hangup with error: #{e}"
       end
     end
-  end
-
-  def get_current_frame
-    /<title>(.+)<\/title>/.match(get_page_source)[1]
-  rescue
-    ''
   end
 
   # Get text of current element
