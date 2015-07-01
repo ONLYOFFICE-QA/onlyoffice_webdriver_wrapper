@@ -140,7 +140,6 @@ class WebDriver
       end
     end
     LoggerHelper.print_to_log("Opened page: #{url}")
-    @headless.take_screenshot
   end
 
   def quit
