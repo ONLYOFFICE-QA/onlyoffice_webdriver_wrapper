@@ -9,7 +9,7 @@ class HeadlessHelper
   attr_accessor :resolution_x
   attr_accessor :resolution_y
 
-  def initialize(resolution_x = 1681, resolution_y = 1050)
+  def initialize(resolution_x = 1680, resolution_y = 1050)
     @resolution_x = resolution_x
     @resolution_y = resolution_y
   end
@@ -28,13 +28,13 @@ class HeadlessHelper
     begin
       @headless_instance = Headless.new(reuse: false,
                                         destroy_at_exit: true,
-                                        dimensions: "#{@resolution_x}x#{@resolution_y}x24")
+                                        dimensions: "#{@resolution_x + 1}x#{@resolution_y + 1}x24")
     rescue Exception => e
       LoggerHelper.print_to_log("xvfb not started with problem #{e}")
       RspecHelper.clean_up(true)
       @headless_instance = Headless.new(reuse: false,
                                         destroy_at_exit: true,
-                                        dimensions: "#{@resolution_x}x#{@resolution_y}x24")
+                                        dimensions: "#{@resolution_x + 1}x#{@resolution_y + 1}x24")
     end
     headless_instance.start
   end

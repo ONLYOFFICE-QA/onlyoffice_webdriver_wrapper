@@ -65,7 +65,7 @@ class WebDriver
         begin
           @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized --disable-popup-blocking test-type)
           if @headless.running?
-            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x + 1, @headless.resolution_y + 1)
+            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
           @driver
         rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
@@ -73,7 +73,7 @@ class WebDriver
           sleep 5
           @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized --disable-popup-blocking test-type)
           if @headless.running?
-            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x + 1, @headless.resolution_y + 1)
+            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
           @driver
         end
