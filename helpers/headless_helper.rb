@@ -40,7 +40,7 @@ class HeadlessHelper
   end
 
   def stop
-    return if headless_instance.nil?
+    return unless running?
     LoggerHelper.print_to_log('Stopping Headless Session')
     @headless_instance.destroy
   end
@@ -50,7 +50,7 @@ class HeadlessHelper
   end
 
   def take_screenshot(scr_path = '/tmp/screenshot.png')
-    return if headless_instance.nil?
+    return unless running?
     headless_instance.take_screenshot(scr_path)
     LoggerHelper.print_to_log("Took Screenshot to file: #{scr_path}")
   end
