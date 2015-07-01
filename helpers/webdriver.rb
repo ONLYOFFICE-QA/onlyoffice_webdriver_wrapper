@@ -63,7 +63,7 @@ class WebDriver
       }
       if remote_server.nil?
         begin
-          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
+          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized --disable-popup-blocking test-type)
           if @headless.running?
             @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
@@ -71,7 +71,7 @@ class WebDriver
         rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
           LinuxHelper.kill_all('chromedriver')
           sleep 5
-          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized test-type)
+          @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: %w(--start-maximized --disable-popup-blocking test-type)
           if @headless.running?
             @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
           end
@@ -415,7 +415,7 @@ class WebDriver
   def switch_to_popup
     if @browser != :ie
       counter = 0
-      while @driver.window_handles.length < 2 && counter < 30
+      while tab_count < 2 && counter < 30
         sleep 1
         counter += 1
       end
@@ -428,8 +428,16 @@ class WebDriver
     end
   end
 
+  # Get tab count
+  # @return [Integer] count of tabs in opened session
+  def tab_count
+    tab_count = @driver.window_handles.length
+    LoggerHelper.print_to_log("tab_count: #{tab_count}")
+    tab_count
+  end
+
   def choose_tab(tab_number)
-    sleep 1 while @driver.window_handles.length < 2
+    sleep 1 while tab_count < 2
     @driver.switch_to.window(@driver.window_handles[tab_number - 1])
   end
 
