@@ -477,7 +477,7 @@ class WebDriver
   end
 
   def set_style_show_by_xpath(xpath, move_to_center = false)
-    xpath.gsub!("'", "\"")
+    xpath.tr!("'", "\"")
     execute_javascript('document.evaluate( \'' + xpath.to_s +
                          '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
     return unless move_to_center
@@ -538,7 +538,7 @@ class WebDriver
   end
 
   def scroll_list_by_pixels(list_xpath, pixels)
-    execute_javascript("$(document.evaluate(\"#{list_xpath.gsub("\"", "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
+    execute_javascript("$(document.evaluate(\"#{list_xpath.tr("\"", "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
   end
 
   def get_screenshot(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
@@ -1005,7 +1005,7 @@ class WebDriver
   end
 
   def get_text_by_js(xpath)
-    execute_javascript("return document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
+    execute_javascript("return document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
   end
 
   def get_text_of_several_elements(xpath_several_elements)
@@ -1080,12 +1080,12 @@ class WebDriver
   end
 
   def set_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+    execute_javascript("document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "#{attribute}=\"#{attribute_value}\";")
   end
 
   def set_style_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{xpath.gsub("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+    execute_javascript("document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "style.#{attribute}=\"#{attribute_value}\"")
   end
 
