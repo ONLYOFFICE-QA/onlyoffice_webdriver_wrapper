@@ -5,6 +5,7 @@ require 'htmlentities'
 require 'uri'
 require_relative 'headless_helper'
 require_relative 'file_helper'
+require_relative '../services/amazon/amazon_s3_wrapper'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver
@@ -544,7 +545,9 @@ class WebDriver
   def get_screenshot(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
     FileHelper.create_folder(File.dirname(path_to_screenshot))
     @driver.save_screenshot(path_to_screenshot)
-    LoggerHelper.print_to_log("get_screenshot(#{path_to_screenshot})")
+    link = AmazonS3Wrapper.new.upload_file(path_to_screenshot, 'screenshots')
+    AmazonS3Wrapper.new.make_public('screenshots')
+    LoggerHelper.print_to_log("get_screenshot #{link}")
   end
 
   # Open dropdown selector, like 'Color Selector', which has no element id
