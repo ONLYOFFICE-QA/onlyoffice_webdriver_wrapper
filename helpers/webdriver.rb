@@ -546,7 +546,7 @@ class WebDriver
     FileHelper.create_folder(File.dirname(path_to_screenshot))
     @driver.save_screenshot(path_to_screenshot)
     link = AmazonS3Wrapper.new.upload_file(path_to_screenshot, 'screenshots')
-    AmazonS3Wrapper.new.make_public('screenshots')
+    AmazonS3Wrapper.new.make_public("screenshots/#{File.basename(path_to_screenshot)}")
     LoggerHelper.print_to_log("get_screenshot #{link}")
   end
 
