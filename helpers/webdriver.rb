@@ -1148,9 +1148,13 @@ class WebDriver
     rescue Exception => e
       link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")}")
+        LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
+        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
       else
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{@headless.take_screenshot("/tmp/#{screenshot_name}.png")}")
+        @headless.take_screenshot("/tmp/#{screenshot_name}.png")
+        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
       end
     end
     "screenshot: #{link}"
