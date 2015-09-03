@@ -541,6 +541,12 @@ class WebDriver
     execute_javascript("$(document.evaluate(\"#{list_xpath.tr("\"", "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
   end
 
+  def get_screenshot_and_upload(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
+    get_screenshot(path_to_screenshot)
+    link = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
+    LoggerHelper.print_to_log("upload screenshot: #{link}")
+  end
+
   def get_screenshot(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
     FileHelper.create_folder(File.dirname(path_to_screenshot))
     @driver.save_screenshot(path_to_screenshot)
@@ -1137,18 +1143,21 @@ class WebDriver
   end
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
-    path_to_screenshot = "#{LinuxHelper.shared_folder}screenshot/WebdriverError/#{screenshot_name}.png"
-    path_for_report = LinuxHelper.screenshot_path(screenshot_name)
     begin
-      get_screenshot(path_to_screenshot)
+      link = get_screenshot_and_upload("/tmp/#{screenshot_name}.png")
     rescue Exception => e
+      link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{LinuxHelper.take_screenshot(path_to_screenshot)}")
+        LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
+        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
       else
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{@headless.take_screenshot(path_to_screenshot)}")
+        @headless.take_screenshot("/tmp/#{screenshot_name}.png")
+        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
       end
     end
-    "screenshot: #{path_for_report}"
+    "screenshot: #{link}"
   end
 
   def wait_until(timeout = ::PageObject.default_page_wait, message = nil, &block)
