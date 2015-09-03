@@ -545,6 +545,7 @@ class WebDriver
     get_screenshot(path_to_screenshot)
     link = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
     LoggerHelper.print_to_log("upload screenshot: #{link}")
+    link
   end
 
   def get_screenshot(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
