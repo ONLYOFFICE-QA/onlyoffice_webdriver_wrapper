@@ -5,7 +5,6 @@ require 'htmlentities'
 require 'uri'
 require_relative 'headless_helper'
 require_relative 'file_helper'
-require_relative '../services/amazon/amazon_s3_wrapper'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver
@@ -543,11 +542,15 @@ class WebDriver
   end
 
   def get_screenshot(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
-    FileHelper.create_folder(File.dirname(path_to_screenshot))
-    @driver.save_screenshot(path_to_screenshot)
+    get_and_save_screenshot(path_to_screenshot)
     link = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
     LoggerHelper.print_to_log("get_screenshot #{link}")
     link
+  end
+
+  def get_and_save_screenshot(path_to_screenshot)
+    FileHelper.create_folder(File.dirname(path_to_screenshot))
+    @driver.save_screenshot(path_to_screenshot)
   end
 
   # Open dropdown selector, like 'Color Selector', which has no element id
@@ -1140,11 +1143,10 @@ class WebDriver
   end
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
-    # link = LinuxHelper.screenshot_path(screenshot_name)
     begin
-      link = get_screenshot("#{screenshot_name}.png")
+      link = get_screenshot("/tmp/#{screenshot_name}.png")
     rescue Exception => e
-      link += ' | An error has occurred!!'
+      link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
         LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{LinuxHelper.take_screenshot(link)}")
       else
