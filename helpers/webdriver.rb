@@ -547,7 +547,7 @@ class WebDriver
     LoggerHelper.print_to_log("upload screenshot: #{link}")
   end
 
-  def get_screenshot(path_to_screenshot)
+  def get_screenshot(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
     FileHelper.create_folder(File.dirname(path_to_screenshot))
     @driver.save_screenshot(path_to_screenshot)
     LoggerHelper.print_to_log("get_screenshot(#{path_to_screenshot})")
