@@ -1148,9 +1148,9 @@ class WebDriver
     rescue Exception => e
       link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{LinuxHelper.take_screenshot(link)}")
+        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")}")
       else
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{@headless.take_screenshot(link)}")
+        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{@headless.take_screenshot("/tmp/#{screenshot_name}.png")}")
       end
     end
     "screenshot: #{link}"
