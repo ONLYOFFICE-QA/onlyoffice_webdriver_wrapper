@@ -586,7 +586,7 @@ class WebDriver
           rescue Selenium::WebDriver::Error::ElementNotVisibleError
             webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
           rescue Exception => e
-            webdriver_error("UnknownError #{e.message} #{xpath_name}")
+            webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
           end
         end
       else
