@@ -543,8 +543,13 @@ class WebDriver
 
   def get_screenshot_and_upload(path_to_screenshot = "/tmp/#{StringHelper.generate_random_string}.png")
     get_screenshot(path_to_screenshot)
-    link = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
-    LoggerHelper.print_to_log("upload screenshot: #{link}")
+    begin
+      link = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
+      LoggerHelper.print_to_log("upload screenshot: #{link}")
+    rescue RuntimeError => e
+      LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
+      link = path_to_screenshot
+    end
     link
   end
 
