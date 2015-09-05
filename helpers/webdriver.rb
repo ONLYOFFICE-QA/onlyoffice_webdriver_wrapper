@@ -553,9 +553,7 @@ class WebDriver
   end
 
   def get_screenshot(path_to_screenshot = "/tmp/screenshot/#{StringHelper.generate_random_string}.png")
-    begin
-      FileHelper.create_folder(path_to_screenshot.sub(%r{[\/]\w+\.\w*}, ''))
-    end
+    FileHelper.create_folder(File.dirname(path_to_screenshot))
     @driver.save_screenshot(path_to_screenshot)
     LoggerHelper.print_to_log("get_screenshot(#{path_to_screenshot})")
   end
