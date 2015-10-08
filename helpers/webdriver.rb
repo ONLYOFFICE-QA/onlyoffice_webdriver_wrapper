@@ -1152,15 +1152,21 @@ class WebDriver
     begin
       link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
     rescue Exception => e
-      link = 'An error has occurred!!'
+      # link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
         LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
-        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
+        begin
+          link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        ensure
+          LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
+        end
       else
         @headless.take_screenshot("/tmp/#{screenshot_name}.png")
-        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
+        begin
+          link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        ensure
+          LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
+        end
       end
     end
     "screenshot: #{link}"
