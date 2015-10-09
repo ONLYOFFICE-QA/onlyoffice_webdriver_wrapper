@@ -1162,14 +1162,14 @@ class WebDriver
         LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
         begin
           link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-        ensure
+        rescue Exception => e
           LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
         end
       else
         @headless.take_screenshot("/tmp/#{screenshot_name}.png")
         begin
           link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-        ensure
+        rescue Exception => e
           LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
         end
       end
