@@ -542,12 +542,17 @@ class WebDriver
   end
 
   def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
-    get_screenshot(path_to_screenshot)
     begin
+      get_screenshot(path_to_screenshot)
       path_to_screenshot = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
       LoggerHelper.print_to_log("upload screenshot: #{path_to_screenshot}")
     rescue Errno::ENOENT => e
+      begin
       @driver.save_screenshot(path_to_screenshot)
+      rescue Errno::ENOENT => e
+        @driver.save_screenshot("tmp/#{File.basename(path_to_screenshot)}")
+        LoggerHelper.print_to_log("Upload screenshot to tmp/#{File.basename(path_to_screenshot)}. Error: #{e}")
+      end
       LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
     end
     path_to_screenshot
