@@ -548,8 +548,8 @@ class WebDriver
       LoggerHelper.print_to_log("upload screenshot: #{path_to_screenshot}")
     rescue Errno::ENOENT => e
       begin
-      @driver.save_screenshot(path_to_screenshot)
-      LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
+        @driver.save_screenshot(path_to_screenshot)
+        LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
       rescue Errno::ENOENT => e
         @driver.save_screenshot("tmp/#{File.basename(path_to_screenshot)}")
         LoggerHelper.print_to_log("Upload screenshot to tmp/#{File.basename(path_to_screenshot)}. Error: #{e}")
