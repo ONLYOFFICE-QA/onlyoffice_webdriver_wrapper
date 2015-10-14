@@ -1157,7 +1157,6 @@ class WebDriver
     begin
       link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
     rescue Exception => e
-      # link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
         LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
         begin
