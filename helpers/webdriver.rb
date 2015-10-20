@@ -50,6 +50,7 @@ class WebDriver
         @ip_of_remote_server = remote_server
       end
     when :chrome
+      Selenium::WebDriver::Chrome::Service.executable_path = File.join(Dir.pwd, 'assets/bin/chromedriver')
       prefs = {
         download: {
           prompt_for_download: false,
