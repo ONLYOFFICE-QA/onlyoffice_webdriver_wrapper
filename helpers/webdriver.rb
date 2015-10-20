@@ -50,7 +50,7 @@ class WebDriver
         @ip_of_remote_server = remote_server
       end
     when :chrome
-      Selenium::WebDriver::Chrome::Service.executable_path = File.join(Dir.home, 'RubymineProjects/SharedFunctional/assets/bin/chromedriver')
+      Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/chromedriver')
       prefs = {
         download: {
           prompt_for_download: false,
