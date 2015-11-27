@@ -19,8 +19,9 @@ describe WebDriver do
   end
 
   it 'element_size_by_js' do
-    webdriver.open('www.google.com')
-    expect(webdriver.element_size_by_js('//*[@id="hplogo"]')).to eq(Dimensions.new(272, 92))
+    dimensions = webdriver.element_size_by_js('//body')
+    expect(dimensions.height).to be > 900
+    expect(dimensions.width).to be > 1600
   end
 
   after { webdriver.quit }
