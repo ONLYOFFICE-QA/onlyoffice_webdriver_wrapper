@@ -18,5 +18,10 @@ describe WebDriver do
     expect(webdriver.browser_size.y).to eq(webdriver.headless.resolution_y)
   end
 
+  it 'element_size_by_js' do
+    webdriver.open('www.google.com')
+    expect(webdriver.element_size_by_js('//*[@id="hplogo"]')).to eq(Dimensions.new(272, 92))
+  end
+
   after { webdriver.quit }
 end
