@@ -5,9 +5,11 @@ require 'htmlentities'
 require 'uri'
 require_relative 'headless_helper'
 require_relative 'file_helper'
+require_relative 'webdriver/webdriver_js_methods'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver
+  include WebdriverJsMethods
   TIMEOUT_WAIT_ELEMENT = 15
   TIMEOUT_FILE_DOWNLOAD = 100
   attr_accessor :driver
@@ -275,11 +277,6 @@ class WebDriver
         end
       end
     end
-  end
-
-  def type_to_locator_by_javascript(xpath_name, text)
-    escaped_text = text.gsub('\\', '\\\\\\\\').gsub("\"", "\\\"").gsub("\n", '\\n')
-    execute_javascript("document.evaluate('#{xpath_name}', document, null, XPathResult.ANY_TYPE, null).iterateNext().value=\"#{escaped_text}\";")
   end
 
   def type_to_input(xpath_name, text_to_send, clear_content = false, click_on_it = true)
@@ -1024,10 +1021,6 @@ class WebDriver
     else
       element.text
     end
-  end
-
-  def get_text_by_js(xpath)
-    execute_javascript("return document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
   end
 
   def get_text_of_several_elements(xpath_several_elements)

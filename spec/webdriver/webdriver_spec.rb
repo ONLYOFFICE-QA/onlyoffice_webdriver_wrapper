@@ -18,5 +18,11 @@ describe WebDriver do
     expect(webdriver.browser_size.y).to eq(webdriver.headless.resolution_y)
   end
 
+  it 'element_size_by_js' do
+    dimensions = webdriver.element_size_by_js('//body')
+    expect(dimensions.height).to be > 900
+    expect(dimensions.width).to be > 1600
+  end
+
   after { webdriver.quit }
 end
