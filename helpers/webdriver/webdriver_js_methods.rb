@@ -17,4 +17,13 @@ module WebdriverJsMethods
     height = execute_javascript("return document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().offsetHeight")
     Dimensions.new(width, height)
   end
+
+  # Get object absolute postion from top left edge of screen
+  # @param xpath [Sting] xpath of object
+  # @return [CursorPoint] position of element
+  def object_absolute_position(xpath)
+    left = execute_javascript("return document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().getBoundingClientRect().left")
+    top = execute_javascript("return document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().getBoundingClientRect().top")
+    CursorPoint.new(left, top)
+  end
 end
