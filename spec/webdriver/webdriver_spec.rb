@@ -24,5 +24,11 @@ describe WebDriver do
     expect(dimensions.width).to be > 1600
   end
 
+  it 'object_absolute_position' do
+    position = webdriver.object_absolute_position('//body')
+    expect(position.height).to be > 0
+    expect(position.width).to be > 0
+  end
+
   after { webdriver.quit }
 end
