@@ -5,9 +5,11 @@ require 'htmlentities'
 require 'uri'
 require_relative 'headless_helper'
 require_relative 'file_helper'
+require_relative 'webdriver/webdriver_js_methods'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver
+  include WebdriverJsMethods
   TIMEOUT_WAIT_ELEMENT = 15
   TIMEOUT_FILE_DOWNLOAD = 100
   attr_accessor :driver
@@ -50,6 +52,11 @@ class WebDriver
         @ip_of_remote_server = remote_server
       end
     when :chrome
+      if LinuxHelper.os_64_bit?
+        Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/x64/chromedriver')
+      else
+        Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/x32/chromedriver')
+      end
       prefs = {
         download: {
           prompt_for_download: false,
@@ -270,11 +277,6 @@ class WebDriver
         end
       end
     end
-  end
-
-  def type_to_locator_by_javascript(xpath_name, text)
-    escaped_text = text.gsub('\\', '\\\\\\\\').gsub("\"", "\\\"").gsub("\n", '\\n')
-    execute_javascript("document.evaluate('#{xpath_name}', document, null, XPathResult.ANY_TYPE, null).iterateNext().value=\"#{escaped_text}\";")
   end
 
   def type_to_input(xpath_name, text_to_send, clear_content = false, click_on_it = true)
@@ -541,18 +543,24 @@ class WebDriver
     execute_javascript("$(document.evaluate(\"#{list_xpath.tr("\"", "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
   end
 
-  def get_screenshot_and_upload(path_to_screenshot = "/tmp/screenshot/#{StringHelper.generate_random_string}.png")
-    get_screenshot(path_to_screenshot)
+  def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
     begin
+      get_screenshot(path_to_screenshot)
       path_to_screenshot = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
       LoggerHelper.print_to_log("upload screenshot: #{path_to_screenshot}")
     rescue Errno::ENOENT => e
-      LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
+      begin
+        @driver.save_screenshot(path_to_screenshot)
+        LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
+      rescue Errno::ENOENT => e
+        @driver.save_screenshot("tmp/#{File.basename(path_to_screenshot)}")
+        LoggerHelper.print_to_log("Upload screenshot to tmp/#{File.basename(path_to_screenshot)}. Error: #{e}")
+      end
     end
     path_to_screenshot
   end
 
-  def get_screenshot(path_to_screenshot = "/tmp/screenshot/#{StringHelper.generate_random_string}.png")
+  def get_screenshot(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
     FileHelper.create_folder(File.dirname(path_to_screenshot))
     @driver.save_screenshot(path_to_screenshot)
     LoggerHelper.print_to_log("get_screenshot(#{path_to_screenshot})")
@@ -1015,10 +1023,6 @@ class WebDriver
     end
   end
 
-  def get_text_by_js(xpath)
-    execute_javascript("return document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
-  end
-
   def get_text_of_several_elements(xpath_several_elements)
     @driver.find_elements(:xpath, xpath_several_elements).map { |element| element.text unless element.text == '' }.compact
   end
@@ -1149,17 +1153,22 @@ class WebDriver
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
     begin
-      link = get_screenshot_and_upload("/tmp/screenshot/#{screenshot_name}.png")
+      link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
     rescue Exception => e
-      link = 'An error has occurred!!'
       if @headless.headless_instance.nil?
         LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
-        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
+        begin
+          link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        rescue Exception => e
+          LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
+        end
       else
         @headless.take_screenshot("/tmp/#{screenshot_name}.png")
-        link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-        LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
+        begin
+          link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
+        rescue Exception => e
+          LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
+        end
       end
     end
     "screenshot: #{link}"
