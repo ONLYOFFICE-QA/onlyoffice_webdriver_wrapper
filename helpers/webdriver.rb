@@ -511,15 +511,18 @@ class WebDriver
   # * +y1+ - y coordinate on element to start drag'n'drop
   # * +x2+ - shift vector x coordinate
   # * +y2+ - shift vector y coordinate
-  def drag_and_drop(xpath, x1, y1, x2, y2)
+  # * +mouse_release+ - release mouse after move
+  def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
     canvas = get_element(xpath)
-    begin
+    if mouse_release
       @driver.action.move_to(canvas, x1, y1).click_and_hold.move_by(x2, y2).release.perform
-    rescue ArgumentError
-      raise "Replace 'click_and_hold(element)' to 'click_and_hold(element = nil)' in action_builder.rb"
-    rescue TypeError => e
-      webdriver_error("drag_and_drop(#{xpath}, #{x1}, #{y1}, #{x2}, #{y2}) TypeError: #{e.message}")
+    else
+      @driver.action.move_to(canvas, x1, y1).click_and_hold.move_by(x2, y2).perform
     end
+  rescue ArgumentError
+    raise "Replace 'click_and_hold(element)' to 'click_and_hold(element = nil)' in action_builder.rb"
+  rescue TypeError => e
+    webdriver_error("drag_and_drop(#{xpath}, #{x1}, #{y1}, #{x2}, #{y2}) TypeError: #{e.message}")
   end
 
   # Perform drag'n'drop one whole element
