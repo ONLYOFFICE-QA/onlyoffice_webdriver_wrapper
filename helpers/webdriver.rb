@@ -266,24 +266,20 @@ class WebDriver
     if @browser != :ie
       if (@browser != :chrome && !by_action) || by_element_send_key
         element.send_keys text_to_send
-      else
-        if text_to_send != ''
-          if text_to_send.is_a?(String)
-            text_to_send.split(//).each do |symbol|
-              @driver.action.send_keys(symbol).perform
-            end
-          else
-            @driver.action.send_keys(text_to_send).perform
+      elsif text_to_send != ''
+        if text_to_send.is_a?(String)
+          text_to_send.split(//).each do |symbol|
+            @driver.action.send_keys(symbol).perform
           end
+        else
+          @driver.action.send_keys(text_to_send).perform
         end
       end
-    else
-      if text_to_send != ''
-        begin
-          element.set text_to_send
-        rescue Exception
-          element.send_keys text_to_send
-        end
+    elsif text_to_send != ''
+      begin
+        element.set text_to_send
+      rescue Exception
+        element.send_keys text_to_send
       end
     end
   end
@@ -318,13 +314,11 @@ class WebDriver
         else
           send_keys(element, symbol, by_action)
         end
-      else
-        if text_to_send != ''
-          begin
-            send_keys(element, symbol, :ie_set)
-          rescue Exception
-            send_keys(element, symbol, :ie_send_keys)
-          end
+      elsif text_to_send != ''
+        begin
+          send_keys(element, symbol, :ie_set)
+        rescue Exception
+          send_keys(element, symbol, :ie_send_keys)
         end
       end
     end
@@ -600,26 +594,22 @@ class WebDriver
     element = get_element(xpath_name)
     if element.nil?
       webdriver_error("Element with xpath: #{xpath_name} not found")
-    else
-      if @browser != :ie
-        if by_javascript
-          execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
-        else
-          begin
-            element.click
-          rescue Selenium::WebDriver::Error::ElementNotVisibleError
-            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
-          rescue Exception => e
-            webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
-          end
-        end
+    elsif @browser != :ie
+      if by_javascript
+        execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
       else
-        if non_iframe
+        begin
           element.click
-        else
-          click_on_locator_ie(element, by_fire_event)
+        rescue Selenium::WebDriver::Error::ElementNotVisibleError
+          webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
+        rescue Exception => e
+          webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
         end
       end
+    elsif non_iframe
+      element.click
+    else
+      click_on_locator_ie(element, by_fire_event)
     end
   end
 
@@ -931,23 +921,21 @@ class WebDriver
   def element_visible?(xpath_name)
     if xpath_name.is_a?(PageObject::Elements::Element) # PageObject always visible
       true
-    else
-      if element_present?(xpath_name)
-        element = get_element(xpath_name)
-        return false if element.nil?
-        if @browser != :ie
-          begin
-            visible = element.displayed?
-          rescue Exception
-            visible = false
-          end
-        else
-          visible = element.visible?
+    elsif element_present?(xpath_name)
+      element = get_element(xpath_name)
+      return false if element.nil?
+      if @browser != :ie
+        begin
+          visible = element.displayed?
+        rescue Exception
+          visible = false
         end
-        visible
       else
-        false
+        visible = element.visible?
       end
+      visible
+    else
+      false
     end
   end
 
