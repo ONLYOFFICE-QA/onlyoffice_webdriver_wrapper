@@ -52,11 +52,11 @@ class WebDriver
         @ip_of_remote_server = remote_server
       end
     when :chrome
-      if LinuxHelper.os_64_bit?
-        Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/x64/chromedriver')
-      else
-        Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/x32/chromedriver')
-      end
+      Selenium::WebDriver::Chrome::Service.executable_path = if LinuxHelper.os_64_bit?
+                                                               File.join(File.dirname(__FILE__), '../assets/bin/x64/chromedriver')
+                                                             else
+                                                               File.join(File.dirname(__FILE__), '../assets/bin/x32/chromedriver')
+                                                             end
       prefs = {
         download: {
           prompt_for_download: false,
@@ -93,11 +93,8 @@ class WebDriver
         @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
       end
     when :opera
-      if remote_server.nil?
-        @driver = Selenium::WebDriver.for :opera
-      else
-        fail 'ForMe:Implement remote for opera'
-      end
+      raise 'ForMe:Implement remote for opera' unless remote_server.nil?
+      @driver = Selenium::WebDriver.for :opera
     when :internet_explorer, :ie
       if remote_server.nil?
         @driver = Selenium::WebDriver.for :internet_explorer
@@ -121,7 +118,7 @@ class WebDriver
       caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
       @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
     else
-      fail 'Unknown Browser: ' + browser.to_s
+      raise 'Unknown Browser: ' + browser.to_s
     end
   end
 
@@ -150,8 +147,16 @@ class WebDriver
   end
 
   def quit
-    @driver.execute_script('window.onbeforeunload = null') rescue Exception # OFF POPUP WINDOW
-    @driver.quit rescue Exception
+    begin
+      @driver.execute_script('window.onbeforeunload = null')
+    rescue
+      Exception
+    end # OFF POPUP WINDOW
+    begin
+      @driver.quit
+    rescue
+      Exception
+    end
     alert_confirm
     @headless.stop
   end
@@ -169,7 +174,11 @@ class WebDriver
 
   def alert_confirm
     return if @browser == :ie
-    @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
+    begin
+      @driver.switch_to.alert.accept
+    rescue
+      Selenium::WebDriver::Error::NoAlertOpenError
+    end
   end
 
   # Check if alert exists
@@ -257,24 +266,20 @@ class WebDriver
     if @browser != :ie
       if (@browser != :chrome && !by_action) || by_element_send_key
         element.send_keys text_to_send
-      else
-        if text_to_send != ''
-          if text_to_send.is_a?(String)
-            text_to_send.split(//).each do |symbol|
-              @driver.action.send_keys(symbol).perform
-            end
-          else
-            @driver.action.send_keys(text_to_send).perform
+      elsif text_to_send != ''
+        if text_to_send.is_a?(String)
+          text_to_send.split(//).each do |symbol|
+            @driver.action.send_keys(symbol).perform
           end
+        else
+          @driver.action.send_keys(text_to_send).perform
         end
       end
-    else
-      if text_to_send != ''
-        begin
-          element.set text_to_send
-        rescue Exception
-          element.send_keys text_to_send
-        end
+    elsif text_to_send != ''
+      begin
+        element.set text_to_send
+      rescue Exception
+        element.send_keys text_to_send
       end
     end
   end
@@ -309,13 +314,11 @@ class WebDriver
         else
           send_keys(element, symbol, by_action)
         end
-      else
-        if text_to_send != ''
-          begin
-            send_keys(element, symbol, :ie_set)
-          rescue Exception
-            send_keys(element, symbol, :ie_send_keys)
-          end
+      elsif text_to_send != ''
+        begin
+          send_keys(element, symbol, :ie_set)
+        rescue Exception
+          send_keys(element, symbol, :ie_send_keys)
         end
       end
     end
@@ -479,7 +482,7 @@ class WebDriver
   end
 
   def set_style_show_by_xpath(xpath, move_to_center = false)
-    xpath.tr!("'", "\"")
+    xpath.tr!("'", '"')
     execute_javascript('document.evaluate( \'' + xpath.to_s +
                          '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
     return unless move_to_center
@@ -543,7 +546,7 @@ class WebDriver
   end
 
   def scroll_list_by_pixels(list_xpath, pixels)
-    execute_javascript("$(document.evaluate(\"#{list_xpath.tr("\"", "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
+    execute_javascript("$(document.evaluate(\"#{list_xpath.tr('"', "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
   end
 
   def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
@@ -591,26 +594,22 @@ class WebDriver
     element = get_element(xpath_name)
     if element.nil?
       webdriver_error("Element with xpath: #{xpath_name} not found")
-    else
-      if @browser != :ie
-        if by_javascript
-          execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
-        else
-          begin
-            element.click
-          rescue Selenium::WebDriver::Error::ElementNotVisibleError
-            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
-          rescue Exception => e
-            webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
-          end
-        end
+    elsif @browser != :ie
+      if by_javascript
+        execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
       else
-        if non_iframe
+        begin
           element.click
-        else
-          click_on_locator_ie(element, by_fire_event)
+        rescue Selenium::WebDriver::Error::ElementNotVisibleError
+          webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
+        rescue Exception => e
+          webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
         end
       end
+    elsif non_iframe
+      element.click
+    else
+      click_on_locator_ie(element, by_fire_event)
     end
   end
 
@@ -650,7 +649,7 @@ class WebDriver
   end
 
   def click_on_locator_by_action(xpath)
-    @driver.action.move_to(get_element xpath).click.perform
+    @driver.action.move_to(get_element(xpath)).click.perform
   end
 
   def click_on_locator_ie(element, by_fire_event = true)
@@ -922,26 +921,21 @@ class WebDriver
   def element_visible?(xpath_name)
     if xpath_name.is_a?(PageObject::Elements::Element) # PageObject always visible
       true
-    else
-      if element_present?(xpath_name)
-        element = get_element(xpath_name)
-        if element.nil?
-          return false
-        else
-          if @browser != :ie
-            begin
-              visible = element.displayed?
-            rescue Exception
-              visible = false
-            end
-          else
-            visible = element.visible?
-          end
-          return visible
+    elsif element_present?(xpath_name)
+      element = get_element(xpath_name)
+      return false if element.nil?
+      if @browser != :ie
+        begin
+          visible = element.displayed?
+        rescue Exception
+          visible = false
         end
       else
-        false
+        visible = element.visible?
       end
+      visible
+    else
+      false
     end
   end
 
@@ -1098,12 +1092,12 @@ class WebDriver
   end
 
   def set_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+    execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "#{attribute}=\"#{attribute_value}\";")
   end
 
   def set_style_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+    execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "style.#{attribute}=\"#{attribute_value}\"")
   end
 
@@ -1151,13 +1145,13 @@ class WebDriver
     end
     select_top_frame
     current_url = get_url
-    fail exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
+    raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
   end
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
     begin
       link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
-    rescue Exception => e
+    rescue Exception
       if @headless.headless_instance.nil?
         LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
         begin
