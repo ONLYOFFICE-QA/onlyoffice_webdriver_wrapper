@@ -659,7 +659,7 @@ class WebDriver
   end
 
   def click_on_locator_by_action(xpath)
-    @driver.action.move_to(get_element xpath).click.perform
+    @driver.action.move_to(get_element(xpath)).click.perform
   end
 
   def click_on_locator_ie(element, by_fire_event = true)
