@@ -147,8 +147,16 @@ class WebDriver
   end
 
   def quit
-    @driver.execute_script('window.onbeforeunload = null') rescue Exception # OFF POPUP WINDOW
-    @driver.quit rescue Exception
+    begin
+      @driver.execute_script('window.onbeforeunload = null')
+    rescue
+      Exception
+    end # OFF POPUP WINDOW
+    begin
+      @driver.quit
+    rescue
+      Exception
+    end
     alert_confirm
     @headless.stop
   end
@@ -166,7 +174,11 @@ class WebDriver
 
   def alert_confirm
     return if @browser == :ie
-    @driver.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
+    begin
+      @driver.switch_to.alert.accept
+    rescue
+      Selenium::WebDriver::Error::NoAlertOpenError
+    end
   end
 
   # Check if alert exists
