@@ -1,7 +1,7 @@
 # Methods for webdriver for calling Javascript
 module WebdriverJsMethods
   def type_to_locator_by_javascript(xpath_name, text)
-    escaped_text = text.gsub('\\', '\\\\\\\\').gsub("\"", "\\\"").gsub("\n", '\\n')
+    escaped_text = text.gsub('\\', '\\\\\\\\').gsub('"', '\\"').gsub("\n", '\\n')
     execute_javascript("document.evaluate('#{xpath_name}', document, null, XPathResult.ANY_TYPE, null).iterateNext().value=\"#{escaped_text}\";")
   end
 
