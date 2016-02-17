@@ -540,7 +540,7 @@ class WebDriver
   end
 
   def scroll_list_by_pixels(list_xpath, pixels)
-    execute_javascript("$(document.evaluate(\"#{list_xpath.tr("\"", "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
+    execute_javascript("$(document.evaluate(\"#{list_xpath.tr('"', "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
   end
 
   def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
@@ -1092,12 +1092,12 @@ class WebDriver
   end
 
   def set_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+    execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "#{attribute}=\"#{attribute_value}\";")
   end
 
   def set_style_parameter(xpath, attribute, attribute_value)
-    execute_javascript("document.evaluate(\"#{xpath.tr("\"", "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
+    execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                            "style.#{attribute}=\"#{attribute_value}\"")
   end
 
