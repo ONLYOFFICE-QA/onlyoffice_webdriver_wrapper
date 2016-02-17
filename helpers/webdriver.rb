@@ -93,11 +93,8 @@ class WebDriver
         @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
       end
     when :opera
-      if remote_server.nil?
-        @driver = Selenium::WebDriver.for :opera
-      else
-        fail 'ForMe:Implement remote for opera'
-      end
+      fail 'ForMe:Implement remote for opera' unless remote_server.nil?
+      @driver = Selenium::WebDriver.for :opera
     when :internet_explorer, :ie
       if remote_server.nil?
         @driver = Selenium::WebDriver.for :internet_explorer
@@ -925,20 +922,17 @@ class WebDriver
     else
       if element_present?(xpath_name)
         element = get_element(xpath_name)
-        if element.nil?
-          return false
-        else
-          if @browser != :ie
-            begin
-              visible = element.displayed?
-            rescue Exception
-              visible = false
-            end
-          else
-            visible = element.visible?
+        return false if element.nil?
+        if @browser != :ie
+          begin
+            visible = element.displayed?
+          rescue Exception
+            visible = false
           end
-          return visible
+        else
+          visible = element.visible?
         end
+        visible
       else
         false
       end
