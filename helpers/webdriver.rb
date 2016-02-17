@@ -93,7 +93,7 @@ class WebDriver
         @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
       end
     when :opera
-      fail 'ForMe:Implement remote for opera' unless remote_server.nil?
+      raise 'ForMe:Implement remote for opera' unless remote_server.nil?
       @driver = Selenium::WebDriver.for :opera
     when :internet_explorer, :ie
       if remote_server.nil?
@@ -118,7 +118,7 @@ class WebDriver
       caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
       @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
     else
-      fail 'Unknown Browser: ' + browser.to_s
+      raise 'Unknown Browser: ' + browser.to_s
     end
   end
 
@@ -1145,7 +1145,7 @@ class WebDriver
     end
     select_top_frame
     current_url = get_url
-    fail exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
+    raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
   end
 
   def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
