@@ -30,5 +30,9 @@ describe WebDriver do
     expect(position.width).to be > 0
   end
 
+  it 'type_to_input raise error for nil' do
+    expect { webdriver.type_to_input('//*[@id="unknwon-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
+  end
+
   after { webdriver.quit }
 end

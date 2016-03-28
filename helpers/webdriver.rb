@@ -286,6 +286,7 @@ class WebDriver
 
   def type_to_input(xpath_name, text_to_send, clear_content = false, click_on_it = true)
     element = get_element(xpath_name)
+    webdriver_error(Selenium::WebDriver::Error::NoSuchElementError, "type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}): element not found") if element.nil?
     element.clear if clear_content
     sleep 0.2
     if click_on_it
