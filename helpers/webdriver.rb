@@ -679,7 +679,7 @@ class WebDriver
     @driver.action.move_to(element, right_by, down_by).click.perform
   end
 
-  def right_click_on_locator_coordinates(xpath_name, right_by, down_by)
+  def right_click_on_locator_coordinates(xpath_name, right_by = nil, down_by = nil)
     wait_until_element_visible(xpath_name)
     element = @driver.find_element(:xpath, xpath_name)
     right_by, down_by = round_coordinates(right_by, down_by)

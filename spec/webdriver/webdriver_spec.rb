@@ -35,6 +35,10 @@ describe WebDriver do
   end
 
   describe 'right_click_on_locator_coordinates' do
+    it 'right_click_on_locator_coordinates with empty coordinates' do
+      webdriver.right_click_on_locator_coordinates('//body')
+    end
+
     it 'right_click_on_locator_coordinates with nil coordinates' do
       webdriver.right_click_on_locator_coordinates('//body', nil, nil)
     end
