@@ -7,15 +7,21 @@ require_relative 'headless_helper'
 require_relative 'file_helper'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
+require_relative 'webdriver/webdriver_user_agent_helper'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver
   include WebdriverHelper
   include WebdriverJsMethods
+  include WebdriverUserAgentHelper
   TIMEOUT_WAIT_ELEMENT = 15
   TIMEOUT_FILE_DOWNLOAD = 100
+  # @return [Array, String] default switches for chrome
+  DEFAULT_CHROME_SWITCHES = %w( --kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
   attr_accessor :driver
   attr_accessor :browser
+  # @return [Symbol] device of which we try to simulate, default - :desktop_linux
+  attr_accessor :device
   attr_accessor :ip_of_remote_server
   attr_accessor :download_directory
   attr_accessor :server_address
@@ -23,7 +29,8 @@ class WebDriver
 
   singleton_class.class_eval { attr_accessor :web_console_error }
 
-  def initialize(browser = :firefox, remote_server = nil)
+  def initialize(browser = :firefox, remote_server = nil, device: :desktop_linux)
+    @device = device
     @headless = HeadlessHelper.new
     @headless.start
 
@@ -71,7 +78,7 @@ class WebDriver
         }
       }
       if remote_server.nil?
-        switches = %w( --kiosk-printing --start-maximized --disable-popup-blocking test-type)
+        switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
         begin
           @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
           if @headless.running?
