@@ -390,8 +390,10 @@ class WebDriver
     @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
   end
 
+  # @return [String] url of current frame, or browser url if
+  # it is a root frame
   def get_url
-    @driver.current_url
+    execute_javascript('return window.location.href')
   rescue Selenium::WebDriver::Error::NoSuchDriverError
     raise 'Browser is crushed or hangup'
   end
