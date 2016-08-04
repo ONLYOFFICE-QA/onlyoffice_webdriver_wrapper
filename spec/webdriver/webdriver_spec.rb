@@ -53,6 +53,15 @@ describe WebDriver do
         expect(webdriver.get_url).to eq('https://www.example.com/')
       end
     end
+
+    describe 'get_host_name' do
+      it 'get url in frame return host name of frame, not mail url' do
+        webdriver.open('http://www.google.com')
+        webdriver.execute_javascript("var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';document.body.appendChild(ifr)")
+        webdriver.select_frame
+        expect(webdriver.get_host_name).to eq('https://www.example.com')
+      end
+    end
   end
 
   describe 'User agent' do

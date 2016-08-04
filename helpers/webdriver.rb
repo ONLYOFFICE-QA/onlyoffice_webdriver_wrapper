@@ -414,7 +414,7 @@ class WebDriver
   end
 
   def get_host_name
-    WebDriver.host_name_by_full_url(@driver.current_url)
+    WebDriver.host_name_by_full_url(get_url)
   end
 
   def new_tab
