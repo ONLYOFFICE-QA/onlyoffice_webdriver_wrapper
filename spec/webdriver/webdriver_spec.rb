@@ -44,6 +44,15 @@ describe WebDriver do
         webdriver.right_click_on_locator_coordinates('//body', nil, nil)
       end
     end
+
+    describe 'get_url' do
+      it 'get url in frame return url of frame, not mail url' do
+        webdriver.open('http://www.google.com')
+        webdriver.execute_javascript("var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';document.body.appendChild(ifr)")
+        webdriver.select_frame
+        expect(webdriver.get_url).to eq('https://www.example.com/')
+      end
+    end
   end
 
   describe 'User agent' do
