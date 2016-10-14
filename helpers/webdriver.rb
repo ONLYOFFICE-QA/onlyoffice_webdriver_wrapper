@@ -410,7 +410,7 @@ class WebDriver
 
   def self.host_name_by_full_url(full_url)
     uri = URI(full_url)
-    (uri.port == 80 || uri.port == 443) ? "#{uri.scheme}://#{uri.host}" : "#{uri.scheme}://#{uri.host}:#{uri.port}"
+    uri.port == 80 || uri.port == 443 ? "#{uri.scheme}://#{uri.host}" : "#{uri.scheme}://#{uri.host}:#{uri.port}"
   end
 
   def get_host_name
@@ -1060,7 +1060,7 @@ class WebDriver
     else
       begin
         attribute_value = element.attribute(attribute)
-        exist = (attribute_value.empty? || attribute_value.nil?) ? false : true
+        exist = attribute_value.empty? || attribute_value.nil? ? false : true
       rescue Exception
         exist = false
       end
@@ -1074,7 +1074,7 @@ class WebDriver
     if element.nil?
       webdriver_error("Webdriver.get_attribute(#{xpath_name}, #{attribute}) failed because element not found")
     else
-      (@browser == :ie) ? element.attribute_value(attribute) : element.attribute(attribute)
+      @browser == :ie ? element.attribute_value(attribute) : element.attribute(attribute)
     end
   end
 
@@ -1086,10 +1086,10 @@ class WebDriver
   end
 
   def get_attributes_of_several_elements(xpath_several_elements, attribute)
-    elements = (@browser == :ie) ? @driver.elements(:xpath, xpath_several_elements) : @driver.find_elements(:xpath, xpath_several_elements)
+    elements = @browser == :ie ? @driver.elements(:xpath, xpath_several_elements) : @driver.find_elements(:xpath, xpath_several_elements)
 
     elements.map do |element|
-      (@browser == :ie) ? element.attribute_value(attribute) : element.attribute(attribute)
+      @browser == :ie ? element.attribute_value(attribute) : element.attribute(attribute)
     end
   end
 
