@@ -17,7 +17,7 @@ class WebDriver
   TIMEOUT_WAIT_ELEMENT = 15
   TIMEOUT_FILE_DOWNLOAD = 100
   # @return [Array, String] default switches for chrome
-  DEFAULT_CHROME_SWITCHES = %w( --kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
+  DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
   attr_accessor :driver
   attr_accessor :browser
   # @return [Symbol] device of which we try to simulate, default - :desktop_linux
