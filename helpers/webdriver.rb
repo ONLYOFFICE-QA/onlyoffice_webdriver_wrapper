@@ -5,6 +5,7 @@ require 'htmlentities'
 require 'uri'
 require_relative 'headless_helper'
 require_relative 'file_helper'
+require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
 require_relative 'webdriver/webdriver_user_agent_helper'
@@ -61,11 +62,8 @@ class WebDriver
         @ip_of_remote_server = remote_server
       end
     when :chrome
-      Selenium::WebDriver::Chrome::Service.executable_path = if LinuxHelper.os_64_bit?
-                                                               File.join(File.dirname(__FILE__), '../assets/bin/x64/chromedriver')
-                                                             else
-                                                               File.join(File.dirname(__FILE__), '../assets/bin/x32/chromedriver')
-                                                             end
+      raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless LinuxHelper.os_64_bit?
+      Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/chromedriver')
       prefs = {
         download: {
           prompt_for_download: false,
