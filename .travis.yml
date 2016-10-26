@@ -4,6 +4,15 @@ rvm:
 - 2.3.0
 - 2.2
 - 2.1
+machine:
+  pre:
+    - sudo pkill Xvfb
+    - google-chrome --version
+    - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - sudo dpkg -i google-chrome.deb
+    - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+    - rm google-chrome.deb
+    - google-chrome --version
 bundler_args: "--without development"
 script:
 - bundle exec rspec
