@@ -1,0 +1,20 @@
+sudo: required
+dist: trusty
+language: ruby
+before_install:
+- google-chrome --version
+- curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- sudo dpkg -i google-chrome.deb
+- rm google-chrome.deb
+- google-chrome --version
+rvm:
+- ruby-head
+- 2.3.0
+- 2.2
+- 2.1
+matrix:
+  allow_failures:
+  - rvm: ruby-head
+bundler_args: "--without development"
+script:
+- bundle exec rspec

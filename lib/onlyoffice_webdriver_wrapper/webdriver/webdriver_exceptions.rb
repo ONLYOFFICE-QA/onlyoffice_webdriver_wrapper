@@ -1,0 +1,1 @@
+class WebdriverSystemNotSupported < StandardError; end
