@@ -1,0 +1,1 @@
+require 'onlyoffice_webdriver_wrapper'

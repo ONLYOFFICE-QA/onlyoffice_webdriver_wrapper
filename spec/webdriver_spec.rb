@@ -1,5 +1,4 @@
-require 'rspec'
-require_relative '../../testing_shared'
+require 'spec_helper'
 
 describe WebDriver do
   describe 'Default tests' do
