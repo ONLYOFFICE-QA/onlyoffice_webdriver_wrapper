@@ -3,7 +3,6 @@
 require 'page-object'
 require 'securerandom'
 require 'selenium-webdriver'
-require 'htmlentities'
 require 'uri'
 require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
