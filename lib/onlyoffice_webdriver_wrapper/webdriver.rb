@@ -83,7 +83,7 @@ class WebDriver
           end
           @driver
         rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
-          kill_all('chromedriver')
+          kill_all
           sleep 5
           @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
           if @headless.running?
