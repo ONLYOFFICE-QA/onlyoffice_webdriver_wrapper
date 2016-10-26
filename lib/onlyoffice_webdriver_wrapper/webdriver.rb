@@ -3,8 +3,6 @@
 require 'selenium-webdriver'
 require 'htmlentities'
 require 'uri'
-require_relative 'headless_helper'
-require_relative 'file_helper'
 require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
@@ -12,6 +10,7 @@ require_relative 'webdriver/webdriver_user_agent_helper'
 
 # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
 class WebDriver
+  include RubyHelper
   include WebdriverHelper
   include WebdriverJsMethods
   include WebdriverUserAgentHelper
@@ -35,11 +34,10 @@ class WebDriver
     @headless = HeadlessHelper.new
     @headless.start
 
-    ENV['SELENIUM_SERVER_JAR'] = LinuxHelper.shared_folder + 'Selenium/Server/selenium-server-standalone.jar'
     client = Selenium::WebDriver::Remote::Http::Default.new
     client.timeout = 480 # seconds
 
-    @download_directory = FileHelper.init_download_directory
+    @download_directory = Dir.mktmpdir('webdriver-download')
     @browser = browser
     @ip_of_remote_server = remote_server
     case browser
@@ -62,8 +60,8 @@ class WebDriver
         @ip_of_remote_server = remote_server
       end
     when :chrome
-      raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless LinuxHelper.os_64_bit?
-      Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), '../assets/bin/chromedriver')
+      raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
+      Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
       prefs = {
         download: {
           prompt_for_download: false,
@@ -84,7 +82,7 @@ class WebDriver
           end
           @driver
         rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
-          LinuxHelper.kill_all('chromedriver')
+          kill_all('chromedriver')
           sleep 5
           @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
           if @headless.running?
@@ -132,7 +130,7 @@ class WebDriver
 
   def browser_size
     size_struct = @driver.manage.window.size
-    size = CursorPoint.new(size_struct.width, size_struct.height)
+    size = Dimensions.new(size_struct.width, size_struct.height)
     LoggerHelper.print_to_log("browser_size: #{size}")
     size
   end
@@ -1173,7 +1171,7 @@ class WebDriver
       link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
     rescue Exception
       if @headless.headless_instance.nil?
-        LinuxHelper.take_screenshot("/tmp/#{screenshot_name}.png")
+        system_screenshot("/tmp/#{screenshot_name}.png")
         begin
           link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
         rescue Exception => e

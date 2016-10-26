@@ -1,10 +1,13 @@
 # encoding: utf-8
 require_relative 'logger_helper'
-require_relative 'linux_helper'
+require_relative 'headless_helper/real_display_tools'
+require_relative 'headless_helper/ruby_helper'
 require 'headless'
 
 # Class for using headless gem
 class HeadlessHelper
+  include RealDisplayTools
+  include RubyHelper
   attr_accessor :headless_instance
   attr_accessor :resolution_x
   attr_accessor :resolution_y
@@ -16,8 +19,8 @@ class HeadlessHelper
 
   def start
     create_session = false
-    if LinuxHelper.real_display_connected?
-      if LinuxHelper.real_display_resolution_low? || !RspecHelper.debug?
+    if real_display_connected?
+      if real_display_resolution_low? || !debug?
         create_session = true
       end
     else
