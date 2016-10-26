@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.email = ['shockwavenn@gmail.com', 'dafttrick@gmail.com']
   s.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
   s.homepage = 'https://github.com/onlyoffice-testing-robot/onlyoffice_webdriver_wrapper'
+  s.add_runtime_dependency('page-object', '~> 1')
   s.add_runtime_dependency('selenium-webdriver', '2.53.4')
   s.license = 'AGPL-3.0'
 end

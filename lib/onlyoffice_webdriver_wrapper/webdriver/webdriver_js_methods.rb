@@ -24,6 +24,6 @@ module WebdriverJsMethods
   def object_absolute_position(xpath)
     left = execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().getBoundingClientRect().left")
     top = execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().getBoundingClientRect().top")
-    CursorPoint.new(left, top)
+    Dimensions.new(left, top)
   end
 end

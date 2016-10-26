@@ -1,5 +1,7 @@
 # encoding: utf-8
 # noinspection SpellCheckingInspection
+require 'page-object'
+require 'securerandom'
 require 'selenium-webdriver'
 require 'htmlentities'
 require 'uri'
@@ -1166,7 +1168,7 @@ class WebDriver
     raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
   end
 
-  def webdriver_screenshot(screenshot_name = StringHelper.generate_random_string(12))
+  def webdriver_screenshot(screenshot_name = SecureRandom.uuid)
     begin
       link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
     rescue Exception
