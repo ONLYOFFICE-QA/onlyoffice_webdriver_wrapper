@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'S3 service tests', :use_private_key do
-  let(:s3) { AmazonS3Wrapper.new }
+  let(:s3) { OnlyofficeWebdriverWrapper::AmazonS3Wrapper.new }
   file_name = nil
 
   before :each do
