@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe WebDriver do
+describe OnlyofficeWebdriverWrapper::WebDriver do
   describe 'Default tests' do
-    let(:webdriver) { WebDriver.new(:chrome) }
+    let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
 
     it 'Check for popup open' do
       webdriver.new_tab
@@ -65,18 +65,18 @@ describe WebDriver do
 
   describe 'User agent' do
     describe 'Custom user agent' do
-      let(:webdriver) { WebDriver.new(:chrome, device: :android_phone) }
+      let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome, device: :android_phone) }
 
       it 'set_custom_device_useragent' do
-        expect(webdriver.current_user_agent).to eq(WebDriver::USERAGENT_ANDROID_PHONE)
+        expect(webdriver.current_user_agent).to eq(OnlyofficeWebdriverWrapper::WebDriver::USERAGENT_ANDROID_PHONE)
       end
     end
 
     describe 'Default user agent' do
-      let(:webdriver) { WebDriver.new(:chrome) }
+      let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
 
       it 'default device name' do
-        expect(webdriver.current_user_agent).not_to eq(WebDriver::USERAGENT_ANDROID_PHONE)
+        expect(webdriver.current_user_agent).not_to eq(OnlyofficeWebdriverWrapper::WebDriver::USERAGENT_ANDROID_PHONE)
       end
     end
   end
