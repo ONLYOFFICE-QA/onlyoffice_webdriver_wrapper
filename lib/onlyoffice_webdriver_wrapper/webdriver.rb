@@ -63,7 +63,7 @@ module OnlyofficeWebdriverWrapper
         end
       when :chrome
         raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
-        Selenium::WebDriver::Chrome::Service.executable_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
+        Selenium::WebDriver::Chrome.driver_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
         prefs = {
           download: {
             prompt_for_download: false,
