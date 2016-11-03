@@ -7,6 +7,9 @@ before_install:
 - sudo dpkg -i google-chrome.deb
 - rm google-chrome.deb
 - google-chrome --version
+addons:
+  apt_packages:
+    firefox
 rvm:
 - ruby-head
 - 2.3.0

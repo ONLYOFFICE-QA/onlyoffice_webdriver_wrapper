@@ -32,6 +32,7 @@ module OnlyofficeWebdriverWrapper
     singleton_class.class_eval { attr_accessor :web_console_error }
 
     def initialize(browser = :firefox, remote_server = nil, device: :desktop_linux)
+      raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
       @device = device
       @headless = HeadlessHelper.new
       @headless.start
@@ -44,6 +45,7 @@ module OnlyofficeWebdriverWrapper
       @ip_of_remote_server = remote_server
       case browser
       when :firefox
+        Selenium::WebDriver::Firefox.driver_path = File.join(File.dirname(__FILE__), 'bin/geckodriver')
         profile = Selenium::WebDriver::Firefox::Profile.new
         profile['browser.download.folderList'] = 2
         profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
@@ -62,7 +64,6 @@ module OnlyofficeWebdriverWrapper
           @ip_of_remote_server = remote_server
         end
       when :chrome
-        raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
         Selenium::WebDriver::Chrome.driver_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
         prefs = {
           download: {
