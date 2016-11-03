@@ -53,7 +53,12 @@ module OnlyofficeWebdriverWrapper
         profile['browser.download.manager.showWhenStarting'] = false
         profile['dom.disable_window_move_resize'] = false
         if remote_server.nil?
-          @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
+          if Gem.loaded_specs['selenium-webdriver'].version >= Gem::Version.new(3.0)
+            # TODO: Remove this check after fix of https://github.com/SeleniumHQ/selenium/issues/2933
+            @driver = Selenium::WebDriver.for :firefox
+          else
+            @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
+          end
           @driver.manage.window.maximize
           if @headless.running?
             @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
