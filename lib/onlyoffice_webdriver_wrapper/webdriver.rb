@@ -534,7 +534,6 @@ module OnlyofficeWebdriverWrapper
     # * +mouse_release+ - release mouse after move
     def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
       canvas = get_element(xpath)
-      x1, y1 = round_coordinates(x1, y1)
       if mouse_release
         @driver.action.move_to(canvas, x1, y1).click_and_hold.move_by(x2, y2).release.perform
       else
@@ -594,7 +593,6 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath_name name of dropdown list
     def open_dropdown_selector(xpath_name, horizontal_shift = 30, vertical_shift = 0)
       element = get_element(xpath_name)
-      horizontal_shift, vertical_shift = round_coordinates(horizontal_shift, vertical_shift)
       if @browser == :firefox || @browser == :safari
         set_style_attribute(xpath_name + '/button', 'display', 'none')
         set_style_attribute(xpath_name, 'display', 'inline')
@@ -633,7 +631,6 @@ module OnlyofficeWebdriverWrapper
     end
 
     def left_mouse_click(xpath, x_coord, y_coord)
-      x_coord, y_coord = round_coordinates(x_coord, y_coord)
       @driver.action.move_to(get_element(xpath), x_coord, y_coord).click.perform
     end
 
@@ -655,7 +652,6 @@ module OnlyofficeWebdriverWrapper
       if browser == :firefox
         element.send_keys [:shift, :f10]
       else
-        x_coord, y_coord = round_coordinates(x_coord, y_coord)
         @driver.action.move_to(element, x_coord, y_coord).context_click.perform
       end
     end
@@ -688,7 +684,6 @@ module OnlyofficeWebdriverWrapper
     def click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      right_by, down_by = round_coordinates(right_by, down_by)
       @driver.action.move_to(element, right_by, down_by).perform
       @driver.action.move_to(element, right_by, down_by).click.perform
     end
@@ -696,7 +691,6 @@ module OnlyofficeWebdriverWrapper
     def right_click_on_locator_coordinates(xpath_name, right_by = nil, down_by = nil)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      right_by, down_by = round_coordinates(right_by, down_by)
       @driver.action.move_to(element, right_by, down_by).perform
       @driver.action.move_to(element, right_by, down_by).context_click.perform
     end
@@ -708,14 +702,12 @@ module OnlyofficeWebdriverWrapper
 
     def double_click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
-      right_by, down_by = round_coordinates(right_by, down_by)
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name), right_by, down_by).double_click.perform
     end
 
     def action_on_locator_coordinates(xpath_name, right_by, down_by, action = :click, times = 1)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      right_by, down_by = round_coordinates(right_by, down_by)
       (0...times).inject(@driver.action.move_to(element, right_by, down_by)) { |a, _e| a.send(action) }.perform
     end
 
@@ -827,7 +819,6 @@ module OnlyofficeWebdriverWrapper
 
     def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
       wait_until_element_present(xpath_name)
-      x_coordinate, y_coordinate = round_coordinates(x_coordinate, y_coordinate)
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name), x_coordinate, y_coordinate).perform
     end
 
