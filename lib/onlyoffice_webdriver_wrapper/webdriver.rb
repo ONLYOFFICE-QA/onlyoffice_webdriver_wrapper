@@ -708,7 +708,7 @@ module OnlyofficeWebdriverWrapper
     def action_on_locator_coordinates(xpath_name, right_by, down_by, action = :click, times = 1)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      (0...times).inject(@driver.action.move_to(element, right_by, down_by)) { |a, _e| a.send(action) }.perform
+      (0...times).inject(@driver.action.move_to(element, right_by, down_by)) { |acc, _elem| acc.send(action) }.perform
     end
 
     def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
