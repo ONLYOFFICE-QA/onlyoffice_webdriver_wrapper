@@ -4,6 +4,8 @@ require 'page-object'
 require 'securerandom'
 require 'selenium-webdriver'
 require 'uri'
+require_relative 'helpers/chrome_helper'
+require_relative 'helpers/firefox_helper'
 require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
@@ -12,6 +14,8 @@ require_relative 'webdriver/webdriver_user_agent_helper'
 module OnlyofficeWebdriverWrapper
   # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
   class WebDriver
+    include ChromeHelper
+    include FirefoxHelper
     include RubyHelper
     include WebdriverHelper
     include WebdriverJsMethods
@@ -19,7 +23,6 @@ module OnlyofficeWebdriverWrapper
     TIMEOUT_WAIT_ELEMENT = 15
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array, String] default switches for chrome
-    DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
     attr_accessor :driver
     attr_accessor :browser
     # @return [Symbol] device of which we try to simulate, default - :desktop_linux
@@ -45,67 +48,9 @@ module OnlyofficeWebdriverWrapper
       @ip_of_remote_server = remote_server
       case browser
       when :firefox
-        Selenium::WebDriver::Firefox.driver_path = File.join(File.dirname(__FILE__), 'bin/geckodriver')
-        profile = Selenium::WebDriver::Firefox::Profile.new
-        profile['browser.download.folderList'] = 2
-        profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
-        profile['browser.download.dir'] = @download_directory
-        profile['browser.download.manager.showWhenStarting'] = false
-        profile['dom.disable_window_move_resize'] = false
-        if remote_server.nil?
-          @driver = if Gem.loaded_specs['selenium-webdriver'].version >= Gem::Version.new(3.0)
-                      # TODO: Remove this check after fix of https://github.com/SeleniumHQ/selenium/issues/2933
-                      Selenium::WebDriver.for :firefox
-                    else
-                      Selenium::WebDriver.for :firefox, profile: profile, http_client: client
-                    end
-          @driver.manage.window.maximize
-          if @headless.running?
-            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-          end
-        else
-          capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
-          @driver = Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + remote_server + ':4444/wd/hub'
-          @ip_of_remote_server = remote_server
-        end
+        @driver = start_firefox_driver
       when :chrome
-        Selenium::WebDriver::Chrome.driver_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
-        prefs = {
-          download: {
-            prompt_for_download: false,
-            default_directory: @download_directory
-          },
-          profile: {
-            default_content_settings: {
-              'multiple-automatic-downloads' => 1
-            }
-          }
-        }
-        if remote_server.nil?
-          switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
-          begin
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
-          rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
-            kill_all
-            sleep 5
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
-          end
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.chrome
-          caps['chromeOptions'] = {
-            profile: data['zip'],
-            extensions: data['extensions']
-          }
-          @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
-        end
+        @driver = start_chrome_driver
       when :opera
         raise 'ForMe:Implement remote for opera' unless remote_server.nil?
         @driver = Selenium::WebDriver.for :opera
