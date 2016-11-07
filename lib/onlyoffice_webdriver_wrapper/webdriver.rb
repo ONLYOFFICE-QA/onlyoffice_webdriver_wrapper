@@ -52,31 +52,6 @@ module OnlyofficeWebdriverWrapper
         @driver = start_firefox_driver
       when :chrome
         @driver = start_chrome_driver
-      when :opera
-        raise 'ForMe:Implement remote for opera' unless remote_server.nil?
-        @driver = Selenium::WebDriver.for :opera
-      when :internet_explorer, :ie
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :internet_explorer
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer
-          caps.native_events = true
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :safari
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :safari
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.safari
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :htmlunit
-        caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
-        @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
       else
         raise 'Unknown Browser: ' + browser.to_s
       end
