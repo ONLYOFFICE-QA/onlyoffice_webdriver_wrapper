@@ -4,22 +4,37 @@ require 'page-object'
 require 'securerandom'
 require 'selenium-webdriver'
 require 'uri'
+require_relative 'helpers/chrome_helper'
+require_relative 'helpers/firefox_helper'
+require_relative 'webdriver/webdriver_alert_helper'
+require_relative 'webdriver/webdriver_attributes_helper'
+require_relative 'webdriver/webdriver_type_helper'
 require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
+require_relative 'webdriver/webdriver_screenshot_helper'
+require_relative 'webdriver/webdriver_style_helper'
+require_relative 'webdriver/webdriver_tab_helper'
 require_relative 'webdriver/webdriver_user_agent_helper'
 
 module OnlyofficeWebdriverWrapper
   # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
   class WebDriver
+    include ChromeHelper
+    include FirefoxHelper
     include RubyHelper
+    include WebdriverAlertHelper
+    include WebdriverAttributesHelper
+    include WebdriverTypeHelper
     include WebdriverHelper
     include WebdriverJsMethods
+    include WebdriverScreenshotHelper
+    include WebdriverStyleHelper
+    include WebdriverTabHelper
     include WebdriverUserAgentHelper
     TIMEOUT_WAIT_ELEMENT = 15
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array, String] default switches for chrome
-    DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
     attr_accessor :driver
     attr_accessor :browser
     # @return [Symbol] device of which we try to simulate, default - :desktop_linux
@@ -45,92 +60,9 @@ module OnlyofficeWebdriverWrapper
       @ip_of_remote_server = remote_server
       case browser
       when :firefox
-        Selenium::WebDriver::Firefox.driver_path = File.join(File.dirname(__FILE__), 'bin/geckodriver')
-        profile = Selenium::WebDriver::Firefox::Profile.new
-        profile['browser.download.folderList'] = 2
-        profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
-        profile['browser.download.dir'] = @download_directory
-        profile['browser.download.manager.showWhenStarting'] = false
-        profile['dom.disable_window_move_resize'] = false
-        if remote_server.nil?
-          if Gem.loaded_specs['selenium-webdriver'].version >= Gem::Version.new(3.0)
-            # TODO: Remove this check after fix of https://github.com/SeleniumHQ/selenium/issues/2933
-            @driver = Selenium::WebDriver.for :firefox
-          else
-            @driver = Selenium::WebDriver.for :firefox, profile: profile, http_client: client
-          end
-          @driver.manage.window.maximize
-          if @headless.running?
-            @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-          end
-        else
-          capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
-          @driver = Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + remote_server + ':4444/wd/hub'
-          @ip_of_remote_server = remote_server
-        end
+        @driver = start_firefox_driver
       when :chrome
-        Selenium::WebDriver::Chrome.driver_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
-        prefs = {
-          download: {
-            prompt_for_download: false,
-            default_directory: @download_directory
-          },
-          profile: {
-            default_content_settings: {
-              'multiple-automatic-downloads' => 1
-            }
-          }
-        }
-        if remote_server.nil?
-          switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
-          begin
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
-          rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
-            kill_all
-            sleep 5
-            @driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
-            if @headless.running?
-              @driver.manage.window.size = Selenium::WebDriver::Dimension.new(@headless.resolution_x, @headless.resolution_y)
-            end
-            @driver
-          end
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.chrome
-          caps['chromeOptions'] = {
-            profile: data['zip'],
-            extensions: data['extensions']
-          }
-          @driver = Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
-        end
-      when :opera
-        raise 'ForMe:Implement remote for opera' unless remote_server.nil?
-        @driver = Selenium::WebDriver.for :opera
-      when :internet_explorer, :ie
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :internet_explorer
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer
-          caps.native_events = true
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :safari
-        if remote_server.nil?
-          @driver = Selenium::WebDriver.for :safari
-        else
-          caps = Selenium::WebDriver::Remote::Capabilities.safari
-          @driver = Selenium::WebDriver.for(:remote,
-                                            url: 'http://' + remote_server + ':4444/wd/hub',
-                                            desired_capabilities: caps)
-        end
-      when :htmlunit
-        caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(javascript_enabled: true)
-        @driver = Selenium::WebDriver.for(:remote, desired_capabilities: caps)
+        @driver = start_chrome_driver
       else
         raise 'Unknown Browser: ' + browser.to_s
       end
@@ -186,165 +118,13 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
-    def alert_confirm
-      return if @browser == :ie
-      begin
-        @driver.switch_to.alert.accept
-      rescue
-        Selenium::WebDriver::Error::NoAlertOpenError
-      end
-    end
-
-    # Check if alert exists
-    # @return [True, false]
-    def alert_exists?
-      @driver.switch_to.alert.text
-      true
-    rescue Selenium::WebDriver::Error::NoAlertOpenError
-      false
-    end
-
-    # Get alert text
-    # @return [String] text inside alert
-    def alert_text
-      @driver.switch_to.alert.text
-    end
-
     def set_text_to_iframe(element, text)
       element.click
       @driver.action.send_keys(text).perform
     end
 
-    def send_keys(xpath_name, text_to_send, by_action = true)
-      element = get_element(xpath_name)
-      if @browser == :ie
-        element.send_keys text_to_send
-      else
-        @driver.mouse.click(element) if @browser == :firefox
-        if by_action
-          @driver.action.send_keys(element, text_to_send).perform
-        else
-          element.send_keys text_to_send
-        end
-      end
-    end
-
-    def send_keys_to_focused_elements(keys, count_of_times = 1)
-      if @browser != :ie
-        command = @driver.action.send_keys(keys)
-        (count_of_times - 1).times { command = command.send_keys(keys) }
-        command.perform
-      else
-        count_of_times.times { @driver.send_keys keys }
-      end
-    end
-
-    def press_key(key)
-      @driver.action.send_keys(key).perform
-    end
-
-    def key_down(xpath, key)
-      @driver.action.key_down(get_element(xpath), key).perform
-    end
-
-    def key_up(xpath, key)
-      @driver.action.key_up(get_element(xpath), key).perform
-    end
-
-    def type_text(element, text_to_send, clear_area = false)
-      element = get_element(element)
-      element.clear if clear_area
-      element.send_keys(text_to_send)
-    end
-
-    def type_text_and_select_it(element, text_to_send, clear_area = false)
-      type_text(element, text_to_send, clear_area)
-      text_to_send.length.times { element.send_keys [:shift, :left] }
-    end
-
-    def type_to_locator(xpath_name, text_to_send, clear_content = true, click_on_it = false, by_action = false, by_element_send_key = false)
-      element = get_element(xpath_name)
-      if clear_content
-        begin
-          element.clear
-        rescue Exception => e
-          webdriver_error("Error in element.clear #{e} for type_to_locator(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}, #{by_action}, #{by_element_send_key})")
-        end
-      end
-
-      if click_on_it
-        click_on_locator(xpath_name)
-        sleep 0.2
-      end
-
-      if @browser != :ie
-        if (@browser != :chrome && !by_action) || by_element_send_key
-          element.send_keys text_to_send
-        elsif text_to_send != ''
-          if text_to_send.is_a?(String)
-            text_to_send.split(//).each do |symbol|
-              @driver.action.send_keys(symbol).perform
-            end
-          else
-            @driver.action.send_keys(text_to_send).perform
-          end
-        end
-      elsif text_to_send != ''
-        begin
-          element.set text_to_send
-        rescue Exception
-          element.send_keys text_to_send
-        end
-      end
-    end
-
-    def type_to_input(xpath_name, text_to_send, clear_content = false, click_on_it = true)
-      element = get_element(xpath_name)
-      webdriver_error(Selenium::WebDriver::Error::NoSuchElementError, "type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}): element not found") if element.nil?
-      element.clear if clear_content
-      sleep 0.2
-      if click_on_it
-        begin
-          element.click
-        rescue Exception => e
-          webdriver_error("type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}) error in 'element.click' error: #{e}")
-        end
-        sleep 0.2
-      end
-      element.send_keys text_to_send
-    end
-
-    def type_text_by_symbol(xpath_name, text_to_send, clear_content = true, click_on_it = false, by_action = false, by_element_send_key = false)
-      click_on_locator(xpath_name) if click_on_it
-      element = get_element(xpath_name)
-      if clear_content
-        element.clear
-        click_on_locator(xpath_name) if click_on_it
-      end
-      text_to_send.scan(/./).each do |symbol|
-        sleep(0.3)
-        if @browser != :ie
-          if (@browser != :chrome && !by_action) || by_element_send_key
-            send_keys(element, symbol, :element_send_key)
-          else
-            send_keys(element, symbol, by_action)
-          end
-        elsif text_to_send != ''
-          begin
-            send_keys(element, symbol, :ie_set)
-          rescue Exception
-            send_keys(element, symbol, :ie_send_keys)
-          end
-        end
-      end
-    end
-
     def get_text_array(array_elements)
       get_elements(array_elements).map { |current_element| get_text(current_element) }
-    end
-
-    def get_element_by_parameter(elements, parameter_name, value)
-      elements.find { |current_element| value == get_attribute(current_element, parameter_name) }
     end
 
     def click(element)
@@ -421,94 +201,6 @@ module OnlyofficeWebdriverWrapper
       WebDriver.host_name_by_full_url(get_url)
     end
 
-    def new_tab
-      execute_javascript('window.open()')
-    end
-
-    def maximize
-      @driver.manage.window.maximize
-      LoggerHelper.print_to_log('Maximized current window')
-    end
-
-    def resize_tab(width, height)
-      @driver.manage.window.resize_to(width, height)
-      LoggerHelper.print_to_log("Resize current window to #{width}x#{height}")
-    end
-
-    def switch_to_popup
-      if @browser != :ie
-        counter = 0
-        while tab_count < 2 && counter < 30
-          sleep 1
-          counter += 1
-        end
-        webdriver_error('switch_to_popup: Popup window not found') if counter >= 30
-        list_of_handlers = @driver.window_handles
-        last_window_handler = list_of_handlers.last
-        @driver.switch_to.window(last_window_handler)
-      else
-        @driver.windows.last.use
-      end
-    end
-
-    # Get tab count
-    # @return [Integer] count of tabs in opened session
-    def tab_count
-      tab_count = @driver.window_handles.length
-      LoggerHelper.print_to_log("tab_count: #{tab_count}")
-      tab_count
-    end
-
-    def choose_tab(tab_number)
-      counter = 0
-      while tab_count < 2 && counter < TIMEOUT_WAIT_ELEMENT
-        sleep 1
-        counter += 1
-      end
-      webdriver_error("choose_tab: Tab number = #{tab_number} not found") if counter >= TIMEOUT_WAIT_ELEMENT
-      @driver.switch_to.window(@driver.window_handles[tab_number - 1])
-    end
-
-    def switch_to_main_tab
-      if @browser == :ie
-        @driver.windows.last.close
-        @driver.windows.first.use
-      else
-        @driver.switch_to.window(@driver.window_handles.first)
-      end
-    end
-
-    def close_tab
-      @driver.close
-      sleep 1
-      switch_to_main_tab
-    end
-
-    def close_window
-      @driver.close
-    end
-
-    def close_popup_and_switch_to_main_tab
-      switch_to_popup
-      close_tab
-      switch_to_main_tab
-    end
-
-    def get_title_of_current_tab
-      @driver.title
-    end
-
-    def set_style_show_by_xpath(xpath, move_to_center = false)
-      xpath.tr!("'", '"')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
-      return unless move_to_center
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
-    end
-
     def remove_event(event_name)
       execute_javascript("jQuery(document).unbind('#{event_name}');")
     end
@@ -564,29 +256,6 @@ module OnlyofficeWebdriverWrapper
 
     def scroll_list_by_pixels(list_xpath, pixels)
       execute_javascript("$(document.evaluate(\"#{list_xpath.tr('"', "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
-    end
-
-    def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
-      begin
-        get_screenshot(path_to_screenshot)
-        path_to_screenshot = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
-        LoggerHelper.print_to_log("upload screenshot: #{path_to_screenshot}")
-      rescue Errno::ENOENT => e
-        begin
-          @driver.save_screenshot(path_to_screenshot)
-          LoggerHelper.print_to_log("Cant upload screenshot #{path_to_screenshot}. Error: #{e}")
-        rescue Errno::ENOENT => e
-          @driver.save_screenshot("tmp/#{File.basename(path_to_screenshot)}")
-          LoggerHelper.print_to_log("Upload screenshot to tmp/#{File.basename(path_to_screenshot)}. Error: #{e}")
-        end
-      end
-      path_to_screenshot
-    end
-
-    def get_screenshot(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
-      FileHelper.create_folder(File.dirname(path_to_screenshot))
-      @driver.save_screenshot(path_to_screenshot)
-      LoggerHelper.print_to_log("get_screenshot(#{path_to_screenshot})")
     end
 
     # Open dropdown selector, like 'Color Selector', which has no element id
@@ -708,7 +377,7 @@ module OnlyofficeWebdriverWrapper
     def action_on_locator_coordinates(xpath_name, right_by, down_by, action = :click, times = 1)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      (0...times).inject(@driver.action.move_to(element, right_by, down_by)) { |a, _e| a.send(action) }.perform
+      (0...times).inject(@driver.action.move_to(element, right_by, down_by)) { |acc, _elem| acc.send(action) }.perform
     end
 
     def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
@@ -928,13 +597,6 @@ module OnlyofficeWebdriverWrapper
       elements
     end
 
-    def get_index_of_elements_with_attribute(xpath, attribute, value, only_visible = true)
-      get_elements(xpath, only_visible).each_with_index do |element, index|
-        return (index + 1) if get_attribute(element, attribute).include?(value)
-      end
-      0
-    end
-
     def element_visible?(xpath_name)
       if xpath_name.is_a?(PageObject::Elements::Element) # PageObject always visible
         true
@@ -1041,86 +703,9 @@ module OnlyofficeWebdriverWrapper
       @driver.find_elements(:xpath, xpath_several_elements).map { |element| element.text unless element.text == '' }.compact
     end
 
-    def attribute_exist?(xpath_name, attribute)
-      exist = false
-
-      element = xpath_name.is_a?(String) ? get_element(xpath_name) : xpath_name
-      if @browser == :ie
-        begin
-          element.attribute_value(attribute)
-          exist = true
-        rescue Exception
-          exist = false
-        end
-      else
-        begin
-          attribute_value = element.attribute(attribute)
-          exist = attribute_value.empty? || attribute_value.nil? ? false : true
-        rescue Exception
-          exist = false
-        end
-      end
-      exist
-    end
-
-    def get_attribute(xpath_name, attribute)
-      element = xpath_name.is_a?(Selenium::WebDriver::Element) ? xpath_name : get_element(xpath_name)
-
-      if element.nil?
-        webdriver_error("Webdriver.get_attribute(#{xpath_name}, #{attribute}) failed because element not found")
-      else
-        @browser == :ie ? element.attribute_value(attribute) : element.attribute(attribute)
-      end
-    end
-
-    def get_attribute_from_displayed_element(xpath_name, attribute)
-      @driver.find_elements(:xpath, xpath_name).each do |current_element|
-        return current_element.attribute(attribute) if current_element.displayed?
-      end
-      false
-    end
-
-    def get_attributes_of_several_elements(xpath_several_elements, attribute)
-      elements = @browser == :ie ? @driver.elements(:xpath, xpath_several_elements) : @driver.find_elements(:xpath, xpath_several_elements)
-
-      elements.map do |element|
-        @browser == :ie ? element.attribute_value(attribute) : element.attribute(attribute)
-      end
-    end
-
-    def get_style_parameter(xpath, parameter_name)
-      get_attribute(xpath, 'style').split(';').each do |current_param|
-        return /:\s(.*);?$/.match(current_param)[1] if current_param.include?(parameter_name)
-      end
-    end
-
-    def get_style_attributes_of_several_elements(xpath_several_elements, style)
-      if @browser == :ie
-        @driver.elements(:xpath, xpath_several_elements).map { |element| element.attribute_value(attribute) }.compact
-      else
-        @driver.find_elements(:xpath, xpath_several_elements).map do |element|
-          el_style = element.attribute('style')
-          unless el_style.empty?
-            found_style = el_style.split(';').find { |curr_param| curr_param.include?(style) }
-            found_style.gsub(/\s?#{ style }:/, '') unless found_style.nil?
-          end
-        end.compact
-      end
-    end
-
     def set_parameter(xpath, attribute, attribute_value)
       execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                              "#{attribute}=\"#{attribute_value}\";")
-    end
-
-    def set_style_parameter(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                             "style.#{attribute}=\"#{attribute_value}\"")
-    end
-
-    def set_style_attribute(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate('#{xpath}',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                             "singleNodeValue.style.#{attribute}=\"#{attribute_value}\"")
     end
 
     def remove_attribute(xpath, attribute)
@@ -1163,29 +748,6 @@ module OnlyofficeWebdriverWrapper
       select_top_frame
       current_url = get_url
       raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
-    end
-
-    def webdriver_screenshot(screenshot_name = SecureRandom.uuid)
-      begin
-        link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
-      rescue Exception
-        if @headless.headless_instance.nil?
-          system_screenshot("/tmp/#{screenshot_name}.png")
-          begin
-            link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-          rescue Exception => e
-            LoggerHelper.print_to_log("Error in get screenshot: #{e}. System screenshot #{link}")
-          end
-        else
-          @headless.take_screenshot("/tmp/#{screenshot_name}.png")
-          begin
-            link = AmazonS3Wrapper.new.upload_file_and_make_public("/tmp/#{screenshot_name}.png", 'screenshots')
-          rescue Exception => e
-            LoggerHelper.print_to_log("Error in get screenshot: #{e}. Headless screenshot #{link}")
-          end
-        end
-      end
-      "screenshot: #{link}"
     end
 
     def wait_until(timeout = ::PageObject.default_page_wait, message = nil, &block)
