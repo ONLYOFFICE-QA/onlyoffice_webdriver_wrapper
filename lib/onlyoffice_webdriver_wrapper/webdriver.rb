@@ -13,6 +13,7 @@ require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
 require_relative 'webdriver/webdriver_screenshot_helper'
+require_relative 'webdriver/webdriver_style_helper'
 require_relative 'webdriver/webdriver_user_agent_helper'
 
 module OnlyofficeWebdriverWrapper
@@ -27,6 +28,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverHelper
     include WebdriverJsMethods
     include WebdriverScreenshotHelper
+    include WebdriverStyleHelper
     include WebdriverUserAgentHelper
     TIMEOUT_WAIT_ELEMENT = 15
     TIMEOUT_FILE_DOWNLOAD = 100
@@ -272,17 +274,6 @@ module OnlyofficeWebdriverWrapper
 
     def get_title_of_current_tab
       @driver.title
-    end
-
-    def set_style_show_by_xpath(xpath, move_to_center = false)
-      xpath.tr!("'", '"')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
-      return unless move_to_center
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                           '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
     end
 
     def remove_event(event_name)
@@ -787,39 +778,9 @@ module OnlyofficeWebdriverWrapper
       @driver.find_elements(:xpath, xpath_several_elements).map { |element| element.text unless element.text == '' }.compact
     end
 
-    def get_style_parameter(xpath, parameter_name)
-      get_attribute(xpath, 'style').split(';').each do |current_param|
-        return /:\s(.*);?$/.match(current_param)[1] if current_param.include?(parameter_name)
-      end
-    end
-
-    def get_style_attributes_of_several_elements(xpath_several_elements, style)
-      if @browser == :ie
-        @driver.elements(:xpath, xpath_several_elements).map { |element| element.attribute_value(attribute) }.compact
-      else
-        @driver.find_elements(:xpath, xpath_several_elements).map do |element|
-          el_style = element.attribute('style')
-          unless el_style.empty?
-            found_style = el_style.split(';').find { |curr_param| curr_param.include?(style) }
-            found_style.gsub(/\s?#{ style }:/, '') unless found_style.nil?
-          end
-        end.compact
-      end
-    end
-
     def set_parameter(xpath, attribute, attribute_value)
       execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                              "#{attribute}=\"#{attribute_value}\";")
-    end
-
-    def set_style_parameter(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                             "style.#{attribute}=\"#{attribute_value}\"")
-    end
-
-    def set_style_attribute(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate('#{xpath}',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                             "singleNodeValue.style.#{attribute}=\"#{attribute_value}\"")
     end
 
     def remove_attribute(xpath, attribute)
