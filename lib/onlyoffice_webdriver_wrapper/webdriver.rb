@@ -14,6 +14,7 @@ require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
 require_relative 'webdriver/webdriver_screenshot_helper'
 require_relative 'webdriver/webdriver_style_helper'
+require_relative 'webdriver/webdriver_tab_helper'
 require_relative 'webdriver/webdriver_user_agent_helper'
 
 module OnlyofficeWebdriverWrapper
@@ -29,6 +30,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverJsMethods
     include WebdriverScreenshotHelper
     include WebdriverStyleHelper
+    include WebdriverTabHelper
     include WebdriverUserAgentHelper
     TIMEOUT_WAIT_ELEMENT = 15
     TIMEOUT_FILE_DOWNLOAD = 100
@@ -197,83 +199,6 @@ module OnlyofficeWebdriverWrapper
 
     def get_host_name
       WebDriver.host_name_by_full_url(get_url)
-    end
-
-    def new_tab
-      execute_javascript('window.open()')
-    end
-
-    def maximize
-      @driver.manage.window.maximize
-      LoggerHelper.print_to_log('Maximized current window')
-    end
-
-    def resize_tab(width, height)
-      @driver.manage.window.resize_to(width, height)
-      LoggerHelper.print_to_log("Resize current window to #{width}x#{height}")
-    end
-
-    def switch_to_popup
-      if @browser != :ie
-        counter = 0
-        while tab_count < 2 && counter < 30
-          sleep 1
-          counter += 1
-        end
-        webdriver_error('switch_to_popup: Popup window not found') if counter >= 30
-        list_of_handlers = @driver.window_handles
-        last_window_handler = list_of_handlers.last
-        @driver.switch_to.window(last_window_handler)
-      else
-        @driver.windows.last.use
-      end
-    end
-
-    # Get tab count
-    # @return [Integer] count of tabs in opened session
-    def tab_count
-      tab_count = @driver.window_handles.length
-      LoggerHelper.print_to_log("tab_count: #{tab_count}")
-      tab_count
-    end
-
-    def choose_tab(tab_number)
-      counter = 0
-      while tab_count < 2 && counter < TIMEOUT_WAIT_ELEMENT
-        sleep 1
-        counter += 1
-      end
-      webdriver_error("choose_tab: Tab number = #{tab_number} not found") if counter >= TIMEOUT_WAIT_ELEMENT
-      @driver.switch_to.window(@driver.window_handles[tab_number - 1])
-    end
-
-    def switch_to_main_tab
-      if @browser == :ie
-        @driver.windows.last.close
-        @driver.windows.first.use
-      else
-        @driver.switch_to.window(@driver.window_handles.first)
-      end
-    end
-
-    def close_tab
-      @driver.close
-      sleep 1
-      switch_to_main_tab
-    end
-
-    def close_window
-      @driver.close
-    end
-
-    def close_popup_and_switch_to_main_tab
-      switch_to_popup
-      close_tab
-      switch_to_main_tab
-    end
-
-    def get_title_of_current_tab
-      @driver.title
     end
 
     def remove_event(event_name)
