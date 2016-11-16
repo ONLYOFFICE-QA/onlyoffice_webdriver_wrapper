@@ -2,7 +2,7 @@ module OnlyofficeWebdriverWrapper
   # Some additional methods for webdriver
   module WebdriverHelper
     def kill_all
-      LoggerHelper.print_to_log('killall -9 chromedriver 2>&1')
+      OnlyofficeLoggerHelper.log('killall -9 chromedriver 2>&1')
       `killall -9 chromedriver 2>&1`
     end
 

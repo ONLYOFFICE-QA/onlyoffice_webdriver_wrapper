@@ -69,4 +69,3 @@ Style/Documentation:
     - 'lib/onlyoffice_webdriver_wrapper/amazon_s3_wrapper.rb'
     - 'lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/real_display_tools.rb'
     - 'lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/ruby_helper.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/helpers/logger_helper.rb'

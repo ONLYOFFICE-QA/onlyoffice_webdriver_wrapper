@@ -71,7 +71,7 @@ module OnlyofficeWebdriverWrapper
     def browser_size
       size_struct = @driver.manage.window.size
       size = Dimensions.new(size_struct.width, size_struct.height)
-      LoggerHelper.print_to_log("browser_size: #{size}")
+      OnlyofficeLoggerHelper.log("browser_size: #{size}")
       size
     end
 
@@ -89,7 +89,7 @@ module OnlyofficeWebdriverWrapper
           @driver.navigate.refresh
         end
       end
-      LoggerHelper.print_to_log("Opened page: #{url}")
+      OnlyofficeLoggerHelper.log("Opened page: #{url}")
     end
 
     def quit
@@ -184,12 +184,12 @@ module OnlyofficeWebdriverWrapper
 
     def refresh
       @driver.navigate.refresh
-      LoggerHelper.print_to_log('Refresh page')
+      OnlyofficeLoggerHelper.log('Refresh page')
     end
 
     def go_back
       @driver.navigate.back
-      LoggerHelper.print_to_log('Go back to previous page')
+      OnlyofficeLoggerHelper.log('Go back to previous page')
     end
 
     def self.host_name_by_full_url(full_url)
@@ -473,7 +473,7 @@ module OnlyofficeWebdriverWrapper
       else
         @driver.mouse.move_to(element)
       end
-      LoggerHelper.print_to_log("Moved mouse to element: #{xpath_name}")
+      OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
     end
 
     def move_to_one_of_several_displayed_element(xpath_several_elements)
@@ -658,7 +658,7 @@ module OnlyofficeWebdriverWrapper
           frame = @driver.find_element(:xpath, xpath_name)
           @driver.switch_to.frame frame
         rescue Selenium::WebDriver::Error::NoSuchElementError
-          LoggerHelper.print_to_log('Raise NoSuchElementError in the select_frame method')
+          OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
         rescue Exception => e
           webdriver_error("Raise unkwnown exception: #{e}")
         end
@@ -673,7 +673,7 @@ module OnlyofficeWebdriverWrapper
         begin
           @driver.switch_to.default_content
         rescue Timeout::Error
-          LoggerHelper.print_to_log('Raise TimeoutError in the select_top_frame method')
+          OnlyofficeLoggerHelper.log('Raise TimeoutError in the select_top_frame method')
         rescue Exception => e
           raise "Browser is crushed or hangup with error: #{e}"
         end
@@ -765,7 +765,7 @@ module OnlyofficeWebdriverWrapper
       full_file_name = file_name if file_name[0] == '/'
       counter = 0
       while !File.exist?(full_file_name) && counter < timeout
-        LoggerHelper.print_to_log("Waiting for download file #{full_file_name} for #{counter} of #{timeout}")
+        OnlyofficeLoggerHelper.log("Waiting for download file #{full_file_name} for #{counter} of #{timeout}")
         sleep 1
         counter += 1
       end

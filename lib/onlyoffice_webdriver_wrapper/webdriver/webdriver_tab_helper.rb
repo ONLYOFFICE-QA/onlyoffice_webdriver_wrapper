@@ -9,12 +9,12 @@ module OnlyofficeWebdriverWrapper
 
     def maximize
       @driver.manage.window.maximize
-      LoggerHelper.print_to_log('Maximized current window')
+      OnlyofficeLoggerHelper.log('Maximized current window')
     end
 
     def resize_tab(width, height)
       @driver.manage.window.resize_to(width, height)
-      LoggerHelper.print_to_log("Resize current window to #{width}x#{height}")
+      OnlyofficeLoggerHelper.log("Resize current window to #{width}x#{height}")
     end
 
     def switch_to_popup
@@ -37,7 +37,7 @@ module OnlyofficeWebdriverWrapper
     # @return [Integer] count of tabs in opened session
     def tab_count
       tab_count = @driver.window_handles.length
-      LoggerHelper.print_to_log("tab_count: #{tab_count}")
+      OnlyofficeLoggerHelper.log("tab_count: #{tab_count}")
       tab_count
     end
 
