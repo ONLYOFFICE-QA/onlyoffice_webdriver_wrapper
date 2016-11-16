@@ -1,5 +1,4 @@
 # encoding: utf-8
-require_relative 'logger_helper'
 require_relative 'headless_helper/real_display_tools'
 require_relative 'headless_helper/ruby_helper'
 require 'headless'
@@ -26,13 +25,13 @@ module OnlyofficeWebdriverWrapper
         create_session = true
       end
       return unless create_session
-      LoggerHelper.print_to_log('Starting Headless Session')
+      OnlyofficeLoggerHelper.log('Starting Headless Session')
       begin
         @headless_instance = Headless.new(reuse: false,
                                           destroy_at_exit: true,
                                           dimensions: "#{@resolution_x + 1}x#{@resolution_y + 1}x24")
       rescue Exception => e
-        LoggerHelper.print_to_log("xvfb not started with problem #{e}")
+        OnlyofficeLoggerHelper.log("xvfb not started with problem #{e}")
         RspecHelper.clean_up(true)
         @headless_instance = Headless.new(reuse: false,
                                           destroy_at_exit: true,
@@ -43,7 +42,7 @@ module OnlyofficeWebdriverWrapper
 
     def stop
       return unless running?
-      LoggerHelper.print_to_log('Stopping Headless Session')
+      OnlyofficeLoggerHelper.log('Stopping Headless Session')
       headless_instance.destroy
     end
 
@@ -54,7 +53,7 @@ module OnlyofficeWebdriverWrapper
     def take_screenshot(scr_path = '/tmp/screenshot.png')
       return unless running?
       headless_instance.take_screenshot(scr_path)
-      LoggerHelper.print_to_log("Took Screenshot to file: #{scr_path}")
+      OnlyofficeLoggerHelper.log("Took Screenshot to file: #{scr_path}")
     end
   end
 end
