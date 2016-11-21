@@ -21,7 +21,7 @@ module OnlyofficeWebdriverWrapper
     # @return [True, False] result
     def should_start?
       return false if debug?
-      return false if RUBY_PLATFORM.include?('darwin')
+      return false if OSHelper.mac?
       true
     end
 
