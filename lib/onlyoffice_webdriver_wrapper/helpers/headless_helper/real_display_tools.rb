@@ -2,7 +2,7 @@ module OnlyofficeWebdriverWrapper
   module RealDisplayTools
     def xrandr_result
       begin
-        result = `xrandr`
+        result = `xrandr 2>&1`
       rescue Exception
         result = 'xrandr throw an exception'
       end
