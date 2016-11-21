@@ -16,13 +16,5 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log("Real Display Exists: #{exists}")
       exists
     end
-
-    def real_display_resolution_low?
-      low_resolution = '1024x768'
-      result = xrandr_result
-      exists = result.include?("primary #{low_resolution}") # check only for primary display
-      OnlyofficeLoggerHelper.log("Real display resolution too low: #{exists}")
-      exists
-    end
   end
 end

@@ -17,13 +17,20 @@ module OnlyofficeWebdriverWrapper
       @resolution_y = resolution_y
     end
 
+    # Check if should start headless
+    # @return [True, False] result
+    def should_start?
+      return false if debug?
+      return false if RUBY_PLATFORM.include?('darwin')
+      true
+    end
+
     def start
-      create_session = false
-      if real_display_connected?
-        create_session = true if real_display_resolution_low? || !debug?
-      else
-        create_session = true
-      end
+      create_session = if real_display_connected?
+                         should_start?
+                       else
+                         true
+                       end
       return unless create_session
       OnlyofficeLoggerHelper.log('Starting Headless Session')
       begin
