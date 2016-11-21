@@ -3,9 +3,16 @@ module OnlyofficeWebdriverWrapper
   module ChromeHelper
     DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
 
+    # @return [Nothing] define chromedriver path
+    def define_chromedriver_path
+      driver_name = 'bin/chromedriver'
+      driver_name = 'bin/chromedriver_mac' if OSHelper.mac?
+      Selenium::WebDriver::Chrome.driver_path = File.join(File.dirname(__FILE__), driver_name)
+    end
+
     # @return [Webdriver::Chrome] Chrome webdriver
     def start_chrome_driver
-      Selenium::WebDriver::Chrome.driver_path = File.join(File.dirname(__FILE__), 'bin/chromedriver')
+      define_chromedriver_path
       prefs = {
         download: {
           prompt_for_download: false,
