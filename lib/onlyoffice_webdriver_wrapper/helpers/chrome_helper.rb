@@ -21,7 +21,8 @@ module OnlyofficeWebdriverWrapper
         profile: {
           default_content_settings: {
             'multiple-automatic-downloads' => 1
-          }
+          },
+          password_manager_enabled: false
         }
       }
       if ip_of_remote_server.nil?
