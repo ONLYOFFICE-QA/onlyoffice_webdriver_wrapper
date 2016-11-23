@@ -37,6 +37,8 @@ module OnlyofficeWebdriverWrapper
     # @return [Array, String] default switches for chrome
     attr_accessor :driver
     attr_accessor :browser
+    # @return [HttpClient] timeouts
+    attr_accessor :client
     # @return [Symbol] device of which we try to simulate, default - :desktop_linux
     attr_accessor :device
     attr_accessor :ip_of_remote_server
@@ -52,8 +54,8 @@ module OnlyofficeWebdriverWrapper
       @headless = HeadlessHelper.new
       @headless.start
 
-      client = Selenium::WebDriver::Remote::Http::Default.new
-      client.timeout = 480 # seconds
+      @client = Selenium::WebDriver::Remote::Http::Default.new
+      @client.timeout = 480 # seconds
 
       @download_directory = Dir.mktmpdir('webdriver-download')
       @browser = browser

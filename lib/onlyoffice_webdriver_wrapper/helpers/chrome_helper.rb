@@ -28,7 +28,7 @@ module OnlyofficeWebdriverWrapper
       if ip_of_remote_server.nil?
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
         begin
-          driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
+          driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches, http_client: client
           if headless.running?
             driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y)
           end
@@ -36,7 +36,7 @@ module OnlyofficeWebdriverWrapper
         rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout # Problems with Chromedriver - hang ups
           kill_all
           sleep 5
-          driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches
+          driver = Selenium::WebDriver.for :chrome, prefs: prefs, switches: switches, http_client: client
           driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?
           driver
         end
