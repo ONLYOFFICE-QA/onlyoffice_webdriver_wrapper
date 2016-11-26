@@ -1,4 +1,5 @@
 # encoding: utf-8
+require_relative 'headless_helper/process_helper'
 require_relative 'headless_helper/real_display_tools'
 require_relative 'headless_helper/ruby_helper'
 require 'headless'
@@ -6,6 +7,7 @@ require 'headless'
 module OnlyofficeWebdriverWrapper
   # Class for using headless gem
   class HeadlessHelper
+    include ProcessHelper
     include RealDisplayTools
     include RubyHelper
     attr_accessor :headless_instance
@@ -61,6 +63,15 @@ module OnlyofficeWebdriverWrapper
       return unless running?
       headless_instance.take_screenshot(scr_path)
       OnlyofficeLoggerHelper.log("Took Screenshot to file: #{scr_path}")
+    end
+
+    # @return [Nothing] reinit headless if something bad happen
+    def reinit
+      stop
+      sleep 5
+      kill_all
+      sleep 5
+      start
     end
   end
 end
