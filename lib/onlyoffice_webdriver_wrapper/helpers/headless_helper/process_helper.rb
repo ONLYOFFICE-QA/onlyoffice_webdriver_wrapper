@@ -13,6 +13,17 @@ module OnlyofficeWebdriverWrapper
       kill_process('chromedriver')
       kill_process('geckodriver')
       kill_process('Xvfb')
+      kill_process('chrome')
+    end
+
+    def show_processes
+      proceses = `ps -ef`
+      OnlyofficeLoggerHelper.log("There is processes on server: #{proceses}")
+    end
+
+    def show_ports
+      ports_usage = `netstat -tulpn`
+      OnlyofficeLoggerHelper.log("There is ports usage on server: #{ports_usage}")
     end
   end
 end

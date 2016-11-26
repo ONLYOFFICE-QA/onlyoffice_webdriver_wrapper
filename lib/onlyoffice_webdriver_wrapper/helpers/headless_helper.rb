@@ -71,6 +71,8 @@ module OnlyofficeWebdriverWrapper
       sleep 5
       kill_all
       sleep 5
+      show_processes # TODO: This is debug funciton, remove after fixing reinit
+      show_ports # TODO: This is debug funciton, remove after fixing reinit
       start
     end
   end
