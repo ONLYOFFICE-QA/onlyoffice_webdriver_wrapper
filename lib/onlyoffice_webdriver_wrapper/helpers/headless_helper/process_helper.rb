@@ -13,6 +13,7 @@ module OnlyofficeWebdriverWrapper
       kill_process('chromedriver')
       kill_process('geckodriver')
       kill_process('Xvfb')
+      kill_process('chrome')
     end
   end
 end
