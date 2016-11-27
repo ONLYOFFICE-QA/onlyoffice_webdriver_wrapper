@@ -17,12 +17,12 @@ module OnlyofficeWebdriverWrapper
     end
 
     def show_processes
-      proceses = `ps -ef`
+      proceses = `sudo ps -ef`
       OnlyofficeLoggerHelper.log("There is processes on server: #{proceses}")
     end
 
     def show_ports
-      ports_usage = `netstat -tulpn`
+      ports_usage = `sudo netstat -tulpn`
       OnlyofficeLoggerHelper.log("There is ports usage on server: #{ports_usage}")
     end
   end
