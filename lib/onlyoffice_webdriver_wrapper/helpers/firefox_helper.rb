@@ -3,7 +3,7 @@ module OnlyofficeWebdriverWrapper
   module FirefoxHelper
     # @return [Webdriver::Firefox] firefox webdriver
     def start_firefox_driver
-      Selenium::WebDriver::Firefox.driver_path = File.join(File.dirname(__FILE__), 'bin/geckodriver')
+      geckodriver = File.join(File.dirname(__FILE__), 'bin/geckodriver')
       profile = Selenium::WebDriver::Firefox::Profile.new
       profile['browser.download.folderList'] = 2
       profile['browser.helperApps.neverAsk.saveToDisk'] = 'application/doct, application/mspowerpoint, application/msword, application/octet-stream, application/oleobject, application/pdf, application/powerpoint, application/pptt, application/rtf, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.text, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/x-compressed, application/x-excel, application/xlst, application/x-msexcel, application/x-mspowerpoint, application/x-rtf, application/x-zip-compressed, application/zip, image/jpeg, image/pjpeg, image/pjpeg, image/x-jps, message/rfc822, multipart/x-zip, text/csv, text/html, text/html, text/plain, text/richtext'
@@ -13,9 +13,9 @@ module OnlyofficeWebdriverWrapper
       if ip_of_remote_server.nil?
         driver = if Gem.loaded_specs['selenium-webdriver'].version >= Gem::Version.new(3.0)
                    # TODO: Remove this check after fix of https://github.com/SeleniumHQ/selenium/issues/2933
-                   Selenium::WebDriver.for :firefox
+                   Selenium::WebDriver.for :firefox, driver_path: geckodriver
                  else
-                   Selenium::WebDriver.for :firefox, profile: profile, http_client: client
+                   Selenium::WebDriver.for :firefox, profile: profile, http_client: client, driver_path: geckodriver
                  end
         driver.manage.window.maximize
         if headless.running?
