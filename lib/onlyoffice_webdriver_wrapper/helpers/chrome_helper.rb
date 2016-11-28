@@ -28,13 +28,14 @@ module OnlyofficeWebdriverWrapper
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
         webdriver_options = { prefs: prefs,
                               switches: switches,
-                              http_client: client,
                               driver_path: chromedriver_path }
         begin
           driver = Selenium::WebDriver.for :chrome, webdriver_options
-        rescue Selenium::WebDriver::Error::WebDriverError, Net::ReadTimeout => e # Problems with Chromedriver - hang ups
-          OnlyofficeLoggerHelper.log("Starting chrome failed with error: #{e}")
-          headless.reinit
+        rescue Selenium::WebDriver::Error::WebDriverError,
+               Net::ReadTimeout,
+               Errno::ECONNREFUSED => e
+          OnlyofficeLoggerHelper.log("Starting chrome failed with error: #{e.backtrace}")
+          sleep 10
           driver = Selenium::WebDriver.for :chrome, webdriver_options
         end
         driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?
