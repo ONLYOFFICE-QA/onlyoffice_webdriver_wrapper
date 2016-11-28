@@ -5,7 +5,8 @@ module OnlyofficeWebdriverWrapper
     # @return [Nothing] kill specified process
     def kill_process(process)
       OnlyofficeLoggerHelper.log("killall -9 #{process} 2>&1")
-      `killall -9 #{process} 2>&1`
+      kill_result = `killall -9 #{process} 2>&1`
+      OnlyofficeLoggerHelper.log("killall -9 #{process} 2>&1: #{kill_result}")
     end
 
     # @return [Nothing] kill all webdriver-related process-es
