@@ -13,7 +13,7 @@ module OnlyofficeWebdriverWrapper
     def real_display_connected?
       return true if OSHelper.mac?
       result = xrandr_result
-      exists = result.include?(' connected') # sometimes there is 'disconnected' so need a space before 'connected'
+      exists = result.include?(' connected') && !result.include?('Failed')
       OnlyofficeLoggerHelper.log("Real Display Exists: #{exists}")
       exists
     end
