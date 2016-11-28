@@ -55,7 +55,7 @@ module OnlyofficeWebdriverWrapper
       @headless.start
 
       @client = Selenium::WebDriver::Remote::Http::Default.new
-      @client.timeout = 480 # seconds
+      @client.timeout = 60 # seconds
 
       @download_directory = Dir.mktmpdir('webdriver-download')
       @browser = browser
