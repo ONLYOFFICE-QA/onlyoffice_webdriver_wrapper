@@ -1,5 +1,5 @@
-require 'aws-sdk-v1'
-require 'aws/s3'
+require 'aws-sdk'
+require 'open-uri'
 module OnlyofficeWebdriverWrapper
   class AmazonS3Wrapper
     attr_accessor :s3, :bucket, :download_folder, :access_key_id, :secret_access_key
@@ -16,31 +16,22 @@ module OnlyofficeWebdriverWrapper
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
       end
-      AWS.config(access_key_id: @access_key_id,
-                 secret_access_key: @secret_access_key,
-                 region: 'us-west-2')
-      @s3 = AWS::S3.new
-      @bucket = @s3.buckets[bucket_name]
+      Aws.config = { access_key_id: @access_key_id,
+                     secret_access_key: @secret_access_key,
+                     region: 'us-west-2' }
+      @s3 = Aws::S3::Resource.new
+      @bucket = @s3.bucket(bucket_name)
       @download_folder = Dir.mktmpdir('amazon-s3-downloads')
     end
 
-    def get_all_files
-      OnlyofficeLoggerHelper.log("Find all files and folders from #{@bucket.name} bucket")
-      files_name = {}
-      @bucket.objects.each do |obj|
-        files_name.merge!(obj.key => obj)
-      end
-      files_name
-    end
-
     def get_files_by_prefix(prefix)
-      objects_array = @bucket.objects.with_prefix(prefix).collect(&:key)
+      objects_array = @bucket.objects(prefix: prefix).collect(&:key)
       objects_array.delete_at(0) # First element - is a /prefix directory
       objects_array
     end
 
     def get_object(obj_name)
-      @bucket.objects[obj_name]
+      @bucket.object(obj_name)
     end
 
     def download_file_by_name(file_name, download_folder = @download_folder)
@@ -51,11 +42,10 @@ module OnlyofficeWebdriverWrapper
     end
 
     def download_object(object, download_folder = @download_folder)
+      link = object.presigned_url(:get, expires_in: 3600)
       OnlyofficeLoggerHelper.log("Try to download object with name #{object.key} to folder #{download_folder}")
-      File.open("#{download_folder}/#{File.basename(object.key)}", 'wb') do |file|
-        object.read do |chunk|
-          file.write(chunk)
-        end
+      File.open("#{download_folder}/#{File.basename(object.key)}", 'w') do |f|
+        IO.copy_stream(open(link), f)
       end
       OnlyofficeLoggerHelper.log("File with name #{object.key} successfully downloaded to folder #{download_folder}")
     rescue StandardError
@@ -65,22 +55,23 @@ module OnlyofficeWebdriverWrapper
     def upload_file(file_path, upload_folder)
       upload_folder.sub!('/', '') if upload_folder[0] == '/'
       upload_folder.chop! if upload_folder[-1] == '/'
-      @bucket.objects["#{upload_folder}/#{File.basename(file_path)}"].write(file: file_path)
+      @bucket.object("#{upload_folder}/#{File.basename(file_path)}").upload_file(file_path)
     end
 
     def make_public(file_path)
-      @bucket.objects[file_path].acl = :public_read
-      @bucket.objects[file_path].public_url.to_s
+      @bucket.object(file_path).acl.put(acl: 'public-read')
+      permission = @bucket.object(file_path).acl.grants.last.permission
+      [@bucket.object(file_path).public_url.to_s, permission]
     end
 
     def get_permission_by_link(file_path)
-      @bucket.objects[file_path].acl
+      @bucket.object(file_path).acl
     end
 
     def upload_file_and_make_public(file_path, upload_folder)
       upload_file(file_path, upload_folder)
       make_public("#{upload_folder}/#{File.basename(file_path)}")
-      @bucket.objects["#{upload_folder}/#{File.basename(file_path)}"].public_url
+      @bucket.object("#{upload_folder}/#{File.basename(file_path)}").public_url
     end
 
     def delete_file(file_path)
