@@ -4,17 +4,16 @@ module OnlyofficeWebdriverWrapper
   class AmazonS3Wrapper
     attr_accessor :s3, :bucket, :download_folder, :access_key_id, :secret_access_key
 
-    def initialize(access_key_id = nil, secret_access_key = nil, bucket_name: 'nct-data-share')
-      if access_key_id.nil? || secret_access_key.nil?
+    def initialize(bucket_name: 'nct-data-share')
+      @access_key_id = ENV['S3_KEY']
+      @secret_access_key = ENV['S3_PRIVATE_KEY']
+      if @access_key_id.nil? || @secret_access_key.nil?
         begin
           @access_key_id = File.read(Dir.home + '/.s3/key').delete("\n")
           @secret_access_key = File.read(Dir.home + '/.s3/private_key').delete("\n")
         rescue Errno::ENOENT
           raise Errno::ENOENT, "No key or private key found in #{Dir.home}/.s3/ directory. Please create files #{Dir.home}/.s3/key and #{Dir.home}/.s3/private_key"
         end
-      else
-        @access_key_id = access_key_id
-        @secret_access_key = secret_access_key
       end
       Aws.config = { access_key_id: @access_key_id,
                      secret_access_key: @secret_access_key,
