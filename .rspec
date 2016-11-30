@@ -1,3 +1,2 @@
 --color
 --require spec_helper
---tag ~use_private_key

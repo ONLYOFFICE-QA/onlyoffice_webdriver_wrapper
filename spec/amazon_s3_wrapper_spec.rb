@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'S3 service tests', :use_private_key do
+describe 'S3 service tests' do
   let(:s3) { OnlyofficeWebdriverWrapper::AmazonS3Wrapper.new }
   file_name = nil
 
