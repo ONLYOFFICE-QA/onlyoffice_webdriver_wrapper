@@ -99,8 +99,8 @@ module OnlyofficeWebdriverWrapper
       end # OFF POPUP WINDOW
       begin
         @driver.quit
-      rescue
-        Exception
+      rescue Exception => e
+        OnlyofficeLoggerHelper.log("Some error happened on webdriver.quit #{e.backtrace}")
       end
       alert_confirm
       @headless.stop
