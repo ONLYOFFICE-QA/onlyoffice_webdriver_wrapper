@@ -754,7 +754,7 @@ module OnlyofficeWebdriverWrapper
       wait = Object::Selenium::WebDriver::Wait.new(timeout: timeout, message: message)
       wait.until(&block)
       wait.until { execute_javascript('return document.readyState;') == 'complete' }
-      wait.until { execute_javascript('return !!window.jQuery && window.jQuery.active;') == 0 }
+      wait.until { jquery_finished? }
       rescue Selenium::WebDriver::Error::TimeOutError
         webdriver_error("Wait until timeout: #{timeout} seconds in")
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
