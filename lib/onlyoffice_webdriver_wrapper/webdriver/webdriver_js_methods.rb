@@ -30,7 +30,7 @@ module OnlyofficeWebdriverWrapper
 
     # Checks for jQuery finished its job or not present
     def jquery_finished?
-      jquery_inactive = execute_javascript('return !!window.jQuery && window.jQuery.active;') == 0
+      jquery_inactive = execute_javascript('return !!window.jQuery && window.jQuery.active;').zero?
       no_jquery = execute_javascript('return !!window.jQuery') == false
       jquery_inactive || no_jquery
     end
