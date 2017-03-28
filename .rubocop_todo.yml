@@ -97,11 +97,3 @@ Style/NumericPredicate:
 Style/RescueEnsureAlignment:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
