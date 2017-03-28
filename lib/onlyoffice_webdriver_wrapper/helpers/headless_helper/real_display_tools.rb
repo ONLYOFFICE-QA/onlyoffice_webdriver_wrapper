@@ -1,4 +1,5 @@
 module OnlyofficeWebdriverWrapper
+  # module for getting info about real display
   module RealDisplayTools
     def xrandr_result
       begin

@@ -1,3 +1,4 @@
+# Class for working with files
 class FileHelper
   class << self
     def delete_directory(path)

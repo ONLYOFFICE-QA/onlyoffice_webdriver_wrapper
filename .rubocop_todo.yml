@@ -64,13 +64,3 @@ Style/AccessorMethodName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
     - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_tab_helper.rb'
-
-# Offense count: 4
-Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'lib/onlyoffice_webdriver_wrapper/amazon_s3_wrapper.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/helpers/file_helper.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/real_display_tools.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/ruby_helper.rb'
