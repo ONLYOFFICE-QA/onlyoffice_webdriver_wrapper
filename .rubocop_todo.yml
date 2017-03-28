@@ -91,9 +91,3 @@ Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
     - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_js_methods.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RescueEnsureAlignment:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'

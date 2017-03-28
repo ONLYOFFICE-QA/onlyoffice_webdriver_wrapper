@@ -755,12 +755,12 @@ module OnlyofficeWebdriverWrapper
       wait.until(&block)
       wait.until { execute_javascript('return document.readyState;') == 'complete' }
       wait.until { jquery_finished? }
-      rescue Selenium::WebDriver::Error::TimeOutError
-        webdriver_error("Wait until timeout: #{timeout} seconds in")
-      rescue Selenium::WebDriver::Error::StaleElementReferenceError
-        OnlyofficeLoggerHelper.log("Wait until: rescuing from Stale Element error, #{tries} attempts remaining")
-        retry unless (tries -= 1).zero?
-        webdriver_error('Wait until: rescuing from Stale Element error failed after 3 tries')
+    rescue Selenium::WebDriver::Error::TimeOutError
+      webdriver_error("Wait until timeout: #{timeout} seconds in")
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      OnlyofficeLoggerHelper.log("Wait until: rescuing from Stale Element error, #{tries} attempts remaining")
+      retry unless (tries -= 1).zero?
+      webdriver_error('Wait until: rescuing from Stale Element error failed after 3 tries')
     end
 
     def wait_file_for_download(file_name, timeout = TIMEOUT_FILE_DOWNLOAD)
