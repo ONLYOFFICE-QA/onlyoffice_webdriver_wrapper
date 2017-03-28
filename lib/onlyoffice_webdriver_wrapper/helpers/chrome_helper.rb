@@ -20,9 +20,9 @@ module OnlyofficeWebdriverWrapper
         profile: {
           default_content_settings: {
             'multiple-automatic-downloads' => 1
-          },
-          password_manager_enabled: false
-        }
+          }
+        },
+        credentials_enable_service: false
       }
       if ip_of_remote_server.nil?
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
