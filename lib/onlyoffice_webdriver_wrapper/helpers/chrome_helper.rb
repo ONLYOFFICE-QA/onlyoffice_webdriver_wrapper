@@ -1,7 +1,11 @@
 module OnlyofficeWebdriverWrapper
   # Class for working with Chrome
   module ChromeHelper
-    DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing --start-maximized --disable-popup-blocking test-type).freeze
+    DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing
+                                 --start-maximized
+                                 --disable-popup-blocking
+                                 --disable-infobars
+                                 test-type).freeze
 
     # @return [String] path to chromedriver
     def chromedriver_path
