@@ -1,4 +1,3 @@
-# encoding: utf-8
 require_relative 'headless_helper/real_display_tools'
 require_relative 'headless_helper/ruby_helper'
 require 'headless'

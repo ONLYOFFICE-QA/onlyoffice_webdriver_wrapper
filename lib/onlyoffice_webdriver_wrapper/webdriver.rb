@@ -1,5 +1,3 @@
-# encoding: utf-8
-# noinspection SpellCheckingInspection
 require 'page-object'
 require 'securerandom'
 require 'selenium-webdriver'
