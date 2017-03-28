@@ -4,6 +4,7 @@ module OnlyofficeWebdriverWrapper
     DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing
                                  --start-maximized
                                  --disable-popup-blocking
+                                 --disable-infobars
                                  test-type).freeze
 
     # @return [String] path to chromedriver
