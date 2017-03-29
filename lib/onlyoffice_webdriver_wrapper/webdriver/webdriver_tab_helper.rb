@@ -18,19 +18,15 @@ module OnlyofficeWebdriverWrapper
     end
 
     def switch_to_popup
-      if @browser != :ie
-        counter = 0
-        while tab_count < 2 && counter < 30
-          sleep 1
-          counter += 1
-        end
-        webdriver_error('switch_to_popup: Popup window not found') if counter >= 30
-        list_of_handlers = @driver.window_handles
-        last_window_handler = list_of_handlers.last
-        @driver.switch_to.window(last_window_handler)
-      else
-        @driver.windows.last.use
+      counter = 0
+      while tab_count < 2 && counter < 30
+        sleep 1
+        counter += 1
       end
+      webdriver_error('switch_to_popup: Popup window not found') if counter >= 30
+      list_of_handlers = @driver.window_handles
+      last_window_handler = list_of_handlers.last
+      @driver.switch_to.window(last_window_handler)
     end
 
     # Get tab count
@@ -52,12 +48,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     def switch_to_main_tab
-      if @browser == :ie
-        @driver.windows.last.close
-        @driver.windows.first.use
-      else
-        @driver.switch_to.window(@driver.window_handles.first)
-      end
+      @driver.switch_to.window(@driver.window_handles.first)
     end
 
     def close_tab

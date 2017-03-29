@@ -106,11 +106,7 @@ module OnlyofficeWebdriverWrapper
 
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
-      if @browser == :ie
-        @driver.element(:xpath, object_identification).to_subtype
-      else
-        @driver.find_element(:xpath, object_identification)
-      end
+      @driver.find_element(:xpath, object_identification)
     rescue
       nil
     end
@@ -167,7 +163,6 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_all_combo_box_values(xpath_name)
-      return if @browser == :ie
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
     end
 
@@ -265,34 +260,25 @@ module OnlyofficeWebdriverWrapper
         element.click
         set_style_attribute(xpath_name + '/button', 'display', 'inline-block')
         set_style_attribute(xpath_name, 'display', 'block')
-      elsif @browser == :ie
-        @driver.driver.action.move_to(element.wd, horizontal_shift, vertical_shift).click.perform
       else
         @driver.action.move_to(element, horizontal_shift, vertical_shift).click.perform
       end
     end
 
     # Click on locator
-    def click_on_locator(xpath_name, non_iframe = false, by_fire_event = true, by_javascript = false)
+    def click_on_locator(xpath_name, by_javascript = false)
       element = get_element(xpath_name)
-      if element.nil?
-        webdriver_error("Element with xpath: #{xpath_name} not found")
-      elsif @browser != :ie
-        if by_javascript
-          execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
-        else
-          begin
-            element.click
-          rescue Selenium::WebDriver::Error::ElementNotVisibleError
-            webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
-          rescue Exception => e
-            webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
-          end
-        end
-      elsif non_iframe
-        element.click
+      return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
+      if by_javascript
+        execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
       else
-        click_on_locator_ie(element, by_fire_event)
+        begin
+          element.click
+        rescue Selenium::WebDriver::Error::ElementNotVisibleError
+          webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
+        rescue Exception => e
+          webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
+        end
       end
     end
 
@@ -333,18 +319,6 @@ module OnlyofficeWebdriverWrapper
 
     def click_on_locator_by_action(xpath)
       @driver.action.move_to(get_element(xpath)).click.perform
-    end
-
-    def click_on_locator_ie(element, by_fire_event = true)
-      if by_fire_event
-        begin
-          element.fire_event('onclick')
-        rescue Exception
-          element.click
-        end
-      else
-        element.click
-      end
     end
 
     def click_on_locator_coordinates(xpath_name, right_by, down_by)
@@ -450,26 +424,18 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def click_on_one_of_several_xpath_by_number(xpath, number_of_element, by_javascript = false)
-      click_on_locator("(#{xpath})[#{number_of_element}]", false, true, by_javascript)
+    def click_on_one_of_several_xpath_by_number(xpath, number_of_element)
+      click_on_locator("(#{xpath})[#{number_of_element}]")
     end
 
     def move_to_element(element)
       element = get_element(element) if element.is_a?(String)
-      if @browser == :ie
-        element.fire_event('onmouseover')
-      else
-        @driver.action.move_to(element).perform
-      end
+      @driver.action.move_to(element).perform
     end
 
     def move_to_element_by_locator(xpath_name)
       element = get_element(xpath_name)
-      if @browser == :ie
-        element.fire_event('onmouseover')
-      else
-        @driver.mouse.move_to(element)
-      end
+      @driver.mouse.move_to(element)
       OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
     end
 
@@ -494,11 +460,7 @@ module OnlyofficeWebdriverWrapper
       elsif xpath_name.is_a?(Selenium::WebDriver::Element)
         xpath_name.displayed?
       else
-        if @browser != :ie
-          @driver.find_element(:xpath, xpath_name)
-        else
-          @driver.element(:xpath, xpath_name).to_subtype
-        end
+        @driver.find_element(:xpath, xpath_name)
         true
       end
     rescue Exception
@@ -506,15 +468,11 @@ module OnlyofficeWebdriverWrapper
     end
 
     def wait_until_element_present(xpath_name)
-      if @browser == :ie
-        get_element(xpath_name).wait_until_present(TIMEOUT_WAIT_ELEMENT)
-      else
-        wait = Selenium::WebDriver::Wait.new(timeout: TIMEOUT_WAIT_ELEMENT) # seconds
-        begin
-          wait.until { get_element(xpath_name) }
-        rescue Selenium::WebDriver::Error::TimeOutError
-          webdriver_error("wait_until_element_present(#{xpath_name}) Selenium::WebDriver::Error::TimeOutError: timed out after 15 seconds")
-        end
+      wait = Selenium::WebDriver::Wait.new(timeout: TIMEOUT_WAIT_ELEMENT) # seconds
+      begin
+        wait.until { get_element(xpath_name) }
+      rescue Selenium::WebDriver::Error::TimeOutError
+        webdriver_error("wait_until_element_present(#{xpath_name}) Selenium::WebDriver::Error::TimeOutError: timed out after 15 seconds")
       end
     end
 
@@ -551,29 +509,17 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_element_by_display(xpath_name)
-      if @browser == :ie
-        @driver.elements(:xpath, xpath_name).to_subtype.each do |element|
-          return element if element.displayed?
-        end
-      else
-        begin
-          @driver.find_elements(:xpath, xpath_name).each do |element|
-            return element if element.displayed?
-          end
-        rescue Selenium::WebDriver::Error::InvalidSelectorError
-          webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
-        end
+      @driver.find_elements(:xpath, xpath_name).each do |element|
+        return element if element.displayed?
       end
+    rescue Selenium::WebDriver::Error::InvalidSelectorError
+      webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
     end
 
     def get_element_count(xpath_name, only_visible = true)
       if element_present?(xpath_name)
-        if @browser == :ie
-          @driver.elements(:xpath, xpath_name).length
-        else
-          elements = @driver.find_elements(:xpath, xpath_name)
-          only_visible ? elements.delete_if { |element| @browser == :firefox && !element.displayed? }.length : elements.length
-        end
+        elements = @driver.find_elements(:xpath, xpath_name)
+        only_visible ? elements.delete_if { |element| @browser == :firefox && !element.displayed? }.length : elements.length
       else
         0
       end
@@ -581,14 +527,10 @@ module OnlyofficeWebdriverWrapper
 
     def get_elements(objects_identification, only_visible = true)
       return objects_identification if objects_identification.is_a?(Array)
-      if @browser == :ie
-        elements = @driver.elements(:xpath, objects_identification)
-      else
-        elements = @driver.find_elements(:xpath, objects_identification)
-        if only_visible
-          elements.each do |current|
-            elements.delete(current) unless @browser == :firefox || current.displayed?
-          end
+      elements = @driver.find_elements(:xpath, objects_identification)
+      if only_visible
+        elements.each do |current|
+          elements.delete(current) unless @browser == :firefox || current.displayed?
         end
       end
       elements
@@ -600,14 +542,10 @@ module OnlyofficeWebdriverWrapper
       elsif element_present?(xpath_name)
         element = get_element(xpath_name)
         return false if element.nil?
-        if @browser != :ie
-          begin
-            visible = element.displayed?
-          rescue Exception
-            visible = false
-          end
-        else
-          visible = element.visible?
+        begin
+          visible = element.displayed?
+        rescue Exception
+          visible = false
         end
         visible
       else
@@ -664,17 +602,11 @@ module OnlyofficeWebdriverWrapper
 
     # Select top frame of browser (even if several subframes exists)
     def select_top_frame
-      if @browser == :ie
-        @driver = @driver.browser
-      else
-        begin
-          @driver.switch_to.default_content
-        rescue Timeout::Error
-          OnlyofficeLoggerHelper.log('Raise TimeoutError in the select_top_frame method')
-        rescue Exception => e
-          raise "Browser is crushed or hangup with error: #{e}"
-        end
-      end
+      @driver.switch_to.default_content
+    rescue Timeout::Error
+      OnlyofficeLoggerHelper.log('Raise TimeoutError in the select_top_frame method')
+    rescue Exception => e
+      raise "Browser is crushed or hangup with error: #{e}"
     end
 
     # Get text of current element
@@ -686,11 +618,7 @@ module OnlyofficeWebdriverWrapper
       element = get_element(xpath_name)
       webdriver_error("get_text(#{xpath_name}, #{wait_until_visible}) not found element by xpath") if element.nil?
       if element.tag_name == 'input' || element.tag_name == 'textarea'
-        if @browser == :ie
-          element
-        else
-          element.attribute('value')
-        end
+        element.attribute('value')
       else
         element.text
       end

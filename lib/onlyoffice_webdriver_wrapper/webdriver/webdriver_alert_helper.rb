@@ -2,12 +2,9 @@ module OnlyofficeWebdriverWrapper
   # Methods for working with alerts
   module WebdriverAlertHelper
     def alert_confirm
-      return if @browser == :ie
-      begin
-        @driver.switch_to.alert.accept
-      rescue
-        Selenium::WebDriver::Error::NoAlertOpenError
-      end
+      @driver.switch_to.alert.accept
+    rescue
+      Selenium::WebDriver::Error::NoAlertOpenError
     end
 
     # Check if alert exists
