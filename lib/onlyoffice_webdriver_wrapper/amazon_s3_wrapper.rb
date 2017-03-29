@@ -1,6 +1,7 @@
 require 'aws-sdk'
 require 'open-uri'
 module OnlyofficeWebdriverWrapper
+  # Class for working with amazon s3
   class AmazonS3Wrapper
     attr_accessor :s3, :bucket, :download_folder, :access_key_id, :secret_access_key
 

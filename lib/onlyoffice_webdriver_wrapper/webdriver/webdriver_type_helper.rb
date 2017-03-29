@@ -9,7 +9,7 @@ module OnlyofficeWebdriverWrapper
 
     def type_text_and_select_it(element, text_to_send, clear_area = false)
       type_text(element, text_to_send, clear_area)
-      text_to_send.length.times { element.send_keys [:shift, :left] }
+      text_to_send.length.times { element.send_keys %i(shift left) }
     end
 
     def type_to_locator(xpath_name, text_to_send, clear_content = true, click_on_it = false, by_action = false, by_element_send_key = false)

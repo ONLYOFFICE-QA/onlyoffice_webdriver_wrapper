@@ -1,4 +1,4 @@
-# encoding: utf-8
+# Class for working with files
 class FileHelper
   class << self
     def delete_directory(path)

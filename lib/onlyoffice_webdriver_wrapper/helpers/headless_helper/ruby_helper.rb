@@ -1,4 +1,5 @@
 module OnlyofficeWebdriverWrapper
+  # Module for check ruby info
   module RubyHelper
     def debug?
       ENV['RUBYLIB'].to_s.include?('ruby-debug')
