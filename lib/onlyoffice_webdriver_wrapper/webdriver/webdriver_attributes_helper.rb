@@ -5,20 +5,11 @@ module OnlyofficeWebdriverWrapper
       exist = false
 
       element = xpath_name.is_a?(String) ? get_element(xpath_name) : xpath_name
-      if @browser == :ie
-        begin
-          element.attribute_value(attribute)
-          exist = true
-        rescue Exception
-          exist = false
-        end
-      else
-        begin
-          attribute_value = element.attribute(attribute)
-          exist = attribute_value.empty? || attribute_value.nil? ? false : true
-        rescue Exception
-          exist = false
-        end
+      begin
+        attribute_value = element.attribute(attribute)
+        exist = attribute_value.empty? || attribute_value.nil? ? false : true
+      rescue Exception
+        exist = false
       end
       exist
     end
@@ -29,7 +20,7 @@ module OnlyofficeWebdriverWrapper
       if element.nil?
         webdriver_error("Webdriver.get_attribute(#{xpath_name}, #{attribute}) failed because element not found")
       else
-        @browser == :ie ? element.attribute_value(attribute) : element.attribute(attribute)
+        element.attribute(attribute)
       end
     end
 
@@ -45,10 +36,10 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_attributes_of_several_elements(xpath_several_elements, attribute)
-      elements = @browser == :ie ? @driver.elements(:xpath, xpath_several_elements) : @driver.find_elements(:xpath, xpath_several_elements)
+      elements = @driver.find_elements(:xpath, xpath_several_elements)
 
       elements.map do |element|
-        @browser == :ie ? element.attribute_value(attribute) : element.attribute(attribute)
+        element.attribute(attribute)
       end
     end
 

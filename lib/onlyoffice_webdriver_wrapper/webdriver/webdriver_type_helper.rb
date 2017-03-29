@@ -27,23 +27,15 @@ module OnlyofficeWebdriverWrapper
         sleep 0.2
       end
 
-      if @browser != :ie
-        if (@browser != :chrome && !by_action) || by_element_send_key
-          element.send_keys text_to_send
-        elsif text_to_send != ''
-          if text_to_send.is_a?(String)
-            text_to_send.split(//).each do |symbol|
-              @driver.action.send_keys(symbol).perform
-            end
-          else
-            @driver.action.send_keys(text_to_send).perform
-          end
-        end
+      if (@browser != :chrome && !by_action) || by_element_send_key
+        element.send_keys text_to_send
       elsif text_to_send != ''
-        begin
-          element.set text_to_send
-        rescue Exception
-          element.send_keys text_to_send
+        if text_to_send.is_a?(String)
+          text_to_send.split(//).each do |symbol|
+            @driver.action.send_keys(symbol).perform
+          end
+        else
+          @driver.action.send_keys(text_to_send).perform
         end
       end
     end
@@ -73,44 +65,28 @@ module OnlyofficeWebdriverWrapper
       end
       text_to_send.scan(/./).each do |symbol|
         sleep(0.3)
-        if @browser != :ie
-          if (@browser != :chrome && !by_action) || by_element_send_key
-            send_keys(element, symbol, :element_send_key)
-          else
-            send_keys(element, symbol, by_action)
-          end
-        elsif text_to_send != ''
-          begin
-            send_keys(element, symbol, :ie_set)
-          rescue Exception
-            send_keys(element, symbol, :ie_send_keys)
-          end
+        if (@browser != :chrome && !by_action) || by_element_send_key
+          send_keys(element, symbol, :element_send_key)
+        else
+          send_keys(element, symbol, by_action)
         end
       end
     end
 
     def send_keys(xpath_name, text_to_send, by_action = true)
       element = get_element(xpath_name)
-      if @browser == :ie
-        element.send_keys text_to_send
+      @driver.mouse.click(element) if @browser == :firefox
+      if by_action
+        @driver.action.send_keys(element, text_to_send).perform
       else
-        @driver.mouse.click(element) if @browser == :firefox
-        if by_action
-          @driver.action.send_keys(element, text_to_send).perform
-        else
-          element.send_keys text_to_send
-        end
+        element.send_keys text_to_send
       end
     end
 
     def send_keys_to_focused_elements(keys, count_of_times = 1)
-      if @browser != :ie
-        command = @driver.action.send_keys(keys)
-        (count_of_times - 1).times { command = command.send_keys(keys) }
-        command.perform
-      else
-        count_of_times.times { @driver.send_keys keys }
-      end
+      command = @driver.action.send_keys(keys)
+      (count_of_times - 1).times { command = command.send_keys(keys) }
+      command.perform
     end
 
     def press_key(key)
