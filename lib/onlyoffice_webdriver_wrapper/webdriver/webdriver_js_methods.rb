@@ -28,11 +28,17 @@ module OnlyofficeWebdriverWrapper
       Dimensions.new(left, top)
     end
 
+    # @return [True, False] is page have jquery loaded
+    def jquery_loaded?
+      loaded = execute_javascript('return !!window.jQuery')
+      OnlyofficeLoggerHelper.log("jquery_loaded? # #{loaded}")
+      loaded
+    end
+
     # Checks for jQuery finished its job or not present
     def jquery_finished?
-      jquery_inactive = execute_javascript('return !!window.jQuery && window.jQuery.active;') == 0
-      no_jquery = execute_javascript('return !!window.jQuery') == false
-      jquery_inactive || no_jquery
+      return true unless jquery_loaded?
+      execute_javascript('return window.jQuery.active;').zero?
     end
   end
 end
