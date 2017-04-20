@@ -11,12 +11,7 @@ module OnlyofficeWebdriverWrapper
       profile['browser.download.manager.showWhenStarting'] = false
       profile['dom.disable_window_move_resize'] = false
       if ip_of_remote_server.nil?
-        driver = if Gem.loaded_specs['selenium-webdriver'].version >= Gem::Version.new(3.0)
-                   # TODO: Remove this check after fix of https://github.com/SeleniumHQ/selenium/issues/2933
-                   Selenium::WebDriver.for :firefox, driver_path: geckodriver
-                 else
-                   Selenium::WebDriver.for :firefox, profile: profile, http_client: client, driver_path: geckodriver
-                 end
+        driver = Selenium::WebDriver.for :firefox, profile: profile, driver_path: geckodriver
         driver.manage.window.maximize
         if headless.running?
           driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y)
@@ -24,7 +19,7 @@ module OnlyofficeWebdriverWrapper
         driver
       else
         capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
-        Selenium::WebDriver.for :remote, desired_capabilities: capabilities, http_client: client, url: 'http://' + ip_of_remote_server + ':4444/wd/hub'
+        Selenium::WebDriver.for :remote, desired_capabilities: capabilities, url: 'http://' + ip_of_remote_server + ':4444/wd/hub'
       end
     end
   end
