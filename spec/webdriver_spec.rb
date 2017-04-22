@@ -81,5 +81,21 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     end
   end
 
+  describe 'clicks' do
+    let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+
+    it 'secure_click should click on item only when it exist on page' do
+      webdriver.open('http://www.google.com')
+      apps_button = webdriver.driver.find_element(:xpath, '//a[contains(@class, "gb_b gb_Xb")]')
+      apps_more_button = webdriver.driver.find_element(:xpath, '//a[contains(@class, "gb_ka gb_Pe")]')
+      apps_even_more_button = webdriver.driver.find_element(:xpath, '//a[contains(@class, "gb_la gb_Ke")]')
+      webdriver.click apps_button
+      expect(webdriver.element_present? apps_even_more_button).to be false
+      expect(webdriver.element_present? apps_more_button).to be false
+      webdriver.secure_click apps_more_button
+      expect(webdriver.element_present? apps_even_more_button).to be true
+    end
+  end
+
   after { webdriver.quit }
 end

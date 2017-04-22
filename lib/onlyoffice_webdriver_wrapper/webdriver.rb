@@ -124,6 +124,11 @@ module OnlyofficeWebdriverWrapper
       element.click
     end
 
+    def secure_click(element)
+      wait_until { element.present? }
+      element.click
+    end
+
     def click_and_wait(element_to_click, element_to_wait)
       element_to_click.click
       count = 0
