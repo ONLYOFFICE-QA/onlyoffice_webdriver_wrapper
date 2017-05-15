@@ -8,7 +8,7 @@ before_install:
 - rm google-chrome.deb
 - google-chrome --version
 addons:
-  firefox: '49.0'
+  firefox: latest
 rvm:
 - ruby-head
 - 2.3.0
