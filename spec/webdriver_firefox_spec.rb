@@ -1,4 +1,4 @@
-require 'rspec'
+require 'spec_helper'
 
 describe 'Webdriver Firefox' do
   it 'Check That firefox start correctly' do
