@@ -81,5 +81,15 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     end
   end
 
+  describe 'console log' do
+    let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+
+    it 'open url and get console log output' do
+      webdriver.open('http://127.0.0.1')
+      webdriver.wait_until { webdriver.document_ready? }
+      expect(webdriver.browser_logs).not_to be_empty
+    end
+  end
+
   after { webdriver.quit }
 end
