@@ -1,11 +1,11 @@
 module OnlyofficeWebdriverWrapper
   # Class for working with Chrome
   module ChromeHelper
-    DEFAULT_CHROME_SWITCHES = %w(--kiosk-printing
+    DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
                                  --start-maximized
                                  --disable-popup-blocking
                                  --disable-infobars
-                                 test-type).freeze
+                                 test-type].freeze
 
     # @return [String] path to chromedriver
     def chromedriver_path
@@ -30,8 +30,11 @@ module OnlyofficeWebdriverWrapper
       }
       if ip_of_remote_server.nil?
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
+        caps = Selenium::WebDriver::Remote::Capabilities.chrome
+        caps[:logging_prefs] = { browser: 'ALL' }
         webdriver_options = { prefs: prefs,
                               switches: switches,
+                              desired_capabilities: caps,
                               driver_path: chromedriver_path }
         begin
           driver = Selenium::WebDriver.for :chrome, webdriver_options

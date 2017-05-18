@@ -16,6 +16,7 @@ require_relative 'webdriver/webdriver_screenshot_helper'
 require_relative 'webdriver/webdriver_style_helper'
 require_relative 'webdriver/webdriver_tab_helper'
 require_relative 'webdriver/webdriver_user_agent_helper'
+require_relative 'webdriver/webdriver_browser_log_helper'
 
 module OnlyofficeWebdriverWrapper
   # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
@@ -32,6 +33,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverStyleHelper
     include WebdriverTabHelper
     include WebdriverUserAgentHelper
+    include WebdriverBrowserLogHelper
     TIMEOUT_WAIT_ELEMENT = 15
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array, String] default switches for chrome
@@ -679,7 +681,7 @@ module OnlyofficeWebdriverWrapper
       tries ||= 3
       wait = Object::Selenium::WebDriver::Wait.new(timeout: timeout, message: message)
       wait.until(&block)
-      wait.until { execute_javascript('return document.readyState;') == 'complete' }
+      wait.until { document_ready? }
       wait.until { jquery_finished? }
     rescue Selenium::WebDriver::Error::TimeOutError
       webdriver_error("Wait until timeout: #{timeout} seconds in")

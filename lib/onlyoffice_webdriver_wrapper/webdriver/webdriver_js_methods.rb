@@ -40,5 +40,9 @@ module OnlyofficeWebdriverWrapper
       return true unless jquery_loaded?
       execute_javascript('return window.jQuery.active;').zero?
     end
+
+    def document_ready?
+      execute_javascript('return document.readyState;') == 'complete'
+    end
   end
 end
