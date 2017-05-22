@@ -136,12 +136,6 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("click_and_wait: Wait for element: #{element_to_click} for 30 seconds") if count == 30
     end
 
-    def execute_javascript(script)
-      @driver.execute_script(script)
-    rescue Exception => e
-      webdriver_error("Exception #{e} in execute_javascript: #{script}")
-    end
-
     def select_from_list(xpath_value, value)
       @driver.find_element(:xpath, xpath_value).find_elements(tag_name: 'li').each do |element|
         next unless element.text == value.to_s
