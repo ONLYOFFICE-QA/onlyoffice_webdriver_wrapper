@@ -2,7 +2,9 @@ module OnlyofficeWebdriverWrapper
   # Methods for webdriver for calling Javascript
   module WebdriverJsMethods
     def execute_javascript(script)
-      @driver.execute_script(script)
+      result = @driver.execute_script(script)
+      OnlyofficeLoggerHelper.log("Executed js: `#{script}` with result: `#{result}`")
+      result
     rescue Exception => e
       webdriver_error("Exception #{e} in execute_javascript: #{script}")
     end
