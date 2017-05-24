@@ -292,7 +292,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     def right_click(xpath_name)
-      @driver.mouse.context_click(@driver.find_element(:xpath, xpath_name))
+      @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
 
     def context_click(xpath, x_coord, y_coord)
@@ -383,7 +383,7 @@ module OnlyofficeWebdriverWrapper
     def right_click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if text_to_click == current_element.text
-          @driver.mouse.context_click(current_element)
+          @driver.action.context_click(current_element).perform
           return true
         end
       end
@@ -431,7 +431,7 @@ module OnlyofficeWebdriverWrapper
 
     def move_to_element_by_locator(xpath_name)
       element = get_element(xpath_name)
-      @driver.mouse.move_to(element)
+      @driver.action.move_to(element).perform
       OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
     end
 

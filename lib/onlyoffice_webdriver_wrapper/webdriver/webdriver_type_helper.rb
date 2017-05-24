@@ -75,7 +75,7 @@ module OnlyofficeWebdriverWrapper
 
     def send_keys(xpath_name, text_to_send, by_action = true)
       element = get_element(xpath_name)
-      @driver.mouse.click(element) if @browser == :firefox
+      @driver.action.click(element).perform if @browser == :firefox
       if by_action
         @driver.action.send_keys(element, text_to_send).perform
       else
