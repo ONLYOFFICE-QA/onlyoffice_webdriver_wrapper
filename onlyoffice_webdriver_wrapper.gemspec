@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/onlyoffice-testing-robot/onlyoffice_webdriver_wrapper'
   s.add_runtime_dependency('aws-sdk', '~> 2')
   s.add_runtime_dependency('headless', '~> 2')
-  s.add_runtime_dependency('onlyoffice_logger_helper', '1.0.0')
+  s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
   s.add_runtime_dependency('page-object', '~> 1')
   s.add_runtime_dependency('selenium-webdriver', '3.4.0')
   s.license = 'AGPL-3.0'
