@@ -5,7 +5,7 @@ module OnlyofficeWebdriverWrapper
   class AmazonS3Wrapper
     attr_accessor :s3, :bucket, :download_folder, :access_key_id, :secret_access_key
 
-    def initialize(bucket_name: 'nct-data-share')
+    def initialize(bucket_name: 'nct-data-share', region: 'us-west-2')
       @access_key_id = ENV['S3_KEY']
       @secret_access_key = ENV['S3_PRIVATE_KEY']
       if @access_key_id.nil? || @secret_access_key.nil?
@@ -18,16 +18,14 @@ module OnlyofficeWebdriverWrapper
       end
       Aws.config = { access_key_id: @access_key_id,
                      secret_access_key: @secret_access_key,
-                     region: 'us-west-2' }
+                     region: region }
       @s3 = Aws::S3::Resource.new
       @bucket = @s3.bucket(bucket_name)
       @download_folder = Dir.mktmpdir('amazon-s3-downloads')
     end
 
-    def get_files_by_prefix(prefix)
-      objects_array = @bucket.objects(prefix: prefix).collect(&:key)
-      objects_array.delete_at(0) # First element - is a /prefix directory
-      objects_array
+    def get_files_by_prefix(prefix = nil)
+      @bucket.objects(prefix: prefix).collect(&:key)
     end
 
     def get_object(obj_name)

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'S3 service tests' do
-  let(:s3) { OnlyofficeWebdriverWrapper::AmazonS3Wrapper.new }
+  let(:s3) { OnlyofficeWebdriverWrapper::AmazonS3Wrapper.new(bucket_name: 'nct-test-bucket', region: 'us-east-1') }
   file_name = nil
 
   before :each do
@@ -10,7 +10,17 @@ describe 'S3 service tests' do
 
   it 'get_files_by_prefix' do
     files = s3.get_files_by_prefix('docx')
-    expect(files.size).to be > 1
+    expect(files.size).to be >= 1
+  end
+
+  it 'get_files_by_prefix with empty prefix' do
+    files = s3.get_files_by_prefix(nil)
+    expect(files.size).to be >= 1
+  end
+
+  it 'get_files_by_prefix with not exist prefix' do
+    files = s3.get_files_by_prefix('notexistprefix')
+    expect(files.size).to eq(0)
   end
 
   it 'get_object' do
