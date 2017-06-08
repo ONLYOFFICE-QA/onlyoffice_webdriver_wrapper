@@ -10,7 +10,12 @@ describe 'S3 service tests' do
 
   it 'get_files_by_prefix' do
     files = s3.get_files_by_prefix('docx')
-    expect(files.size).to be >= 1
+    expect(files).to include('docx/Book.docx')
+  end
+
+  it 'get_files_by_prefix with sub folder prefix' do
+    files = s3.get_files_by_prefix('docx/test_folder')
+    expect(files).to include('docx/test_folder/file_in_test_folder.rtf')
   end
 
   it 'get_files_by_prefix with empty prefix' do
@@ -48,13 +53,13 @@ describe 'S3 service tests' do
   it 'upload_file with slash in the beginning of the path line' do
     FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", '/test')
-    expect(s3.get_files_by_prefix('test')).to include("test/#{file_name}")
+    expect(s3.get_elements_by_prefix('test')).to include("test/#{file_name}")
   end
 
   it 'upload_file with slash in the end of the path line' do
     FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", 'test/')
-    expect(s3.get_files_by_prefix('test')).to include("test/#{file_name}")
+    expect(s3.get_elements_by_prefix('test')).to include("test/#{file_name}")
   end
 
   it 'delete_file' do
