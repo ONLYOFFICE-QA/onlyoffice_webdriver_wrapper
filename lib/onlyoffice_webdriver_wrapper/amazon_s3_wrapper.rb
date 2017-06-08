@@ -25,7 +25,17 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_files_by_prefix(prefix = nil)
+      @bucket.objects(prefix: prefix).collect(&:key).reject { |file| is_folder?(file) }
+    end
+
+    # param [String] prefix
+    # return [Array] of folder names with '/' in end and filenames with fullpath (started ad prefix)
+    def get_elements_by_prefix(prefix = nil)
       @bucket.objects(prefix: prefix).collect(&:key)
+    end
+
+    def is_folder?(str)
+      str.end_with? '/'
     end
 
     def get_object(obj_name)
@@ -52,7 +62,7 @@ module OnlyofficeWebdriverWrapper
 
     def upload_file(file_path, upload_folder)
       upload_folder.sub!('/', '') if upload_folder[0] == '/'
-      upload_folder.chop! if upload_folder[-1] == '/'
+      upload_folder.chop! if is_folder?(upload_folder)
       @bucket.object("#{upload_folder}/#{File.basename(file_path)}").upload_file(file_path)
     end
 
