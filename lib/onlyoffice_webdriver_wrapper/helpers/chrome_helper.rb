@@ -30,10 +30,11 @@ module OnlyofficeWebdriverWrapper
       }
       if ip_of_remote_server.nil?
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
+        options = Selenium::WebDriver::Chrome::Options.new(args: switches,
+                                                           prefs: prefs)
         caps = Selenium::WebDriver::Remote::Capabilities.chrome
         caps[:logging_prefs] = { browser: 'ALL' }
-        webdriver_options = { prefs: prefs,
-                              switches: switches,
+        webdriver_options = { options: options,
                               desired_capabilities: caps,
                               driver_path: chromedriver_path }
         begin
