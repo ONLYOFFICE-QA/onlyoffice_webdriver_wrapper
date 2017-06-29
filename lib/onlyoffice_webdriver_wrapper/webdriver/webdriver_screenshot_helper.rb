@@ -19,7 +19,8 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_screenshot(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
-      FileHelper.create_folder(File.dirname(path_to_screenshot))
+      screenshot_folder = File.dirname(path_to_screenshot)
+      FileUtils.mkdir_p(screenshot_folder) unless File.directory?(screenshot_folder)
       @driver.save_screenshot(path_to_screenshot)
       OnlyofficeLoggerHelper.log("get_screenshot(#{path_to_screenshot})")
     end
