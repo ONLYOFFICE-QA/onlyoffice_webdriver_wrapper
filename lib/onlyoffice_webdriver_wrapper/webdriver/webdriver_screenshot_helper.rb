@@ -4,8 +4,10 @@ module OnlyofficeWebdriverWrapper
     def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
       begin
         get_screenshot(path_to_screenshot)
-        path_to_screenshot = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
-        OnlyofficeLoggerHelper.log("upload screenshot: #{path_to_screenshot}")
+        cloud_screenshot = AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
+        File.delete(path_to_screenshot) if File.exist?(path_to_screenshot)
+        OnlyofficeLoggerHelper.log("upload screenshot: #{cloud_screenshot}")
+        return cloud_screenshot
       rescue Errno::ENOENT => e
         begin
           @driver.save_screenshot(path_to_screenshot)
@@ -19,7 +21,8 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_screenshot(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
-      FileHelper.create_folder(File.dirname(path_to_screenshot))
+      screenshot_folder = File.dirname(path_to_screenshot)
+      FileUtils.mkdir_p(screenshot_folder) unless File.directory?(screenshot_folder)
       @driver.save_screenshot(path_to_screenshot)
       OnlyofficeLoggerHelper.log("get_screenshot(#{path_to_screenshot})")
     end
