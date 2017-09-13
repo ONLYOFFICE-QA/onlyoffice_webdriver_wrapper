@@ -13,7 +13,6 @@ module OnlyofficeWebdriverWrapper
       options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
       if ip_of_remote_server.nil?
         driver = Selenium::WebDriver.for :firefox, options: options, driver_path: geckodriver
-        driver.manage.window.maximize
         if headless.running?
           driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y)
         end
