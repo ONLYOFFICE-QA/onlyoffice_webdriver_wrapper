@@ -45,39 +45,39 @@ describe 'S3 service tests' do
   end
 
   it 'upload_file' do
-    FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
+    OnlyofficeFileHelper::FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", 'test')
     expect(s3.get_files_by_prefix('test')).to include("test/#{file_name}")
   end
 
   it 'upload_file with slash in the beginning of the path line' do
-    FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
+    OnlyofficeFileHelper::FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", '/test')
     expect(s3.get_elements_by_prefix('test')).to include("test/#{file_name}")
   end
 
   it 'upload_file with slash in the end of the path line' do
-    FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
+    OnlyofficeFileHelper::FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", 'test/')
     expect(s3.get_elements_by_prefix('test')).to include("test/#{file_name}")
   end
 
   it 'delete_file' do
-    FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
+    OnlyofficeFileHelper::FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", 'test')
     s3.delete_file("test/#{file_name}")
     expect(s3.get_files_by_prefix('test')).not_to include("test/#{file_name}")
   end
 
   it 'delete_file with slash in the beginning of the path line' do
-    FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
+    OnlyofficeFileHelper::FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", 'test')
     s3.delete_file("/test/#{file_name}")
     expect(s3.get_files_by_prefix('test')).not_to include("test/#{file_name}")
   end
 
   it 'make_public' do
-    FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
+    OnlyofficeFileHelper::FileHelper.create_file_with_content(file_path: "/tmp/#{file_name}", content: '')
     s3.upload_file("/tmp/#{file_name}", 'test')
     link, permissions = s3.make_public("test/#{file_name}")
     expect(link.is_a?(String)).to be_truthy
@@ -85,6 +85,6 @@ describe 'S3 service tests' do
   end
 
   after :each do
-    FileHelper.delete_directory(s3.download_folder)
+    OnlyofficeFileHelper::FileHelper.delete_directory(s3.download_folder)
   end
 end
