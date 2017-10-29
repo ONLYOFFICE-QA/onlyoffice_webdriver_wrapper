@@ -262,14 +262,15 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Click on locator
-    def click_on_locator(xpath_name, by_javascript = false)
+    # @param count [Integer] count of clicks
+    def click_on_locator(xpath_name, by_javascript = false, count: 1)
       element = get_element(xpath_name)
       return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
       if by_javascript
         execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
       else
         begin
-          element.click
+          count.times { element.click }
         rescue Selenium::WebDriver::Error::ElementNotVisibleError
           webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
         rescue Exception => e
