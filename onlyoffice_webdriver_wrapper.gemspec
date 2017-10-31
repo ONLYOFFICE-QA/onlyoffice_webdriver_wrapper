@@ -11,10 +11,10 @@ Gem::Specification.new do |s|
   s.email = ['shockwavenn@gmail.com', 'dafttrick@gmail.com']
   s.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
   s.homepage = 'https://github.com/onlyoffice-testing-robot/onlyoffice_webdriver_wrapper'
-  s.add_runtime_dependency('aws-sdk', '~> 2')
   s.add_runtime_dependency('headless', '~> 2')
   s.add_runtime_dependency('onlyoffice_file_helper', '~> 0.1')
   s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
+  s.add_runtime_dependency('onlyoffice_s3_wrapper', '~> 0.1')
   # since v2.1 page-object remove capability with Selenium Platform
   s.add_runtime_dependency('page-object', '~> 2.0.0')
   s.add_runtime_dependency('selenium-webdriver', '3.6.0')
