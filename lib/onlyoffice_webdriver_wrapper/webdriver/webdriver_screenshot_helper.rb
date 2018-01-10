@@ -2,7 +2,12 @@ require 'onlyoffice_s3_wrapper'
 module OnlyofficeWebdriverWrapper
   # Working with screenshots
   module WebdriverScreenshotHelper
-    def get_screenshot_and_upload(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
+    # @return [String] location of screenshot to take
+    def screenshot_folder
+      '/tmp/screenshot/WebdriverError'
+    end
+
+    def get_screenshot_and_upload(path_to_screenshot = "#{screenshot_folder}/#{StringHelper.generate_random_string}.png")
       begin
         get_screenshot(path_to_screenshot)
         cloud_screenshot = OnlyofficeS3Wrapper::AmazonS3Wrapper.new.upload_file_and_make_public(path_to_screenshot, 'screenshots')
@@ -21,7 +26,7 @@ module OnlyofficeWebdriverWrapper
       path_to_screenshot
     end
 
-    def get_screenshot(path_to_screenshot = "/mnt/data_share/screenshot/WebdriverError/#{StringHelper.generate_random_string}.png")
+    def get_screenshot(path_to_screenshot = "#{screenshot_folder}/#{StringHelper.generate_random_string}.png")
       screenshot_folder = File.dirname(path_to_screenshot)
       FileUtils.mkdir_p(screenshot_folder) unless File.directory?(screenshot_folder)
       @driver.save_screenshot(path_to_screenshot)
@@ -30,8 +35,9 @@ module OnlyofficeWebdriverWrapper
 
     def webdriver_screenshot(screenshot_name = SecureRandom.uuid)
       begin
-        link = get_screenshot_and_upload("/mnt/data_share/screenshot/WebdriverError/#{screenshot_name}.png")
-      rescue Exception
+        link = get_screenshot_and_upload("#{screenshot_folder}/#{screenshot_name}.png")
+      rescue Exception => e
+        OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. Trying to get headless screenshot")
         if @headless.headless_instance.nil?
           system_screenshot("/tmp/#{screenshot_name}.png")
           begin
