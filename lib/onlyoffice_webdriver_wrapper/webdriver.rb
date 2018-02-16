@@ -672,12 +672,14 @@ module OnlyofficeWebdriverWrapper
       raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
     end
 
-    def wait_until(timeout = ::PageObject.default_page_wait, message = nil, &block)
+    def wait_until(timeout = ::PageObject.default_page_wait, message = nil, wait_js: true, &block)
       tries ||= 3
       wait = Object::Selenium::WebDriver::Wait.new(timeout: timeout, message: message)
       wait.until(&block)
-      wait.until { document_ready? }
-      wait.until { jquery_finished? }
+      if wait_js
+        wait.until { document_ready? }
+        wait.until { jquery_finished? }
+      end
     rescue Selenium::WebDriver::Error::TimeOutError
       webdriver_error("Wait until timeout: #{timeout} seconds in")
     rescue Selenium::WebDriver::Error::StaleElementReferenceError
