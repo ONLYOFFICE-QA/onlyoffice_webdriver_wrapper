@@ -5,9 +5,9 @@ describe 'Working with download directory' do
 
   it 'download directory is deleted after browser stop' do
     download_dir = webdriver.download_directory
-    expect(Dir.exists?(download_dir)).to be_truthy
+    expect(Dir.exist?(download_dir)).to be_truthy
     webdriver.quit
-    expect(Dir.exists?(download_dir)).to be_falsey
+    expect(Dir.exist?(download_dir)).to be_falsey
   end
 
   after { webdriver.quit }
