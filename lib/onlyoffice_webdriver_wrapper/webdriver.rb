@@ -94,7 +94,7 @@ module OnlyofficeWebdriverWrapper
     def quit
       begin
         @driver.execute_script('window.onbeforeunload = null') # off popup window
-      rescue
+      rescue StandardError
         Exception
       end
       begin
@@ -110,7 +110,7 @@ module OnlyofficeWebdriverWrapper
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
       @driver.find_element(:xpath, object_identification)
-    rescue
+    rescue StandardError
       nil
     end
 
@@ -647,7 +647,7 @@ module OnlyofficeWebdriverWrapper
       option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
       begin
         option.select_by(select_by, select_value)
-      rescue
+      rescue StandardError
         option.select_by(:text, select_value)
       end
     end

@@ -62,15 +62,6 @@ Naming/UncommunicativeMethodParamName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, explicit
-Style/RescueStandardError:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_alert_helper.rb'
-
 # Offense count: 139
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
