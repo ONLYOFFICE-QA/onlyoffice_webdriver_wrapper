@@ -62,14 +62,6 @@ Naming/UncommunicativeMethodParamName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_type_helper.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
