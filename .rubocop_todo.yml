@@ -63,11 +63,6 @@ Naming/UncommunicativeMethodParamName:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
 # Offense count: 1
-Style/CommentedKeyword:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-
-# Offense count: 1
 # Cop supports --auto-correct.
 Style/Encoding:
   Exclude:

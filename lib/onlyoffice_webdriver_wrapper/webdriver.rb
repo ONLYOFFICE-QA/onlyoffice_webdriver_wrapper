@@ -93,10 +93,10 @@ module OnlyofficeWebdriverWrapper
 
     def quit
       begin
-        @driver.execute_script('window.onbeforeunload = null')
+        @driver.execute_script('window.onbeforeunload = null') # off popup window
       rescue
         Exception
-      end # OFF POPUP WINDOW
+      end
       begin
         @driver.quit
       rescue Exception => e
