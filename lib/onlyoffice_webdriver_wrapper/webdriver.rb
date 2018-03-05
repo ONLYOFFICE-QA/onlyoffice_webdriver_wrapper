@@ -698,9 +698,7 @@ module OnlyofficeWebdriverWrapper
         sleep 1
         counter += 1
       end
-      if counter >= timeout
-        webdriver_error("File #{full_file_name} not download for #{timeout} seconds")
-      end
+      webdriver_error("File #{full_file_name} not download for #{timeout} seconds") if counter >= timeout
       full_file_name
     end
 

@@ -64,13 +64,6 @@ Naming/UncommunicativeMethodParamName:
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/helpers/firefox_helper.rb'
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
 # Configuration parameters: PreferredDelimiters.
 Style/PercentLiteralDelimiters:
   Exclude:

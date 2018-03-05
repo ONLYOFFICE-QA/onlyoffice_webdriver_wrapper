@@ -13,9 +13,7 @@ module OnlyofficeWebdriverWrapper
       options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
       if ip_of_remote_server.nil?
         driver = Selenium::WebDriver.for :firefox, options: options, driver_path: geckodriver
-        if headless.running?
-          driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y)
-        end
+        driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?
         driver
       else
         capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
