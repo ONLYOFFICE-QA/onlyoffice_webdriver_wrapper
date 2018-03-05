@@ -64,12 +64,6 @@ Naming/UncommunicativeMethodParamName:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/Encoding:
-  Exclude:
-    - 'Gemfile'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Style/ExpandPathArguments:
   Exclude:
     - 'onlyoffice_webdriver_wrapper.gemspec'
