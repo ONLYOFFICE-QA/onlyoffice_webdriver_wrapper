@@ -104,6 +104,7 @@ module OnlyofficeWebdriverWrapper
       end
       alert_confirm
       @headless.stop
+      FileUtils.remove_dir(@download_directory) if Dir.exists?(@download_directory)
     end
 
     def get_element(object_identification)
