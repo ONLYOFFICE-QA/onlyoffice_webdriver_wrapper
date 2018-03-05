@@ -3,7 +3,7 @@ module OnlyofficeWebdriverWrapper
   module WebdriverAlertHelper
     def alert_confirm
       @driver.switch_to.alert.accept
-    rescue
+    rescue StandardError
       Selenium::WebDriver::Error::NoAlertOpenError
     end
 

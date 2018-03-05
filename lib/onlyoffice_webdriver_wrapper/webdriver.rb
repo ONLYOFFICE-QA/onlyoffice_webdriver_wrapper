@@ -93,10 +93,10 @@ module OnlyofficeWebdriverWrapper
 
     def quit
       begin
-        @driver.execute_script('window.onbeforeunload = null')
-      rescue
+        @driver.execute_script('window.onbeforeunload = null') # off popup window
+      rescue StandardError
         Exception
-      end # OFF POPUP WINDOW
+      end
       begin
         @driver.quit
       rescue Exception => e
@@ -104,13 +104,13 @@ module OnlyofficeWebdriverWrapper
       end
       alert_confirm
       @headless.stop
-      FileUtils.remove_dir(@download_directory) if Dir.exists?(@download_directory)
+      FileUtils.remove_dir(@download_directory) if Dir.exist?(@download_directory)
     end
 
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
       @driver.find_element(:xpath, object_identification)
-    rescue
+    rescue StandardError
       nil
     end
 
@@ -300,7 +300,7 @@ module OnlyofficeWebdriverWrapper
     def context_click(xpath, x_coord, y_coord)
       element = get_element(xpath)
       if browser == :firefox
-        element.send_keys %i(shift f10)
+        element.send_keys %i[shift f10]
       else
         @driver.action.move_to(element, x_coord, y_coord).context_click.perform
       end
@@ -647,7 +647,7 @@ module OnlyofficeWebdriverWrapper
       option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
       begin
         option.select_by(select_by, select_value)
-      rescue
+      rescue StandardError
         option.select_by(:text, select_value)
       end
     end
@@ -698,9 +698,7 @@ module OnlyofficeWebdriverWrapper
         sleep 1
         counter += 1
       end
-      if counter >= timeout
-        webdriver_error("File #{full_file_name} not download for #{timeout} seconds")
-      end
+      webdriver_error("File #{full_file_name} not download for #{timeout} seconds") if counter >= timeout
       full_file_name
     end
 
