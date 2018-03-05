@@ -62,12 +62,6 @@ Naming/UncommunicativeMethodParamName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/ExpandPathArguments:
-  Exclude:
-    - 'onlyoffice_webdriver_wrapper.gemspec'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:
