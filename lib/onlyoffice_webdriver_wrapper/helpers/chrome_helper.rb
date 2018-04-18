@@ -28,12 +28,13 @@ module OnlyofficeWebdriverWrapper
         },
         credentials_enable_service: false
       }
+      caps = Selenium::WebDriver::Remote::Capabilities.chrome
+      caps[:logging_prefs] = { browser: 'ALL' }
+      caps[:proxy] = Selenium::WebDriver::Proxy.new(http: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
       if ip_of_remote_server.nil?
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
         options = Selenium::WebDriver::Chrome::Options.new(args: switches,
                                                            prefs: prefs)
-        caps = Selenium::WebDriver::Remote::Capabilities.chrome
-        caps[:logging_prefs] = { browser: 'ALL' }
         webdriver_options = { options: options,
                               desired_capabilities: caps,
                               driver_path: chromedriver_path }
@@ -49,7 +50,6 @@ module OnlyofficeWebdriverWrapper
         driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?
         driver
       else
-        caps = Selenium::WebDriver::Remote::Capabilities.chrome
         caps['chromeOptions'] = {
           profile: data['zip'],
           extensions: data['extensions']
