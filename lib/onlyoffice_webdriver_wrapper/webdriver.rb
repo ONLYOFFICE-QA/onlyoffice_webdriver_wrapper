@@ -45,10 +45,15 @@ module OnlyofficeWebdriverWrapper
     attr_accessor :download_directory
     attr_accessor :server_address
     attr_accessor :headless
+    # @return [Net::HTTP::Proxy] connection proxy
+    attr_accessor :proxy
 
     singleton_class.class_eval { attr_accessor :web_console_error }
 
-    def initialize(browser = :firefox, remote_server = nil, device: :desktop_linux)
+    def initialize(browser = :firefox,
+                   remote_server = nil,
+                   device: :desktop_linux,
+                   proxy: nil)
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
       @device = device
       @headless = HeadlessHelper.new
@@ -57,6 +62,7 @@ module OnlyofficeWebdriverWrapper
       @download_directory = Dir.mktmpdir('webdriver-download')
       @browser = browser
       @ip_of_remote_server = remote_server
+      @proxy = proxy
       case browser
       when :firefox
         @driver = start_firefox_driver
