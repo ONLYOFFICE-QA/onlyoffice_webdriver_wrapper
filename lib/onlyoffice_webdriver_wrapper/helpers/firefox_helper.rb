@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
       profile['dom.disable_window_move_resize'] = false
       options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
       caps = Selenium::WebDriver::Remote::Capabilities.firefox
-      caps[:proxy] = Selenium::WebDriver::Proxy.new(http: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
+      caps[:proxy] = Selenium::WebDriver::Proxy.new(ssl: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
       if ip_of_remote_server.nil?
         driver = Selenium::WebDriver.for :firefox, options: options, driver_path: geckodriver, desired_capabilities: caps
         driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?

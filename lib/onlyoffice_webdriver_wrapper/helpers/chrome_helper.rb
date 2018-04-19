@@ -30,7 +30,7 @@ module OnlyofficeWebdriverWrapper
       }
       caps = Selenium::WebDriver::Remote::Capabilities.chrome
       caps[:logging_prefs] = { browser: 'ALL' }
-      caps[:proxy] = Selenium::WebDriver::Proxy.new(http: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
+      caps[:proxy] = Selenium::WebDriver::Proxy.new(ssl: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
       if ip_of_remote_server.nil?
         switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
         options = Selenium::WebDriver::Chrome::Options.new(args: switches,
