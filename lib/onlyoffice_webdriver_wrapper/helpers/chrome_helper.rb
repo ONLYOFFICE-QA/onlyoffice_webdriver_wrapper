@@ -5,6 +5,7 @@ module OnlyofficeWebdriverWrapper
                                  --start-maximized
                                  --disable-popup-blocking
                                  --disable-infobars
+                                 --no-sandbox
                                  test-type].freeze
 
     # @return [String] path to chromedriver
