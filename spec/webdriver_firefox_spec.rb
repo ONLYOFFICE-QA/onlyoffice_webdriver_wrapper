@@ -12,6 +12,18 @@ describe 'Webdriver Firefox' do
     expect(webdriver).not_to be_alert_exists
   end
 
+  it 'Check That firefox return empty browser logs' do
+    expect(webdriver.browser_logs).to be_empty
+  end
+
+  it 'open url and get console log output' do
+    pending('https://github.com/mozilla/geckodriver/issues/284')
+    file_with_js_error = "#{Dir.pwd}/spec/html_examples/javascript_error.html"
+    webdriver.open("file://#{file_with_js_error}")
+    webdriver.wait_until { webdriver.document_ready? }
+    expect(webdriver.browser_logs).not_to be_empty
+  end
+
   after do
     webdriver.quit
   end

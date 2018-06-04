@@ -9,3 +9,4 @@
 
 ### Fixes
 * Fix `Webdriver#alert_exists?` for `firefox`
+* Do not crash on `Webdrvier#browser_logs` in `firefox`
