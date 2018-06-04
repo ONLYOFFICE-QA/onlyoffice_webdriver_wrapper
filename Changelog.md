@@ -4,5 +4,8 @@
 * Remove `Webdriver#download_directory` after `Webdriver#quit`
 * Support of `Webdriver#proxy`
 
+### New Features
+* Update geckodriver from 0.18.0 to 0.20.1 
+
 ### Fixes
 * Fix `Webdriver#alert_exists?` for `firefox`
