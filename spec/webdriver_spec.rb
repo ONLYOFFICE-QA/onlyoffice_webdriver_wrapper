@@ -3,6 +3,7 @@ require 'spec_helper'
 describe OnlyofficeWebdriverWrapper::WebDriver do
   describe 'Default tests' do
     let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+    iframe_js = "var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';ifr.id = 'my-frame';document.body.appendChild(ifr)"
 
     it 'Check for popup open' do
       webdriver.new_tab
@@ -47,8 +48,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     describe 'get_url' do
       it 'get url in frame return url of frame, not mail url' do
         webdriver.open('http://www.google.com')
-        webdriver.execute_javascript("var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';document.body.appendChild(ifr)")
-        webdriver.select_frame
+        webdriver.execute_javascript(iframe_js)
+        webdriver.select_frame('//*[@id="my-frame"]')
         expect(webdriver.get_url).to eq('https://www.example.com/')
       end
     end
@@ -56,8 +57,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     describe 'get_host_name' do
       it 'get url in frame return host name of frame, not mail url' do
         webdriver.open('http://www.google.com')
-        webdriver.execute_javascript("var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';document.body.appendChild(ifr)")
-        webdriver.select_frame
+        webdriver.execute_javascript(iframe_js)
+        webdriver.select_frame('//*[@id="my-frame"]')
         expect(webdriver.get_host_name).to eq('https://www.example.com')
       end
     end
