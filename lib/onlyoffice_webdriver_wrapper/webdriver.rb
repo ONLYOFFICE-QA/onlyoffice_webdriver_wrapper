@@ -7,6 +7,7 @@ require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
 require_relative 'webdriver/webdriver_alert_helper'
 require_relative 'webdriver/webdriver_attributes_helper'
+require_relative 'webdriver/webdriver_browser_info_helper'
 require_relative 'webdriver/webdriver_type_helper'
 require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_extension'
@@ -26,6 +27,7 @@ module OnlyofficeWebdriverWrapper
     include RubyHelper
     include WebdriverAlertHelper
     include WebdriverAttributesHelper
+    include WebdriverBrowserInfo
     include WebdriverTypeHelper
     include WebdriverHelper
     include WebdriverJsMethods
@@ -71,13 +73,6 @@ module OnlyofficeWebdriverWrapper
       else
         raise 'Unknown Browser: ' + browser.to_s
       end
-    end
-
-    def browser_size
-      size_struct = @driver.manage.window.size
-      size = Dimensions.new(size_struct.width, size_struct.height)
-      OnlyofficeLoggerHelper.log("browser_size: #{size}")
-      size
     end
 
     def add_web_console_error(log)
