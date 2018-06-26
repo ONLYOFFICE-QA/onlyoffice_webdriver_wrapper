@@ -6,7 +6,8 @@
 * Add method `Webdriver#browser_metadata`
 
 ### New Features
-* Update geckodriver from 0.18.0 to 0.20.1 
+* Update geckodriver from 0.18.0 to 0.20.1
+* Add `Webdriver#download` for downloading files by link
 
 ### Fixes
 * Fix `Webdriver#alert_exists?` for `firefox`

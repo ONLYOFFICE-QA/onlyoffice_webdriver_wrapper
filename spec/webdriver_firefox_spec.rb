@@ -24,6 +24,11 @@ describe 'Webdriver Firefox' do
     expect(webdriver.browser_logs).not_to be_empty
   end
 
+  it 'Check that firefox can download files by direct links' do
+    result = webdriver.download('https://s3.us-west-2.amazonaws.com/nct-data-share/docx/0+(1).docx')
+    expect(File.exist?(result)).to be_truthy
+  end
+
   after do
     webdriver.quit
   end
