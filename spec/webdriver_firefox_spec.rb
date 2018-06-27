@@ -12,6 +12,11 @@ describe 'Webdriver Firefox' do
     expect(webdriver).not_to be_alert_exists
   end
 
+  it 'Webdriver#click_on_locator_coordinates correct for .0 values' do
+    webdriver.open('www.google.com')
+    webdriver.click_on_locator_coordinates('//*[@id="body"]', 20.0, 10)
+  end
+
   it 'Check That firefox return empty browser logs' do
     expect(webdriver.browser_logs).to be_empty
   end
