@@ -568,6 +568,8 @@ module OnlyofficeWebdriverWrapper
         return true if current_element.displayed?
       end
       false
+    rescue Exception => e
+      webdriver_error("Raise unkwnown exception: #{e}")
     end
 
     def wait_element(xpath_name, period_of_wait = 1, critical_time = 3)
