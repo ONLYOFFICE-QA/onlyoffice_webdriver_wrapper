@@ -13,3 +13,4 @@
 * Fix `Webdriver#alert_exists?` for `firefox`
 * Do not crash on `Webdrvier#browser_logs` in `firefox`
 * Fix crashes on `@driver.action.move_to` non-integer coordinates
+* Add `webdriver_error` handling to `one_of_several_elements_displayed?`
