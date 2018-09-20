@@ -18,6 +18,10 @@ rvm:
   - 2.2.10
   - 2.1.10
 
+matrix:
+  allow_failures:
+  - rvm: ruby-head
+
 bundler_args: "--without development"
 script:
 - bundle exec rspec
