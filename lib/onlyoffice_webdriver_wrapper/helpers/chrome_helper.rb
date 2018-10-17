@@ -2,7 +2,6 @@ module OnlyofficeWebdriverWrapper
   # Class for working with Chrome
   module ChromeHelper
     DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
-                                 --start-maximized
                                  --disable-popup-blocking
                                  --disable-infobars
                                  --no-sandbox
@@ -48,7 +47,7 @@ module OnlyofficeWebdriverWrapper
           sleep 10
           driver = Selenium::WebDriver.for :chrome, webdriver_options
         end
-        driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?
+        maximize_chrome(driver)
         driver
       else
         caps['chromeOptions'] = {
@@ -56,6 +55,21 @@ module OnlyofficeWebdriverWrapper
           extensions: data['extensions']
         }
         Selenium::WebDriver.for(:remote, url: 'http://' + remote_server + ':4444/wd/hub', desired_capabilities: caps)
+      end
+    end
+
+    private
+
+    # Maximize chrome
+    # @param driver [Selenium::WebDriver] driver to use
+    # @return [Void]
+    def maximize_chrome(driver)
+      if headless.running?
+        # Cannot use `driver.manage.window.maximize` in xvfb session
+        # according to https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901#c16
+        driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y)
+      else
+        driver.manage.window.maximize
       end
     end
   end
