@@ -11,6 +11,7 @@
 
 ### New Features
 * Update geckodriver from 0.18.0 to 0.20.1
+* Update `chromedriver` to 2.43
 * Add `Webdriver#download` for downloading files by link
 * Support of `Webdriver#proxy`
 * Add method `Webdriver#browser_metadata`
