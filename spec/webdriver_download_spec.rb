@@ -9,6 +9,4 @@ describe 'Working with download directory' do
     webdriver.quit
     expect(Dir.exist?(download_dir)).to be_falsey
   end
-
-  after { webdriver.quit }
 end
