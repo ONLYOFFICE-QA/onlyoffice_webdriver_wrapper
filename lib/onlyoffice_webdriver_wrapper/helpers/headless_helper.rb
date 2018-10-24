@@ -21,6 +21,7 @@ module OnlyofficeWebdriverWrapper
     def should_start?
       return false if debug?
       return false if OSHelper.mac?
+
       true
     end
 
@@ -31,6 +32,7 @@ module OnlyofficeWebdriverWrapper
                          true
                        end
       return unless create_session
+
       OnlyofficeLoggerHelper.log('Starting Headless Session')
       begin
         @headless_instance = Headless.new(reuse: false,
@@ -48,6 +50,7 @@ module OnlyofficeWebdriverWrapper
 
     def stop
       return unless running?
+
       OnlyofficeLoggerHelper.log('Stopping Headless Session')
       headless_instance.destroy
     end
@@ -58,6 +61,7 @@ module OnlyofficeWebdriverWrapper
 
     def take_screenshot(scr_path = '/tmp/screenshot.png')
       return unless running?
+
       headless_instance.take_screenshot(scr_path)
       OnlyofficeLoggerHelper.log("Took Screenshot to file: #{scr_path}")
     end

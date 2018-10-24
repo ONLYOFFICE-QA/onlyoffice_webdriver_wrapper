@@ -29,6 +29,7 @@ module OnlyofficeWebdriverWrapper
     def add_useragent_to_switches(switches)
       user_agent = user_agent_for_device
       return switches.dup if user_agent.nil?
+
       switches.dup << "--user-agent=#{user_agent}"
     end
 

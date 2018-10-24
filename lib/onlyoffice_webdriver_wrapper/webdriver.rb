@@ -57,6 +57,7 @@ module OnlyofficeWebdriverWrapper
                    device: :desktop_linux,
                    proxy: nil)
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
+
       @device = device
       @headless = HeadlessHelper.new
       @headless.start
@@ -110,6 +111,7 @@ module OnlyofficeWebdriverWrapper
 
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
+
       @driver.find_element(:xpath, object_identification)
     rescue StandardError
       nil
@@ -141,6 +143,7 @@ module OnlyofficeWebdriverWrapper
     def select_from_list(xpath_value, value)
       @driver.find_element(:xpath, xpath_value).find_elements(tag_name: 'li').each do |element|
         next unless element.text == value.to_s
+
         element.click
         return true
       end
@@ -268,6 +271,7 @@ module OnlyofficeWebdriverWrapper
     def click_on_locator(xpath_name, by_javascript = false, count: 1)
       element = get_element(xpath_name)
       return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
+
       if by_javascript
         execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
       else
@@ -353,6 +357,7 @@ module OnlyofficeWebdriverWrapper
     def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         next unless text_to_click.to_s == current_element.attribute('innerHTML')
+
         begin
           current_element.click
         rescue Exception => e
@@ -489,8 +494,10 @@ module OnlyofficeWebdriverWrapper
       result = []
       some_element = get_element(xpath_for_some)
       return result if some_element.nil?
+
       elements.each do |current|
         break if current == some_element
+
         result << current
       end
       result
@@ -500,6 +507,7 @@ module OnlyofficeWebdriverWrapper
       elements = get_elements(xpath_several_elements)
       some_element = get_element(xpath_for_some)
       return elements if some_element.nil?
+
       elements.each do |current|
         elements.delete(current)
         break if current == some_element
@@ -526,6 +534,7 @@ module OnlyofficeWebdriverWrapper
 
     def get_elements(objects_identification, only_visible = true)
       return objects_identification if objects_identification.is_a?(Array)
+
       elements = @driver.find_elements(:xpath, objects_identification)
       if only_visible
         elements.each do |current|
@@ -541,6 +550,7 @@ module OnlyofficeWebdriverWrapper
       elsif element_present?(xpath_name)
         element = get_element(xpath_name)
         return false if element.nil?
+
         begin
           visible = element.displayed?
         rescue Exception
@@ -560,6 +570,7 @@ module OnlyofficeWebdriverWrapper
         time += 1
       end
       return unless time >= timeout
+
       webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
     end
 
