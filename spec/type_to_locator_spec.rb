@@ -7,6 +7,11 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#type_to_locator' do
     webdriver.open('https://github.com/login')
     webdriver.type_to_locator('//*[@id="login_field"]', 'user@example.com')
     webdriver.type_to_locator('//*[@id="password"]', 'password')
+    expect(webdriver.get_text('//*[@id="login_field"]')).not_to eq('user@example.com')
+    expect(webdriver.get_text('//*[@id="password"]')).not_to eq('password')
+
+    webdriver.type_to_locator('//*[@id="login_field"]', 'user@example.com', true, true)
+    webdriver.type_to_locator('//*[@id="password"]', 'password', true, true)
     expect(webdriver.get_text('//*[@id="login_field"]')).to eq('user@example.com')
     expect(webdriver.get_text('//*[@id="password"]')).to eq('password')
   end
