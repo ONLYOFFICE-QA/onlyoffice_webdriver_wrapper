@@ -5,6 +5,7 @@
 ### New Features
 
 * Update `geckodriver` from 0.20.1 to 0.23.0
+* Update `selenium-webdriver` gem from 3.14.0 to 3.14.1
 
 ## 0.0.1 (2018-09-28)
 
