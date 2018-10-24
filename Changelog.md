@@ -6,12 +6,12 @@
 
 * Update `geckodriver` from 0.20.1 to 0.23.0
 * Update `selenium-webdriver` gem from 3.14.0 to 3.14.1
+* Update `chromedriver` from 2.41 to 2.43
 
 ## 0.0.1 (2018-09-28)
 
 ### New Features
 * Update geckodriver from 0.18.0 to 0.20.1
-* Update `chromedriver` to 2.43
 * Add `Webdriver#download` for downloading files by link
 * Support of `Webdriver#proxy`
 * Add method `Webdriver#browser_metadata`
