@@ -8,6 +8,10 @@
 * Update `selenium-webdriver` gem from 3.14.0 to 3.14.1
 * Update `chromedriver` from 2.41 to 2.43
 
+### Fixes
+
+* Fix `WebDriver#switch_to_popup` cause page to stop loading
+
 ## 0.0.1 (2018-09-28)
 
 ### New Features
