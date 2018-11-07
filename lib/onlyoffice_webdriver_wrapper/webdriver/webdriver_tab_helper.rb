@@ -27,6 +27,7 @@ module OnlyofficeWebdriverWrapper
       list_of_handlers = @driver.window_handles
       last_window_handler = list_of_handlers.last
       @driver.switch_to.window(last_window_handler)
+      sleep 1 # Do not remove until problem with browser hangup is fixed
     end
 
     # Get tab count
