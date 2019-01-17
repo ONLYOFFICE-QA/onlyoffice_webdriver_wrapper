@@ -12,5 +12,9 @@ module OnlyofficeWebdriverWrapper
     alias height top
     alias x left
     alias y top
+
+    def to_s
+      "Dimensions(left: #{@left}, top: #{@top})"
+    end
   end
 end
