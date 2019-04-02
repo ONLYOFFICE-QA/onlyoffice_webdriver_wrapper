@@ -17,7 +17,9 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log("Resize current window to #{width}x#{height}")
     end
 
-    def switch_to_popup
+    # @param after_switch_timeout [Integer] wait after switch to window
+    # non-zero to workaround bug with page load hanging up after switch
+    def switch_to_popup(after_switch_timeout: 3)
       counter = 0
       while tab_count < 2 && counter < 30
         sleep 1
@@ -27,7 +29,7 @@ module OnlyofficeWebdriverWrapper
       list_of_handlers = @driver.window_handles
       last_window_handler = list_of_handlers.last
       @driver.switch_to.window(last_window_handler)
-      sleep 3 # Do not remove until problem with page loading stop resolved
+      sleep(after_switch_timeout) # Do not remove until problem with page loading stop resolved
     end
 
     # Get tab count
