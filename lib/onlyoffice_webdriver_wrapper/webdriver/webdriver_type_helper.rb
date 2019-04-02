@@ -56,23 +56,6 @@ module OnlyofficeWebdriverWrapper
       element.send_keys text_to_send
     end
 
-    def type_text_by_symbol(xpath_name, text_to_send, clear_content = true, click_on_it = false, by_action = false, by_element_send_key = false)
-      click_on_locator(xpath_name) if click_on_it
-      element = get_element(xpath_name)
-      if clear_content
-        element.clear
-        click_on_locator(xpath_name) if click_on_it
-      end
-      text_to_send.scan(/./).each do |symbol|
-        sleep(0.3)
-        if (@browser != :chrome && !by_action) || by_element_send_key
-          send_keys(element, symbol, :element_send_key)
-        else
-          send_keys(element, symbol, by_action)
-        end
-      end
-    end
-
     def send_keys(xpath_name, text_to_send, by_action = true)
       element = get_element(xpath_name)
       @driver.action.click(element).perform if @browser == :firefox

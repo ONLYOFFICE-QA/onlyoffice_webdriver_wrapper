@@ -16,6 +16,10 @@
 * Fix `WebDriver#switch_to_popup` cause page to stop loading
 * Add `WebDriver#switch_to_popup` `after_switch_timeout` param to set timeout
 
+### Refactor
+
+* Remove unused method `WebDriver#type_text_by_symbol`
+
 ## 0.0.1 (2018-09-28)
 
 ### New Features
