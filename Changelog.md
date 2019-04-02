@@ -2,6 +2,18 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `Dimensions#to_s` method
+
+### Fixes
+
+* Add `WebDriver#switch_to_popup` `after_switch_timeout` param to set timeout
+
+### Refactor
+
+* Remove unused method `WebDriver#type_text_by_symbol`
+
 ## 0.0.2 (2018-11-07)
 
 ### New Features
@@ -9,16 +21,10 @@
 * Update `geckodriver` from 0.20.1 to 0.23.0
 * Update `selenium-webdriver` gem from 3.14.0 to 3.14.1
 * Update `chromedriver` from 2.41 to 2.43
-* Add `Dimensions#to_s` method
 
 ### Fixes
 
 * Fix `WebDriver#switch_to_popup` cause page to stop loading
-* Add `WebDriver#switch_to_popup` `after_switch_timeout` param to set timeout
-
-### Refactor
-
-* Remove unused method `WebDriver#type_text_by_symbol`
 
 ## 0.0.1 (2018-09-28)
 
