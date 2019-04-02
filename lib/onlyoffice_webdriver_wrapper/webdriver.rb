@@ -224,8 +224,6 @@ module OnlyofficeWebdriverWrapper
       else
         @driver.action.move_to(canvas, x1.to_i, y1.to_i).click_and_hold.move_by(x2, y2).perform
       end
-    rescue ArgumentError
-      raise "Replace 'click_and_hold(element)' to 'click_and_hold(element = nil)' in action_builder.rb"
     rescue TypeError => e
       webdriver_error("drag_and_drop(#{xpath}, #{x1}, #{y1}, #{x2}, #{y2}) TypeError: #{e.message}")
     end
