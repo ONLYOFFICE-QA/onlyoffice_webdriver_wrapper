@@ -219,11 +219,14 @@ module OnlyofficeWebdriverWrapper
     # * +mouse_release+ - release mouse after move
     def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
       canvas = get_element(xpath)
-      if mouse_release
-        @driver.action.move_to(canvas, x1.to_i, y1.to_i).click_and_hold.move_by(x2, y2).release.perform
-      else
-        @driver.action.move_to(canvas, x1.to_i, y1.to_i).click_and_hold.move_by(x2, y2).perform
-      end
+
+      move_action = @driver.action
+                           .move_to(canvas, x1.to_i, y1.to_i)
+                           .click_and_hold
+                           .move_by(x2, y2)
+      move_action = move_action.release if mouse_release
+
+      move_action.perform
     end
 
     # Perform drag'n'drop one whole element
