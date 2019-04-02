@@ -13,6 +13,7 @@
 ### Refactor
 
 * Remove unused method `WebDriver#type_text_by_symbol`
+* Remove non-actual exception handling in `WebDriver#drag_and_drop`
 
 ## 0.0.2 (2018-11-07)
 
