@@ -5,6 +5,7 @@
 ### New Features
 
 * Add `Dimensions#to_s` method
+* Update `chromedriver` to 74.0.3729.6 
 
 ### Fixes
 
