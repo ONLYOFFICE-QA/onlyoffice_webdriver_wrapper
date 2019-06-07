@@ -6,6 +6,7 @@
 
 * Add `Dimensions#to_s` method
 * Update `chromedriver` to 74.0.3729.6 
+* Update `selenium-webdriver` gem from `3.141.0` to `3.142.3` 
 
 ### Fixes
 
