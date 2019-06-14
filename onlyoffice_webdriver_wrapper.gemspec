@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
   s.add_runtime_dependency('onlyoffice_s3_wrapper', '~> 0.1')
   # since v2.1 page-object remove capability with Selenium Platform
-  s.add_runtime_dependency('page-object', '~> 2.0.0')
+  s.add_runtime_dependency('page-object', '>= 2.0', '< 2.3')
   s.add_runtime_dependency('selenium-webdriver', '3.142.3')
   # Since `watir` 6.8 -  `cannot load such file -- watir/extensions/select_text`
   # See: https://github.com/watir/watir/issues/635
