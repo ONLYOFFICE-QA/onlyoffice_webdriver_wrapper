@@ -70,13 +70,6 @@ Naming/UncommunicativeMethodParamName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
-# Offense count: 36
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 146
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.

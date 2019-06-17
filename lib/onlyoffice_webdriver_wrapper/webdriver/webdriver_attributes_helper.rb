@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OnlyofficeWebdriverWrapper
   # Module with methods to work with attributes
   module WebdriverAttributesHelper

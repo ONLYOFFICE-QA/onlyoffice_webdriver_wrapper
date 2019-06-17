@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OnlyofficeWebdriverWrapper
   # Methods for webdriver for calling Javascript
   module WebdriverJsMethods
