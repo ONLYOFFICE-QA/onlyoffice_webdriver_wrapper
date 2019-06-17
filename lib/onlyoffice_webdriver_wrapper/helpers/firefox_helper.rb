@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OnlyofficeWebdriverWrapper
   # Module for working with firefox
   module FirefoxHelper

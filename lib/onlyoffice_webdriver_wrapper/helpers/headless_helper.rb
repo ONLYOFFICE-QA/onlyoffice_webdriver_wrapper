@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'headless_helper/real_display_tools'
 require_relative 'headless_helper/ruby_helper'
 require 'headless'

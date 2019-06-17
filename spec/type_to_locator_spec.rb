@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rspec'
 
 describe 'OnlyofficeWebdriverWrapper::WebDriver#type_to_locator' do

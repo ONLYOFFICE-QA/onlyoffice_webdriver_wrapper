@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OnlyofficeWebdriverWrapper
   # Class for helping with type stuff
   module WebdriverTypeHelper

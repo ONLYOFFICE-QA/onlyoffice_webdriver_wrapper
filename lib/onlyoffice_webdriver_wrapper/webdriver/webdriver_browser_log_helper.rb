@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OnlyofficeWebdriverWrapper
   # Methods for working with browser console logs
   module WebdriverBrowserLogHelper
