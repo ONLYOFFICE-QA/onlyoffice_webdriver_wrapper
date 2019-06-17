@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
         el_style = element.attribute('style')
         unless el_style.empty?
           found_style = el_style.split(';').find { |curr_param| curr_param.include?(style) }
-          found_style.gsub(/\s?#{ style }:/, '') unless found_style.nil?
+          found_style&.gsub(/\s?#{ style }:/, '')
         end
       end.compact
     end
