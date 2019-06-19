@@ -11,6 +11,11 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("Exception #{e} in execute_javascript: #{script}")
     end
 
+    # @return [String] string to select by xpath
+    def jquery_selector_by_xpath(xpath)
+      "$(document.evaluate('#{xpath}', document, null, XPathResult.ANY_TYPE, null).iterateNext())"
+    end
+
     def type_to_locator_by_javascript(xpath_name, text)
       escaped_text = text.gsub('\\', '\\\\\\\\').gsub('"', '\\"').gsub("\n", '\\n')
       execute_javascript("document.evaluate('#{xpath_name}', document, null, XPathResult.ANY_TYPE, null).iterateNext().value=\"#{escaped_text}\";")
