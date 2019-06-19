@@ -13,6 +13,7 @@
 ### Fixes
 
 * Add `WebDriver#switch_to_popup` `after_switch_timeout` param to set timeout
+* Fix `WebDriver#add_class_by_jquery`
 
 ### Refactor
 
