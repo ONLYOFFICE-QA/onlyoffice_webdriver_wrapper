@@ -201,8 +201,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     def remove_class_by_jquery(selector, class_name)
-      execute_javascript('cd(window.frames[0])')
-      execute_javascript("$('#{selector}').removeClass('#{class_name}');")
+      execute_javascript("#{jquery_selector_by_xpath(selector)}.removeClass('#{class_name}');")
     end
 
     def add_class_by_jquery(selector, class_name)

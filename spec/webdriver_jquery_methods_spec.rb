@@ -17,4 +17,12 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     webdriver.add_class_by_jquery(button_xpath, custom_class)
     expect(webdriver.get_attribute(button_xpath, 'class')).to eq(custom_class)
   end
+
+  it 'remove_class_by_jquery correctly works' do
+    expect(webdriver.get_attribute(button_xpath, 'class')).to be_empty
+    webdriver.add_class_by_jquery(button_xpath, custom_class)
+    expect(webdriver.get_attribute(button_xpath, 'class')).to eq(custom_class)
+    webdriver.remove_class_by_jquery(button_xpath, custom_class)
+    expect(webdriver.get_attribute(button_xpath, 'class')).to be_empty
+  end
 end
