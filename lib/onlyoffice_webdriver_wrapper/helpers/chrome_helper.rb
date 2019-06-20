@@ -16,6 +16,10 @@ module OnlyofficeWebdriverWrapper
       File.join(File.dirname(__FILE__), driver_name)
     end
 
+    def chrome_service
+      @chrome_service ||= Selenium::WebDriver::Chrome::Service.new(path: chromedriver_path)
+    end
+
     # @return [Webdriver::Chrome] Chrome webdriver
     def start_chrome_driver
       prefs = {
@@ -40,7 +44,7 @@ module OnlyofficeWebdriverWrapper
                                                            prefs: prefs)
         webdriver_options = { options: options,
                               desired_capabilities: caps,
-                              driver_path: chromedriver_path }
+                              service: chrome_service }
         begin
           driver = Selenium::WebDriver.for :chrome, webdriver_options
         rescue Selenium::WebDriver::Error::WebDriverError,
