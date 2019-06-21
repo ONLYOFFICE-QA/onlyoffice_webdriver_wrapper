@@ -4,9 +4,7 @@ module OnlyofficeWebdriverWrapper
   # Methods for working with alerts
   module WebdriverAlertHelper
     def alert_confirm
-      @driver.switch_to.alert.accept
-    rescue StandardError
-      Selenium::WebDriver::Error::NoAlertOpenError
+      @driver.switch_to.alert.accept if alert_exists?
     end
 
     # Check if alert exists
@@ -14,7 +12,7 @@ module OnlyofficeWebdriverWrapper
     def alert_exists?
       @driver.switch_to.alert.text
       true
-    rescue Selenium::WebDriver::Error::NoAlertOpenError, Selenium::WebDriver::Error::NoSuchAlertError
+    rescue Selenium::WebDriver::Error::NoAlertOpenError, Selenium::WebDriver::Error::NoSuchAlertError, Errno::ECONNREFUSED
       false
     end
 
