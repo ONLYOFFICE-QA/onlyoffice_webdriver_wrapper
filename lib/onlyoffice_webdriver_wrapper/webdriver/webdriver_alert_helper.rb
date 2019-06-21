@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
     def alert_exists?
       @driver.switch_to.alert.text
       true
-    rescue Selenium::WebDriver::Error::NoAlertOpenError, Selenium::WebDriver::Error::NoSuchAlertError
+    rescue Selenium::WebDriver::Error::NoAlertOpenError, Selenium::WebDriver::Error::NoSuchAlertError, Errno::ECONNREFUSED
       false
     end
 
