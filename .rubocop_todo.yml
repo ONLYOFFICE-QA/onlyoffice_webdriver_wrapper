@@ -37,7 +37,7 @@ Metrics/BlockLength:
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 568
+  Max: 571
 
 # Offense count: 1
 Metrics/CyclomaticComplexity:

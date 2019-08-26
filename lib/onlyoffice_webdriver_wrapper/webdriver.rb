@@ -43,6 +43,8 @@ module OnlyofficeWebdriverWrapper
     # @return [Array, String] default switches for chrome
     attr_accessor :driver
     attr_accessor :browser
+    # @return [True, False] is browser currently running
+    attr_reader :browser_running
     # @return [Symbol] device of which we try to simulate, default - :desktop_linux
     attr_accessor :device
     attr_accessor :ip_of_remote_server
@@ -76,6 +78,7 @@ module OnlyofficeWebdriverWrapper
       else
         raise 'Unknown Browser: ' + browser.to_s
       end
+      @browser_running = true
     end
 
     def add_web_console_error(log)
@@ -96,6 +99,8 @@ module OnlyofficeWebdriverWrapper
     end
 
     def quit
+      return unless browser_running
+
       begin
         @driver.execute_script('window.onbeforeunload = null') # off popup window
       rescue StandardError
@@ -109,6 +114,7 @@ module OnlyofficeWebdriverWrapper
       alert_confirm
       @headless.stop
       FileUtils.remove_dir(@download_directory) if Dir.exist?(@download_directory)
+      @browser_running = false
     end
 
     def get_element(object_identification)
