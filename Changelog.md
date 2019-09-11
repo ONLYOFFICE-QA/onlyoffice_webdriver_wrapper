@@ -6,7 +6,7 @@
 
 * Add `Dimensions#to_s` method
 * Add `w3c: false` to access logs on latest chromedriver
-* Update `chromedriver` to 75.0.3770.8
+* Update `chromedriver` to 77.0.3865.40
 * Update `selenium-webdriver` gem from `3.141.0` to `3.142.3`
   and drop support of ruby older than 2.3
 * Update `geckodriver` from 0.23.0 to 0.24.0
