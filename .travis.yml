@@ -1,5 +1,5 @@
 sudo: required
-language: rugby
+language: ruby
 before_install:
 - google-chrome --version
 - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
