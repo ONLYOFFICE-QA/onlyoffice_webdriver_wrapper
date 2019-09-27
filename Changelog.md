@@ -18,6 +18,7 @@
 * Fix `WebDriver#remove_class_by_jquery`
 * Fix deprecation of `driver_path`
 * Fix quitting from already quit browser session
+* Fix downloading multiple files in Chrome
 
 ### Refactor
 

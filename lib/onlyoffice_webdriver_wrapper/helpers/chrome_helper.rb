@@ -28,8 +28,8 @@ module OnlyofficeWebdriverWrapper
           default_directory: download_directory
         },
         profile: {
-          default_content_settings: {
-            'multiple-automatic-downloads' => 1
+          default_content_setting_values: {
+            'automatic_downloads': 1
           }
         },
         credentials_enable_service: false
