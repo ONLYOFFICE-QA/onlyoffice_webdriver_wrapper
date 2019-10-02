@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
   s.add_runtime_dependency('onlyoffice_s3_wrapper', '~> 0.1')
   s.add_runtime_dependency('page-object', '~> 2')
-  s.add_runtime_dependency('selenium-webdriver', '3.142.3')
+  s.add_runtime_dependency('selenium-webdriver', '3.142.5')
   s.add_runtime_dependency('watir', '~> 6')
   s.license = 'AGPL-3.0'
 end
