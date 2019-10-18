@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.1.0 (2019-10-18) 
+
 ### New Features
 
 * Add `Dimensions#to_s` method
