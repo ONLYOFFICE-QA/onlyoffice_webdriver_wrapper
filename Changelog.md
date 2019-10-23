@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Replace all `visible?` usage to `present?`
+
 ## 0.1.0 (2019-10-18) 
 
 ### New Features

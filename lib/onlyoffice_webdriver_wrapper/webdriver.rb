@@ -140,7 +140,7 @@ module OnlyofficeWebdriverWrapper
     def click_and_wait(element_to_click, element_to_wait)
       element_to_click.click
       count = 0
-      while !element_to_wait.visible? && count < 30
+      while !element_to_wait.present? && count < 30
         sleep 1
         count += 1
       end
@@ -465,7 +465,7 @@ module OnlyofficeWebdriverWrapper
 
     def element_present?(xpath_name)
       if xpath_name.is_a?(PageObject::Elements::Element)
-        xpath_name.visible?
+        xpath_name.present?
       elsif xpath_name.is_a?(Selenium::WebDriver::Element)
         xpath_name.displayed?
       else
