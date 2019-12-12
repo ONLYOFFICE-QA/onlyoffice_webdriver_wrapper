@@ -71,7 +71,7 @@ module OnlyofficeWebdriverWrapper
       style = "window.getComputedStyle(#{element_by_xpath}, '#{pseudo_element}')"
       full_command = "#{style}.getPropertyValue('#{property}')"
       result = execute_javascript("return #{full_command}")
-      result.gsub('"', '')
+      result.delete('"', '')
     end
   end
 end
