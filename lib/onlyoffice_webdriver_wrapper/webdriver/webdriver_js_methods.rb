@@ -60,5 +60,18 @@ module OnlyofficeWebdriverWrapper
     def document_ready?
       execute_javascript('return document.readyState;') == 'complete'
     end
+
+    # Get ComputedStyle property value
+    # @param xpath [String] xpath of element
+    # @param pseudo_element [String] pseudo element to compute
+    # @param property [String] property to get
+    # @return [String] value of property
+    def computed_style(xpath, pseudo_element = 'null', property = nil)
+      element_by_xpath = "document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()"
+      style = "window.getComputedStyle(#{element_by_xpath}, '#{pseudo_element}')"
+      full_command = "#{style}.getPropertyValue('#{property}')"
+      result = execute_javascript("return #{full_command}")
+      result.delete('"')
+    end
   end
 end
