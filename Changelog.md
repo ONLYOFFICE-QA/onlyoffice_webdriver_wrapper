@@ -16,6 +16,7 @@
 * Update `selenium-webdriver` gem from `3.141.0` to `3.142.3`
   and drop support of ruby older than 2.3
 * Update `geckodriver` from 0.23.0 to 0.24.0
+* Add `Webdriver#computed_style` to get computed style of element via js
 
 ### Fixes
 

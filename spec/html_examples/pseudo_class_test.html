@@ -1,0 +1,21 @@
+<html>
+    <body>
+        <div id="first_element" class="usual_class">text</div>
+        <div id="second_element" class="psevdo_class">text</div>
+    </body>
+</html>
+<style>
+    #first_element {
+        height: 1em;
+        background-color: red;
+    }
+
+    #second_element {
+        height: 1em;
+        background-color: red;
+    }
+
+    #second_element::before {
+        content: "with_pseudo_ ";
+    }
+</style>
