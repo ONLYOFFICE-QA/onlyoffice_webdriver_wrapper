@@ -69,8 +69,9 @@ module OnlyofficeWebdriverWrapper
     def computed_style(xpath, pseudo_element = 'null', property = nil)
       element_by_xpath = "document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()"
       style = "window.getComputedStyle(#{element_by_xpath}, '#{pseudo_element}')"
-      result = "#{style}.getPropertyValue('#{property}')"
-      execute_javascript("return #{result}")
+      full_command = "#{style}.getPropertyValue('#{property}')"
+      result = execute_javascript("return #{full_command}")
+      result.gsub('"', '')
     end
   end
 end

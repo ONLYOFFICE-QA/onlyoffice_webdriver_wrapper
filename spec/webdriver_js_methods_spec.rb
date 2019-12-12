@@ -23,6 +23,6 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
                                     'content')).to eq('none')
     expect(webdriver.computed_style('//*[@id="second_element"]',
                                     ':before',
-                                    'content')).to eq('"with_pseudo_ "')
+                                    'content')).to eq('with_pseudo_')
   end
 end
