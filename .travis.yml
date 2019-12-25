@@ -21,5 +21,4 @@ jobs:
       script:
         - npm install -g markdownlint-cli
         - markdownlint Changelog.md
-    - stage: rspec
-      script: bundle exec rspec
+        - bundle exec rspec
