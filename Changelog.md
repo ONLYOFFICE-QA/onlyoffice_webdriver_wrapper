@@ -2,9 +2,13 @@
 
 ## master (unreleased)
 
+## 0.1.1 (2019-12-25)
+
 ### New Features
 
 * Replace all `visible?` usage to `present?`
+* Add `Webdriver#computed_style` to get computed style of element via js
+* Update `chromedriver` to 79.0.3945.36
 
 ## 0.1.0 (2019-10-18) 
 
@@ -12,11 +16,10 @@
 
 * Add `Dimensions#to_s` method
 * Add `w3c: false` to access logs on latest chromedriver
-* Update `chromedriver` to 79.0.3945.36
+* Update `chromedriver` to 77.0.3865.40
 * Update `selenium-webdriver` gem from `3.141.0` to `3.142.3`
   and drop support of ruby older than 2.3
 * Update `geckodriver` from 0.23.0 to 0.24.0
-* Add `Webdriver#computed_style` to get computed style of element via js
 
 ### Fixes
 
