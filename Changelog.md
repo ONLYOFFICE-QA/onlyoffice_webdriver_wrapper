@@ -16,7 +16,7 @@
 * Add `Webdriver#computed_style` to get computed style of element via js
 * Update `chromedriver` to 79.0.3945.36
 
-## 0.1.0 (2019-10-18) 
+## 0.1.0 (2019-10-18)
 
 ### New Features
 
