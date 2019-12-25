@@ -5,6 +5,7 @@
 ### New Features
 
 * Add Rakefile and tasks for releasing gem
+* Simplify travis config, remove non-actual code
 
 ## 0.1.1 (2019-12-25)
 
