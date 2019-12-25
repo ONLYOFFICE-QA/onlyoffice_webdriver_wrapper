@@ -15,4 +15,11 @@ rvm:
   - 2.3
 
 bundler_args: "--without development"
-script: bundle exec rspec
+jobs:
+  include:
+    - stage: markdownlint
+      script:
+        - npm install -g markdownlint-cli
+        - markdownlint Changelog.md
+    - stage: rspec
+      script: bundle exec rspec
