@@ -7,7 +7,6 @@
 * Add Rakefile and tasks for releasing gem
 * Simplify travis config, remove non-actual code
 * Add travis task for markdown and fix issues in Changelog.md
-* Add `rake` as `test` dependency
 
 ## 0.1.1 (2019-12-25)
 
