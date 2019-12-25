@@ -6,6 +6,7 @@
 
 * Add Rakefile and tasks for releasing gem
 * Simplify travis config, remove non-actual code
+* Add travis task for markdown and fix issues in Changelog.md
 
 ## 0.1.1 (2019-12-25)
 
@@ -15,7 +16,7 @@
 * Add `Webdriver#computed_style` to get computed style of element via js
 * Update `chromedriver` to 79.0.3945.36
 
-## 0.1.0 (2019-10-18) 
+## 0.1.0 (2019-10-18)
 
 ### New Features
 
@@ -57,12 +58,14 @@
 ## 0.0.1 (2018-09-28)
 
 ### New Features
+
 * Update geckodriver from 0.18.0 to 0.20.1
 * Add `Webdriver#download` for downloading files by link
 * Support of `Webdriver#proxy`
 * Add method `Webdriver#browser_metadata`
 
 ### Fixes
+
 * Fix `Webdriver#alert_exists?` for `firefox`
 * Do not crash on `Webdrvier#browser_logs` in `firefox`
 * Fix crashes on `@driver.action.move_to` non-integer coordinates
