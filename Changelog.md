@@ -8,6 +8,10 @@
 * Simplify travis config, remove non-actual code
 * Add travis task for markdown and fix issues in Changelog.md
 
+### Removal
+
+* Remove `Webdriver#get_element_by_parameter`
+
 ## 0.1.1 (2019-12-25)
 
 ### New Features
