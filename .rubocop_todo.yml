@@ -63,14 +63,6 @@ Naming/MethodParameterName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - 'Rakefile'
-
 # Offense count: 153
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
