@@ -26,10 +26,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_element_by_parameter(elements, parameter_name, value)
-      elements.find { |current_element| value == get_attribute(current_element, parameter_name) }
-    end
-
     def get_attribute_from_displayed_element(xpath_name, attribute)
       @driver.find_elements(:xpath, xpath_name).each do |current_element|
         return current_element.attribute(attribute) if current_element.displayed?
