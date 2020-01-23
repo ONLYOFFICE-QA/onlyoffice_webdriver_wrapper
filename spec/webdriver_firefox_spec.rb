@@ -32,7 +32,7 @@ describe 'Webdriver Firefox' do
   end
 
   it 'Check that firefox can download files by direct links' do
-    result = webdriver.download('https://s3.us-west-2.amazonaws.com/nct-data-share/docx/0+(1).docx')
+    result = webdriver.download('https://onlyoffice-webdriver-wrapper-spec-files.s3.amazonaws.com/0+(1).docx')
     expect(File.exist?(result)).to be_truthy
   end
 
