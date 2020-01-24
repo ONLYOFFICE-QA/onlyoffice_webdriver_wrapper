@@ -7,6 +7,7 @@
 * Add Rakefile and tasks for releasing gem
 * Simplify travis config, remove non-actual code
 * Add travis task for markdown and fix issues in Changelog.md
+* Change screenshot S3 bucket location
 
 ### Removal
 
