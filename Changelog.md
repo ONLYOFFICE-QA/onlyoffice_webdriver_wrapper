@@ -8,6 +8,7 @@
 * Simplify travis config, remove non-actual code
 * Add travis task for markdown and fix issues in Changelog.md
 * Change screenshot S3 bucket location
+* Update `chromedriver` to 80.0.3987.16
 
 ### Removal
 
