@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.1.2 (2020-02-18)
+
 ### New Features
 
 * Add Rakefile and tasks for releasing gem
