@@ -598,10 +598,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def remove_element(xpath)
-      execute_javascript("element = document.evaluate(\"#{xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
-    end
-
     # Select frame as current
     # @param [String] xpath_name name of current xpath
     def select_frame(xpath_name = '//iframe', count_of_frames = 1)

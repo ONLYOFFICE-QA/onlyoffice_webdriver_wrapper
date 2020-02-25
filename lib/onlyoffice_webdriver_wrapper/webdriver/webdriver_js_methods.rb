@@ -73,5 +73,12 @@ module OnlyofficeWebdriverWrapper
       result = execute_javascript("return #{full_command}")
       result.delete('"')
     end
+
+    # Remove element by its xpath
+    # @param [String] xpath of element to remove
+    # @return [String] result of javascript execution
+    def remove_element(xpath)
+      execute_javascript("element = document.evaluate(\"#{xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
+    end
   end
 end
