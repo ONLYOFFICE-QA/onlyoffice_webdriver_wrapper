@@ -25,4 +25,11 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
                                     ':before',
                                     'content')).to eq('with_pseudo_')
   end
+
+  it 'WebdriverJsMethods#remove_element' do
+    webdriver.open("file://#{pseudo_class_file}")
+    element_to_remove = "//*[@id='first_element']"
+    webdriver.remove_element(element_to_remove)
+    expect(webdriver.get_element(element_to_remove)).to be_nil
+  end
 end
