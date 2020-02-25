@@ -10,6 +10,7 @@
 * Simplify travis config, remove non-actual code
 * Add travis task for markdown and fix issues in Changelog.md
 * Change screenshot S3 bucket location
+* Rename and redone `jquery_selector_by_xpath` to `dom_element_by_xpath`
 
 ### Removal
 
