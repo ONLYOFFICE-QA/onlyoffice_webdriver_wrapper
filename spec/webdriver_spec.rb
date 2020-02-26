@@ -5,6 +5,7 @@ require 'spec_helper'
 describe OnlyofficeWebdriverWrapper::WebDriver do
   describe 'Default tests' do
     let(:webdriver) { described_class.new(:chrome) }
+
     iframe_js = "var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';ifr.id = 'my-frame';document.body.appendChild(ifr)"
 
     it 'Check for popup open' do

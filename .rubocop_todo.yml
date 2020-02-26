@@ -75,13 +75,6 @@ RSpec/DescribeClass:
     - 'spec/webdriver_firefox_spec.rb'
     - 'spec/webdriver_metadata_version_spec.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterFinalLet:
-  Exclude:
-    - 'spec/wait_until_spec.rb'
-    - 'spec/webdriver_spec.rb'
-
 # Offense count: 4
 # Configuration parameters: Max.
 RSpec/ExampleLength:

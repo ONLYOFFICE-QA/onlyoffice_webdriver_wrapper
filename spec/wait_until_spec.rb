@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe 'wait_until' do
   let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+
   wait_until_message = '`return document.readyState;` with result: `complete`'
 
   it 'wait_until by default wait for js load' do
