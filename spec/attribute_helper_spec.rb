@@ -12,15 +12,15 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
 
   describe '#attribute_exist?' do
     it 'attribute_exist? true' do
-      expect(webdriver.attribute_exist?('//div', 'hidden')).to be_truthy
+      expect(webdriver).to be_attribute_exist('//div', 'hidden')
     end
 
     it 'attribute_exist? false' do
-      expect(webdriver.attribute_exist?('//div', 'pidden')).to be_falsey
+      expect(webdriver).not_to be_attribute_exist('//div', 'pidden')
     end
 
     it 'attribute_exist? for non-existing element' do
-      expect(webdriver.attribute_exist?('//div1', 'pidden')).to be_falsey
+      expect(webdriver).not_to be_attribute_exist('//div1', 'pidden')
     end
   end
 

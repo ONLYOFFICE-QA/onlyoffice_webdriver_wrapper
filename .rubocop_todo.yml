@@ -137,17 +137,6 @@ RSpec/InstanceVariable:
 RSpec/MultipleExpectations:
   Max: 4
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: Strict, EnforcedStyle, AllowedExplicitMatchers.
-# SupportedStyles: inflected, explicit
-RSpec/PredicateMatcher:
-  Exclude:
-    - 'spec/attribute_helper_spec.rb'
-    - 'spec/webdriver_download_spec.rb'
-    - 'spec/webdriver_firefox_spec.rb'
-    - 'spec/webdriver_js_methods_spec.rb'
-
 # Offense count: 149
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
