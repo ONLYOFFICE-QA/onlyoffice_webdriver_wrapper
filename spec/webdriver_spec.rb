@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebDriver do
   describe 'Default tests' do
-    let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+    let(:webdriver) { described_class.new(:chrome) }
     iframe_js = "var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';ifr.id = 'my-frame';document.body.appendChild(ifr)"
 
     it 'Check for popup open' do
@@ -68,7 +68,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
 
   describe 'User agent' do
     describe 'Custom user agent' do
-      let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome, device: :android_phone) }
+      let(:webdriver) { described_class.new(:chrome, device: :android_phone) }
 
       it 'set_custom_device_useragent' do
         expect(webdriver.current_user_agent).to eq(OnlyofficeWebdriverWrapper::WebDriver::USERAGENT_ANDROID_PHONE)
@@ -76,7 +76,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     end
 
     describe 'Default user agent' do
-      let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+      let(:webdriver) { described_class.new(:chrome) }
 
       it 'default device name' do
         expect(webdriver.current_user_agent).not_to eq(OnlyofficeWebdriverWrapper::WebDriver::USERAGENT_ANDROID_PHONE)
@@ -85,7 +85,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
   end
 
   describe 'console log' do
-    let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+    let(:webdriver) { described_class.new(:chrome) }
 
     it 'open url and get console log output' do
       file_with_js_error = "#{Dir.pwd}/spec/html_examples/javascript_error.html"

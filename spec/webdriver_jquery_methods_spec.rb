@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebDriver do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+  let(:webdriver) { described_class.new(:chrome) }
   let(:file) { "#{Dir.pwd}/spec/html_examples/jquery.html" }
   let(:button_xpath) { '//*[@id="button"]' }
   let(:custom_class) { 'customClass' }
