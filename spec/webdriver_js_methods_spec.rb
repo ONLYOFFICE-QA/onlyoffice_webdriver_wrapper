@@ -43,4 +43,18 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
       expect(webdriver.get_element(element_to_remove)).to be_nil
     end
   end
+
+  it 'WebdriverJsMethods#element_size_by_js return not empty data' do
+    webdriver.open("file://#{pseudo_class_file}")
+    size = webdriver.element_size_by_js('//*[@id="first_element"]')
+    expect(size.x).to be > 0
+    expect(size.y).to be > 0
+  end
+
+  it 'WebdriverJsMethods#object_absolute_position return not empty data' do
+    webdriver.open("file://#{pseudo_class_file}")
+    size = webdriver.object_absolute_position('//*[@id="first_element"]')
+    expect(size.x).to be > 0
+    expect(size.y).to be > 0
+  end
 end
