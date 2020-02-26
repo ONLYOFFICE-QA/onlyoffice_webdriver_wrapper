@@ -8,12 +8,12 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
 
   it 'WebdriverJsMethods#jquery_finished? if no jquery on page' do
     webdriver.open('http://www.google.com')
-    expect(webdriver.jquery_finished?).to be_truthy
+    expect(webdriver).to be_jquery_finished
   end
 
   it 'WebdriverJsMethods#jquery_finished? if jquery on page' do
     webdriver.open('https://www.teamlab.info')
-    expect(webdriver.jquery_finished?).to be_truthy
+    expect(webdriver).to be_jquery_finished
   end
 
   it 'WebdriverJsMethods#computed_style' do

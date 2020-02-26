@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebDriver do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+  let(:webdriver) { described_class.new(:chrome) }
   let(:alert_file) { "#{Dir.pwd}/spec/html_examples/alert.html" }
   let(:no_alert_file) { "#{Dir.pwd}/spec/html_examples/jquery.html" }
 

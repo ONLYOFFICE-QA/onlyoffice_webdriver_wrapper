@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebDriver do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+  let(:webdriver) { described_class.new(:chrome) }
 
   it 'Quiting several times not cause any troubles' do
     webdriver.quit
