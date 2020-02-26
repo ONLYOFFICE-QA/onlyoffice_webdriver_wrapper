@@ -31,8 +31,8 @@ module OnlyofficeWebdriverWrapper
     # @param xpath [Sting] xpath of object
     # @return [Dimensions] size of element
     def element_size_by_js(xpath)
-      width = execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().offsetWidth")
-      height = execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().offsetHeight")
+      width = execute_javascript("return #{dom_element_by_xpath(xpath)}.offsetWidth")
+      height = execute_javascript("return #{dom_element_by_xpath(xpath)}.offsetHeight")
       Dimensions.new(width, height)
     end
 
@@ -40,8 +40,9 @@ module OnlyofficeWebdriverWrapper
     # @param xpath [Sting] xpath of object
     # @return [CursorPoint] position of element
     def object_absolute_position(xpath)
-      left = execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().getBoundingClientRect().left")
-      top = execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().getBoundingClientRect().top")
+      bounding = "#{dom_element_by_xpath(xpath)}.getBoundingClientRect()"
+      left = execute_javascript("return #{bounding}.left")
+      top = execute_javascript("return #{bounding}.top")
       Dimensions.new(left, top)
     end
 
