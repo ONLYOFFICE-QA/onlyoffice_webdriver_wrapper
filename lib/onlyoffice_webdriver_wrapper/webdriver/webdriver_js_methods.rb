@@ -11,9 +11,11 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("Exception #{e} in execute_javascript: #{script}")
     end
 
-    # @return [String] string to select by xpath
-    def jquery_selector_by_xpath(xpath)
-      "$(document.evaluate('#{xpath}', document, null, XPathResult.ANY_TYPE, null).iterateNext())"
+    # @param [String] xpath element to select
+    # @return [String] string to select dom by xpath
+    def dom_element_by_xpath(xpath)
+      escaped_xpath = xpath.gsub('"', "'")
+      "document.evaluate(\"#{escaped_xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()"
     end
 
     def type_to_locator_by_javascript(xpath_name, text)
@@ -78,7 +80,10 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath of element to remove
     # @return [String] result of javascript execution
     def remove_element(xpath)
-      execute_javascript("element = document.evaluate(\"#{xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();if (element !== null) {element.parentNode.removeChild(element);};")
+      script = "element = #{dom_element_by_xpath(xpath)};"\
+               'if (element !== null) '\
+               '{element.parentNode.removeChild(element);};'
+      execute_javascript(script)
     end
   end
 end
