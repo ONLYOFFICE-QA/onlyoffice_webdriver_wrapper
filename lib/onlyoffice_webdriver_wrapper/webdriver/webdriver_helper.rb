@@ -16,7 +16,7 @@ module OnlyofficeWebdriverWrapper
     def download(file_url)
       data = Kernel.open(file_url, &:read)
       file = Tempfile.new('onlyoffice-downloaded-file')
-      file.write(data)
+      file.write(data.force_encoding('UTF-8'))
       file.close
       file.path
     end

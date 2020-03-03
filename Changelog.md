@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix `Encoding::UndefinedConversionError` for `Webdriver#download`
+
 ## 0.1.2 (2020-02-18)
 
 ### New Features
