@@ -24,15 +24,9 @@ module OnlyofficeWebdriverWrapper
     def start_chrome_driver
       prefs = {
         download: {
-          prompt_for_download: false,
-          default_directory: download_directory
-        },
-        profile: {
-          default_content_setting_values: {
-            'automatic_downloads': 1
-          }
-        },
-        credentials_enable_service: false
+          'prompt_for_download' => false,
+          'default_directory' => download_directory
+        }
       }
       caps = Selenium::WebDriver::Remote::Capabilities.chrome
       caps[:logging_prefs] = { browser: 'ALL' }
