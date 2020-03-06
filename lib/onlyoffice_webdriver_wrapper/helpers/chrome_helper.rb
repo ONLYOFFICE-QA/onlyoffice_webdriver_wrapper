@@ -24,12 +24,12 @@ module OnlyofficeWebdriverWrapper
     def start_chrome_driver
       prefs = {
         download: {
-          prompt_for_download: false,
-          default_directory: download_directory
+          'prompt_for_download' => false,
+          'default_directory' => download_directory
         },
         profile: {
-          default_content_setting_values: {
-            'automatic_downloads': 1
+          'default_content_setting_values' => {
+            'automatic_downloads' => 1
           }
         },
         credentials_enable_service: false

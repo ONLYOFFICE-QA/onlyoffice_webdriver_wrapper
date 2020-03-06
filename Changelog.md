@@ -5,6 +5,7 @@
 ### Fixes
 
 * Fix `Encoding::UndefinedConversionError` for `Webdriver#download`
+* Fix incorrect file download location
 
 ## 0.1.2 (2020-02-18)
 
