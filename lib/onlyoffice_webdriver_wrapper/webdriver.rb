@@ -53,8 +53,6 @@ module OnlyofficeWebdriverWrapper
     # @return [Net::HTTP::Proxy] connection proxy
     attr_accessor :proxy
 
-    singleton_class.class_eval { attr_accessor :web_console_error }
-
     def initialize(browser = :firefox,
                    remote_server = nil,
                    device: :desktop_linux,
@@ -78,10 +76,6 @@ module OnlyofficeWebdriverWrapper
         raise 'Unknown Browser: ' + browser.to_s
       end
       @browser_running = true
-    end
-
-    def add_web_console_error(log)
-      WebDriver.web_console_error = log
     end
 
     def open(url)

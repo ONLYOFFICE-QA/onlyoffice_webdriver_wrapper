@@ -8,6 +8,10 @@
 * Fix incorrect file download location
 * Do not try to start selenium once more
 
+### Removal
+
+* Remove unused `Webdriver.web_console_error`
+
 ## 0.1.2 (2020-02-18)
 
 ### New Features
