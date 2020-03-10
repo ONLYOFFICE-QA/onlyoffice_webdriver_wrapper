@@ -45,15 +45,7 @@ module OnlyofficeWebdriverWrapper
         webdriver_options = { options: options,
                               desired_capabilities: caps,
                               service: chrome_service }
-        begin
-          driver = Selenium::WebDriver.for :chrome, webdriver_options
-        rescue Selenium::WebDriver::Error::WebDriverError,
-               Net::ReadTimeout,
-               Errno::ECONNREFUSED => e
-          OnlyofficeLoggerHelper.log("Starting chrome failed with error: #{e.backtrace}")
-          sleep 10
-          driver = Selenium::WebDriver.for :chrome, webdriver_options
-        end
+        driver = Selenium::WebDriver.for :chrome, webdriver_options
         maximize_chrome(driver)
         driver
       else
