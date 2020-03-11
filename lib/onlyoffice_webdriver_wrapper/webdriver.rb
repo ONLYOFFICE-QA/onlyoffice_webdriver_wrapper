@@ -106,7 +106,7 @@ module OnlyofficeWebdriverWrapper
       end
       alert_confirm
       @headless.stop
-      FileUtils.remove_dir(@download_directory) if Dir.exist?(@download_directory)
+      cleanup_download_folder
       @browser_running = false
     end
 

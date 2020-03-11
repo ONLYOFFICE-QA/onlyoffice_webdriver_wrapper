@@ -20,5 +20,18 @@ module OnlyofficeWebdriverWrapper
       file.close
       file.path
     end
+
+    # Perform safe cleanup of download folder
+    # @return [Nothing]
+    def cleanup_download_folder
+      return unless Dir.exist?(@download_directory)
+
+      if @download_directory.start_with?(Dir.tmpdir)
+        FileUtils.remove_dir(@download_directory)
+      else
+        OnlyofficeLoggerHelper.log("Download directory #{@download_directory} is not at tmp dir. "\
+                                   'It will be not deleted')
+      end
+    end
   end
 end

@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Features
+
+* Do not remove `@download_directory` if it's not in `/tmp/`
+
 ### Fixes
 
 * Fix `Encoding::UndefinedConversionError` for `Webdriver#download`
