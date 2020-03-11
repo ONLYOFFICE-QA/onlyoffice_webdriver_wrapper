@@ -29,7 +29,7 @@ module OnlyofficeWebdriverWrapper
       if @download_directory.start_with?(Dir.tmpdir)
         FileUtils.remove_dir(@download_directory)
       else
-        OnlyofficeLoggerHelper.log("Download directory #{@download_directory} is not at /tmp. "\
+        OnlyofficeLoggerHelper.log("Download directory #{@download_directory} is not at tmp dir. "\
                                    'It will be not deleted')
       end
     end
