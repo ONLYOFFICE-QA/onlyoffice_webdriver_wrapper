@@ -118,11 +118,6 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
-    def set_text_to_iframe(element, text)
-      element.click
-      @driver.action.send_keys(text).perform
-    end
-
     def get_text_array(array_elements)
       get_elements(array_elements).map { |current_element| get_text(current_element) }
     end
