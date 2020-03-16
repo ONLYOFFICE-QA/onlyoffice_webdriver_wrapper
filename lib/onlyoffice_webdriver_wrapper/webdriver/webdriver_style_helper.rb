@@ -7,6 +7,7 @@ module OnlyofficeWebdriverWrapper
       get_attribute(xpath, 'style').split(';').each do |current_param|
         return /:\s(.*);?$/.match(current_param)[1] if current_param.include?(parameter_name)
       end
+      nil
     end
 
     def set_style_parameter(xpath, attribute, attribute_value)
@@ -20,7 +21,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     def set_style_show_by_xpath(xpath, move_to_center = false)
-      xpath.tr!("'", '"')
+      xpath = xpath.tr("'", '"')
       execute_javascript('document.evaluate( \'' + xpath.to_s +
                              '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
       return unless move_to_center
