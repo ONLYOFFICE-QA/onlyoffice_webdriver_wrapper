@@ -51,7 +51,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     describe 'get_url' do
       it 'get url in frame return url of frame, not mail url' do
         webdriver.open('http://www.google.com')
-        webdriver.execute_javascript(iframe_js)
+        webdriver.execute_javascript(iframe_js, wait_timeout: 5)
         webdriver.select_frame('//*[@id="my-frame"]')
         expect(webdriver.get_url).to eq('https://www.example.com/')
       end
@@ -60,7 +60,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     describe 'get_host_name' do
       it 'get url in frame return host name of frame, not mail url' do
         webdriver.open('http://www.google.com')
-        webdriver.execute_javascript(iframe_js)
+        webdriver.execute_javascript(iframe_js, wait_timeout: 5)
         webdriver.select_frame('//*[@id="my-frame"]')
         expect(webdriver.get_host_name).to eq('https://www.example.com')
       end

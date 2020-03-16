@@ -5,6 +5,7 @@
 ### Features
 
 * Do not remove `@download_directory` if it's not in `/tmp/`
+* `Webdriver#execute_javascript` new param to sleep after execute
 
 ### Fixes
 
