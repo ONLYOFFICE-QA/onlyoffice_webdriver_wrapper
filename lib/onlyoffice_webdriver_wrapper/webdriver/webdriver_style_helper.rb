@@ -7,6 +7,7 @@ module OnlyofficeWebdriverWrapper
       get_attribute(xpath, 'style').split(';').each do |current_param|
         return /:\s(.*);?$/.match(current_param)[1] if current_param.include?(parameter_name)
       end
+      nil
     end
 
     def set_style_parameter(xpath, attribute, attribute_value)
