@@ -30,4 +30,13 @@ describe '#type_helper' do
       expect(webdriver.get_text('//input')).to eq('bar')
     end
   end
+
+  describe 'type_text_and_select_it' do
+    it 'type_text_and_select_it text will replaced in next type' do
+      text_element = webdriver.get_element('//input')
+      webdriver.type_text_and_select_it(text_element, 'foo')
+      webdriver.type_text('//input', 'bar')
+      expect(webdriver.get_text('//input')).to eq('bar')
+    end
+  end
 end
