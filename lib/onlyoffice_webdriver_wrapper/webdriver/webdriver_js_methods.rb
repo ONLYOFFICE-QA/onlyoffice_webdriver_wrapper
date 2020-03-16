@@ -3,9 +3,14 @@
 module OnlyofficeWebdriverWrapper
   # Methods for webdriver for calling Javascript
   module WebdriverJsMethods
-    def execute_javascript(script)
+    # Execute javascript
+    # @param script [String] code to execute
+    # @param wait_timeout [Integer] wait after JS is executed.
+    #   Some code require some time to execute
+    def execute_javascript(script, wait_timeout: 0)
       result = @driver.execute_script(script)
       OnlyofficeLoggerHelper.log("Executed js: `#{script}` with result: `#{result}`")
+      sleep(wait_timeout)
       result
     rescue Exception => e
       webdriver_error("Exception #{e} in execute_javascript: #{script}")
