@@ -9,16 +9,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_style_attributes_of_several_elements(xpath_several_elements, style)
-      @driver.find_elements(:xpath, xpath_several_elements).map do |element|
-        el_style = element.attribute('style')
-        unless el_style.empty?
-          found_style = el_style.split(';').find { |curr_param| curr_param.include?(style) }
-          found_style&.gsub(/\s?#{style}:/, '')
-        end
-      end.compact
-    end
-
     def set_style_parameter(xpath, attribute, attribute_value)
       execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
                              "style.#{attribute}=\"#{attribute_value}\"")

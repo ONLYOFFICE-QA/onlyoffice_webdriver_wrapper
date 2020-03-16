@@ -17,6 +17,7 @@
 
 * Remove unused `Webdriver.web_console_error`
 * Remove unused `Webdriver#set_text_to_iframe`
+* Remove unused `Webdriver#get_style_attributes_of_several_elements`
 
 ## 0.1.2 (2020-02-18)
 
