@@ -67,9 +67,9 @@ describe '#type_helper' do
       expect(webdriver.get_text('//input')).to eq('bar')
     end
 
-    it 'click on blocked element' do
+    it 'click on hidden element' do
       expect do
-        webdriver.type_to_input('//input[@id="disabled"]',
+        webdriver.type_to_input('//input[@id="hidden"]',
                                 'foo',
                                 false,
                                 true)
