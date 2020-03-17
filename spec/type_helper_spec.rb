@@ -88,4 +88,27 @@ describe '#type_helper' do
       expect(webdriver.get_text('//input')).to eq('foo')
     end
   end
+
+  describe 'send_keys_to_focused_elements' do
+    it 'send_keys_to_focused_elements default' do
+      webdriver.send_keys_to_focused_elements('foo')
+      expect(webdriver.get_text('//input')).to eq('foo')
+    end
+  end
+
+  describe 'press_key' do
+    it 'press_key single button' do
+      webdriver.press_key('a')
+      expect(webdriver.get_text('//input')).to eq('a')
+    end
+  end
+
+  describe 'key_down' do
+    it 'key_down for control is correct' do
+      webdriver.send_keys_to_focused_elements('foo')
+      webdriver.key_down('//input', :control)
+      webdriver.send_keys_to_focused_elements('a')
+      expect(webdriver.get_text('//input')).to eq('foo')
+    end
+  end
 end
