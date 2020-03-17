@@ -76,4 +76,16 @@ describe '#type_helper' do
       end.to raise_error(Selenium::WebDriver::Error::ElementNotInteractableError)
     end
   end
+
+  describe 'send_keys' do
+    it 'send_keys default' do
+      webdriver.send_keys('//input', 'foo')
+      expect(webdriver.get_text('//input')).to eq('foo')
+    end
+
+    it 'send_keys not by action' do
+      webdriver.send_keys('//input', 'foo', false)
+      expect(webdriver.get_text('//input')).to eq('foo')
+    end
+  end
 end
