@@ -48,5 +48,15 @@ describe '#type_helper' do
                                   true)
       end.to raise_error(Selenium::WebDriver::Error::ElementNotInteractableError)
     end
+
+    it 'type_to_locator type_to_locator' do
+      webdriver.type_to_locator('//input',
+                                'foo',
+                                true,
+                                false,
+                                false,
+                                true)
+      expect(webdriver.get_text('//input')).to eq('foo')
+    end
   end
 end
