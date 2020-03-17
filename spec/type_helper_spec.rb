@@ -39,4 +39,14 @@ describe '#type_helper' do
       expect(webdriver.get_text('//input')).to eq('bar')
     end
   end
+
+  describe 'type_to_locator' do
+    it 'type_to_locator cannot clear blocked element' do
+      expect do
+        webdriver.type_to_locator('//input[@id="disabled"]',
+                                  'text',
+                                  true)
+      end.to raise_error(Selenium::WebDriver::Error::ElementNotInteractableError)
+    end
+  end
 end
