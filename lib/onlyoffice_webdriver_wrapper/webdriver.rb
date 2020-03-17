@@ -46,7 +46,6 @@ module OnlyofficeWebdriverWrapper
     attr_reader :browser_running
     # @return [Symbol] device of which we try to simulate, default - :desktop_linux
     attr_accessor :device
-    attr_accessor :ip_of_remote_server
     attr_accessor :download_directory
     attr_accessor :server_address
     attr_accessor :headless
@@ -54,7 +53,7 @@ module OnlyofficeWebdriverWrapper
     attr_accessor :proxy
 
     def initialize(browser = :firefox,
-                   remote_server = nil,
+                   _remote_server = nil,
                    device: :desktop_linux,
                    proxy: nil)
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
@@ -65,7 +64,6 @@ module OnlyofficeWebdriverWrapper
 
       @download_directory = Dir.mktmpdir('webdriver-download')
       @browser = browser
-      @ip_of_remote_server = remote_server
       @proxy = proxy
       case browser
       when :firefox
