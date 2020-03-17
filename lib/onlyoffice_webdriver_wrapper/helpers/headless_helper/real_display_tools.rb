@@ -4,11 +4,7 @@ module OnlyofficeWebdriverWrapper
   # module for getting info about real display
   module RealDisplayTools
     def xrandr_result
-      begin
-        result = `xrandr 2>&1`
-      rescue Exception
-        result = 'xrandr throw an exception'
-      end
+      result = `xrandr 2>&1`
       OnlyofficeLoggerHelper.log("xrandr answer: #{result}".delete("\n"))
       result
     end
