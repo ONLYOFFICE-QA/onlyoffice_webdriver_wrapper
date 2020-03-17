@@ -58,7 +58,7 @@ module OnlyofficeWebdriverWrapper
         begin
           element.click
         rescue Exception => e
-          webdriver_error("type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}) error in 'element.click' error: #{e}")
+          webdriver_error(e.class, "type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}) error in 'element.click' error: #{e}")
         end
         sleep 0.2
       end

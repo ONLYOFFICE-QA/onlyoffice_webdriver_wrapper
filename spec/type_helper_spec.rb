@@ -59,4 +59,21 @@ describe '#type_helper' do
       expect(webdriver.get_text('//input')).to eq('foo')
     end
   end
+
+  describe 'type_to_input' do
+    it 'clear element is correct' do
+      webdriver.type_to_input('//input', 'foo')
+      webdriver.type_to_input('//input', 'bar', true)
+      expect(webdriver.get_text('//input')).to eq('bar')
+    end
+
+    it 'click on blocked element' do
+      expect do
+        webdriver.type_to_input('//input[@id="disabled"]',
+                                'foo',
+                                false,
+                                true)
+      end.to raise_error(Selenium::WebDriver::Error::ElementNotInteractableError)
+    end
+  end
 end
