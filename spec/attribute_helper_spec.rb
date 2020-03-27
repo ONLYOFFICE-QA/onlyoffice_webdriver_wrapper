@@ -52,5 +52,19 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
     end
   end
 
+  describe '#get_index_of_elements_with_attribute' do
+    it 'get_index_of_elements_with_attribute for several objects' do
+      expect(webdriver.get_index_of_elements_with_attribute('//span', 'custom-attribute', 'findable')).to eq(1)
+    end
+
+    it 'get_index_of_elements_with_attribute for several only_visible false' do
+      expect(webdriver.get_index_of_elements_with_attribute('//span', 'custom-attribute', 'findable', false)).to eq(2)
+    end
+
+    it 'get_index_of_elements_with_attribute for non-existing object' do
+      expect(webdriver.get_index_of_elements_with_attribute('//no', 'custom-attribute', 'findable')).to eq(0)
+    end
+  end
+
   after { webdriver.quit }
 end
