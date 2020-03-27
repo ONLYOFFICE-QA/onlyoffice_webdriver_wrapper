@@ -22,6 +22,7 @@
 * Remove support of `ip_of_remote_server`
 * Remove unused `Webdriver#get_attribute_from_displayed_element`
 * Remove unused `Webdriver#maximize`
+* Remove unused `Webdriver#close_window`
 
 ## 0.1.2 (2020-02-18)
 

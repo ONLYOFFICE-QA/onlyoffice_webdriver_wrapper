@@ -57,10 +57,6 @@ module OnlyofficeWebdriverWrapper
       switch_to_main_tab
     end
 
-    def close_window
-      @driver.close
-    end
-
     def close_popup_and_switch_to_main_tab
       switch_to_popup
       close_tab
