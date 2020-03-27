@@ -9,11 +9,6 @@ module OnlyofficeWebdriverWrapper
       execute_javascript('window.open()')
     end
 
-    def maximize
-      @driver.manage.window.maximize
-      OnlyofficeLoggerHelper.log('Maximized current window')
-    end
-
     def resize_tab(width, height)
       @driver.manage.window.resize_to(width, height)
       OnlyofficeLoggerHelper.log("Resize current window to #{width}x#{height}")

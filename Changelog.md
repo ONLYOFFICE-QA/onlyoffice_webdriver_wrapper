@@ -21,6 +21,7 @@
 * Remove `xrandr` exception handling
 * Remove support of `ip_of_remote_server`
 * Remove unused `Webdriver#get_attribute_from_displayed_element`
+* Remove unused `Webdriver#maximize`
 
 ## 0.1.2 (2020-02-18)
 
