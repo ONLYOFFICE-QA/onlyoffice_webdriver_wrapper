@@ -20,6 +20,7 @@
 * Remove unused `Webdriver#get_style_attributes_of_several_elements`
 * Remove `xrandr` exception handling
 * Remove support of `ip_of_remote_server`
+* Remove unused `Webdriver#get_attribute_from_displayed_element`
 
 ## 0.1.2 (2020-02-18)
 
