@@ -286,15 +286,6 @@ module OnlyofficeWebdriverWrapper
       @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
 
-    def context_click(xpath, x_coord, y_coord)
-      element = get_element(xpath)
-      if browser == :firefox
-        element.send_keys %i[shift f10]
-      else
-        @driver.action.move_to(element, x_coord.to_i, y_coord.to_i).context_click.perform
-      end
-    end
-
     def click_on_displayed(xpath_name)
       element = get_element_by_display(xpath_name)
       begin
