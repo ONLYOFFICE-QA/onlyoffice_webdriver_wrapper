@@ -406,16 +406,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def click_on_one_of_several_by_parameter_and_text(xpath_several_elements, parameter_name, parameter_value, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if current_element.attribute(parameter_name).include?(parameter_value) && text_to_click == current_element.text
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
     def click_on_one_of_several_xpath_by_number(xpath, number_of_element)
       click_on_locator("(#{xpath})[#{number_of_element}]")
     end
