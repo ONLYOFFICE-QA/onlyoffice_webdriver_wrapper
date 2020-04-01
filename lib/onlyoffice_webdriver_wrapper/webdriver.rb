@@ -349,16 +349,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def right_click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if text_to_click == current_element.text
-          @driver.action.context_click(current_element).perform
-          return true
-        end
-      end
-      false
-    end
-
     def click_on_one_of_several_with_display_by_number(xpath_several_elements, number)
       @driver.find_elements(:xpath, "#{xpath_several_elements}[#{number}]").each do |current_element|
         if current_element.displayed?

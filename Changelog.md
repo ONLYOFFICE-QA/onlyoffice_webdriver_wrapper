@@ -31,6 +31,7 @@
 * Remove unused `Webdriver#select_from_list`
 * Remove unused `Webdriver#context_click`
 * Remove unused `Webdriver#click_on_one_of_several_with_display_by_text`
+* Remove unused `Webdriver#right_click_on_one_of_several_by_text`
 
 ## 0.1.2 (2020-02-18)
 
