@@ -349,16 +349,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def click_on_one_of_several_with_display_by_number(xpath_several_elements, number)
-      @driver.find_elements(:xpath, "#{xpath_several_elements}[#{number}]").each do |current_element|
-        if current_element.displayed?
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
     def click_on_one_of_several_by_parameter(xpath_several_elements, parameter_name, parameter_value)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if current_element.attribute(parameter_name).include? parameter_value
