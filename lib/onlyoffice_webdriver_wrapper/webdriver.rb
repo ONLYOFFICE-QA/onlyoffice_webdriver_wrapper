@@ -116,6 +116,9 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
+    # Get text from all elements with specified xpath
+    # @param array_elements [String] xpath of elements
+    # @return [Array<String>] values of elements
     def get_text_array(array_elements)
       get_elements(array_elements).map { |current_element| get_text(current_element) }
     end
@@ -132,17 +135,6 @@ module OnlyofficeWebdriverWrapper
         count += 1
       end
       webdriver_error("click_and_wait: Wait for element: #{element_to_click} for 30 seconds") if count == 30
-    end
-
-    def select_from_list(xpath_value, value)
-      @driver.find_element(:xpath, xpath_value).find_elements(tag_name: 'li').each do |element|
-        next unless element.text == value.to_s
-
-        element.click
-        return true
-      end
-
-      webdriver_error("select_from_list: Option #{value} in list #{xpath_value} not found")
     end
 
     def select_from_list_elements(value, elements_value)
@@ -294,15 +286,6 @@ module OnlyofficeWebdriverWrapper
       @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
 
-    def context_click(xpath, x_coord, y_coord)
-      element = get_element(xpath)
-      if browser == :firefox
-        element.send_keys %i[shift f10]
-      else
-        @driver.action.move_to(element, x_coord.to_i, y_coord.to_i).context_click.perform
-      end
-    end
-
     def click_on_displayed(xpath_name)
       element = get_element_by_display(xpath_name)
       begin
@@ -310,10 +293,6 @@ module OnlyofficeWebdriverWrapper
       rescue Exception => e
         webdriver_error("Exception #{e} in click_on_displayed(#{xpath_name})")
       end
-    end
-
-    def click_on_locator_by_action(xpath)
-      @driver.action.move_to(get_element(xpath)).click.perform
     end
 
     def click_on_locator_coordinates(xpath_name, right_by, down_by)
@@ -370,49 +349,9 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def click_on_one_of_several_with_display_by_text(xpath_several_elements, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if current_element.displayed? && text_to_click == current_element.text
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
-    def right_click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if text_to_click == current_element.text
-          @driver.action.context_click(current_element).perform
-          return true
-        end
-      end
-      false
-    end
-
-    def click_on_one_of_several_with_display_by_number(xpath_several_elements, number)
-      @driver.find_elements(:xpath, "#{xpath_several_elements}[#{number}]").each do |current_element|
-        if current_element.displayed?
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
     def click_on_one_of_several_by_parameter(xpath_several_elements, parameter_name, parameter_value)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if current_element.attribute(parameter_name).include? parameter_value
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
-    def click_on_one_of_several_by_parameter_and_text(xpath_several_elements, parameter_name, parameter_value, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if current_element.attribute(parameter_name).include?(parameter_value) && text_to_click == current_element.text
           current_element.click
           return true
         end
@@ -433,16 +372,6 @@ module OnlyofficeWebdriverWrapper
       element = get_element(xpath_name)
       @driver.action.move_to(element).perform
       OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
-    end
-
-    def move_to_one_of_several_displayed_element(xpath_several_elements)
-      get_elements(xpath_several_elements).each do |current_element|
-        if current_element.displayed?
-          move_to_element(current_element)
-          return true
-        end
-      end
-      false
     end
 
     def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
@@ -481,32 +410,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_elements_from_array_before_some(xpath_several_elements, xpath_for_some)
-      elements = get_elements(xpath_several_elements)
-      result = []
-      some_element = get_element(xpath_for_some)
-      return result if some_element.nil?
-
-      elements.each do |current|
-        break if current == some_element
-
-        result << current
-      end
-      result
-    end
-
-    def get_elements_from_array_after_some(xpath_several_elements, xpath_for_some)
-      elements = get_elements(xpath_several_elements)
-      some_element = get_element(xpath_for_some)
-      return elements if some_element.nil?
-
-      elements.each do |current|
-        elements.delete(current)
-        break if current == some_element
-      end
-      elements
-    end
-
     def get_element_by_display(xpath_name)
       @driver.find_elements(:xpath, xpath_name).each do |element|
         return element if element.displayed?
@@ -515,10 +418,14 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
     end
 
+    # Return count of elements (visible and not visible)
+    # @param xpath_name [String] xpath to find
+    # @param only_visible [True, False] count only visible elements?
+    # @return [Integer] element count
     def get_element_count(xpath_name, only_visible = true)
       if element_present?(xpath_name)
         elements = @driver.find_elements(:xpath, xpath_name)
-        only_visible ? elements.delete_if { |element| @browser == :firefox && !element.displayed? }.length : elements.length
+        only_visible ? elements.delete_if { |element| !element.displayed? }.length : elements.length
       else
         0
       end
@@ -566,6 +473,9 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
     end
 
+    # Check if any element of xpath is displayed
+    # @param xpath_several_elements [String] xpath to check
+    # @return [True, False] result of visibility
     def one_of_several_elements_displayed?(xpath_several_elements)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         return true if current_element.displayed?
@@ -638,12 +548,6 @@ module OnlyofficeWebdriverWrapper
                              "singleNodeValue.removeAttribute('#{attribute}');")
     end
 
-    def select_text_from_page(xpath_name)
-      wait_until_element_visible(xpath_name)
-      elem = get_element xpath_name
-      @driver.action.key_down(:control).click(elem).send_keys('a').key_up(:control).perform
-    end
-
     def select_combo_box(xpath_name, select_value, select_by = :value)
       wait_until_element_visible(xpath_name)
       option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
@@ -654,13 +558,8 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_element_number_by_text(xpath_list, element_text)
-      @driver.find_elements(:xpath, xpath_list).each_with_index do |current_element, index|
-        return index if element_text == current_element.attribute('innerHTML')
-      end
-      nil
-    end
-
+    # Get page source
+    # @return [String] all page source
     def get_page_source
       @driver.execute_script('return document.documentElement.innerHTML;')
     end

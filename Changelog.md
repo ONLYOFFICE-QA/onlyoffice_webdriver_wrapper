@@ -12,6 +12,7 @@
 * Fix `Encoding::UndefinedConversionError` for `Webdriver#download`
 * Fix incorrect file download location
 * Do not try to start selenium once more
+* Fix correct behavior for `Webdriver#get_element_count` with `only_visible: true`
 
 ### Removal
 
@@ -20,6 +21,21 @@
 * Remove unused `Webdriver#get_style_attributes_of_several_elements`
 * Remove `xrandr` exception handling
 * Remove support of `ip_of_remote_server`
+* Remove unused `Webdriver#get_attribute_from_displayed_element`
+* Remove unused `Webdriver#maximize`
+* Remove unused `Webdriver#close_window`
+* Remove unused `Webdriver#get_element_number_by_text`
+* Remove unused `Webdriver#click_on_locator_by_action`
+* Remove unused `Webdriver#select_text_from_page`
+* Remove unused `Webdriver#move_to_one_of_several_displayed_element`
+* Remove unused `Webdriver#click_on_one_of_several_by_parameter_and_text`
+* Remove unused `Webdriver#select_from_list`
+* Remove unused `Webdriver#context_click`
+* Remove unused `Webdriver#click_on_one_of_several_with_display_by_text`
+* Remove unused `Webdriver#right_click_on_one_of_several_by_text`
+* Remove unused `Webdriver#click_on_one_of_several_with_display_by_number`
+* Remove unused `Webdriver#get_elements_from_array_before_some`
+* Remove unused `Webdriver#get_elements_from_array_after_some`
 
 ## 0.1.2 (2020-02-18)
 
