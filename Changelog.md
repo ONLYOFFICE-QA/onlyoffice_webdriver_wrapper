@@ -24,6 +24,7 @@
 * Remove unused `Webdriver#maximize`
 * Remove unused `Webdriver#close_window`
 * Remove unused `Webdriver#get_element_number_by_text`
+* Remove unused `Webdriver#click_on_locator_by_action`
 
 ## 0.1.2 (2020-02-18)
 

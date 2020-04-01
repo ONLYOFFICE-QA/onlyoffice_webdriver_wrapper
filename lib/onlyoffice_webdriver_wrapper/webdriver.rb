@@ -312,10 +312,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def click_on_locator_by_action(xpath)
-      @driver.action.move_to(get_element(xpath)).click.perform
-    end
-
     def click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
