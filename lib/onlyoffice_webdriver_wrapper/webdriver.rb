@@ -116,6 +116,9 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
+    # Get text from all elements with specified xpath
+    # @param array_elements [String] xpath of elements
+    # @return [Array<String>] values of elements
     def get_text_array(array_elements)
       get_elements(array_elements).map { |current_element| get_text(current_element) }
     end
