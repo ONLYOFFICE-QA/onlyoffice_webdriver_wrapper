@@ -473,6 +473,9 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
     end
 
+    # Check if any element of xpath is displayed
+    # @param xpath_several_elements [String] xpath to check
+    # @return [True, False] result of visibility
     def one_of_several_elements_displayed?(xpath_several_elements)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         return true if current_element.displayed?
