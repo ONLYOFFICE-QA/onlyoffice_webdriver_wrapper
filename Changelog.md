@@ -33,6 +33,7 @@
 * Remove unused `Webdriver#click_on_one_of_several_with_display_by_text`
 * Remove unused `Webdriver#right_click_on_one_of_several_by_text`
 * Remove unused `Webdriver#click_on_one_of_several_with_display_by_number`
+* Remove unused `Webdriver#get_elements_from_array_before_some`
 
 ## 0.1.2 (2020-02-18)
 

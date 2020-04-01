@@ -410,20 +410,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_elements_from_array_before_some(xpath_several_elements, xpath_for_some)
-      elements = get_elements(xpath_several_elements)
-      result = []
-      some_element = get_element(xpath_for_some)
-      return result if some_element.nil?
-
-      elements.each do |current|
-        break if current == some_element
-
-        result << current
-      end
-      result
-    end
-
     def get_elements_from_array_after_some(xpath_several_elements, xpath_for_some)
       elements = get_elements(xpath_several_elements)
       some_element = get_element(xpath_for_some)
