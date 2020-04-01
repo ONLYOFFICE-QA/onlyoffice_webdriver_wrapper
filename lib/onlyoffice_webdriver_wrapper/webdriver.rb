@@ -431,16 +431,6 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
     end
 
-    def move_to_one_of_several_displayed_element(xpath_several_elements)
-      get_elements(xpath_several_elements).each do |current_element|
-        if current_element.displayed?
-          move_to_element(current_element)
-          return true
-        end
-      end
-      false
-    end
-
     def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
       wait_until_element_present(xpath_name)
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name), x_coordinate.to_i, y_coordinate.to_i).perform
