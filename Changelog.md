@@ -28,6 +28,7 @@
 * Remove unused `Webdriver#select_text_from_page`
 * Remove unused `Webdriver#move_to_one_of_several_displayed_element`
 * Remove unused `Webdriver#click_on_one_of_several_by_parameter_and_text`
+* Remove unused `Webdriver#select_from_list`
 
 ## 0.1.2 (2020-02-18)
 

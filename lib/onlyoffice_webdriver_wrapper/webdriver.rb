@@ -137,17 +137,6 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("click_and_wait: Wait for element: #{element_to_click} for 30 seconds") if count == 30
     end
 
-    def select_from_list(xpath_value, value)
-      @driver.find_element(:xpath, xpath_value).find_elements(tag_name: 'li').each do |element|
-        next unless element.text == value.to_s
-
-        element.click
-        return true
-      end
-
-      webdriver_error("select_from_list: Option #{value} in list #{xpath_value} not found")
-    end
-
     def select_from_list_elements(value, elements_value)
       index = get_element_index(value, elements_value)
       elements_value[index].click
