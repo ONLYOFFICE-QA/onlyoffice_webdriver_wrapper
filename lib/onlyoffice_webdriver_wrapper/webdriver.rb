@@ -410,18 +410,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_elements_from_array_after_some(xpath_several_elements, xpath_for_some)
-      elements = get_elements(xpath_several_elements)
-      some_element = get_element(xpath_for_some)
-      return elements if some_element.nil?
-
-      elements.each do |current|
-        elements.delete(current)
-        break if current == some_element
-      end
-      elements
-    end
-
     def get_element_by_display(xpath_name)
       @driver.find_elements(:xpath, xpath_name).each do |element|
         return element if element.displayed?
