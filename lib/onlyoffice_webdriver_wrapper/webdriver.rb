@@ -634,12 +634,6 @@ module OnlyofficeWebdriverWrapper
                              "singleNodeValue.removeAttribute('#{attribute}');")
     end
 
-    def select_text_from_page(xpath_name)
-      wait_until_element_visible(xpath_name)
-      elem = get_element xpath_name
-      @driver.action.key_down(:control).click(elem).send_keys('a').key_up(:control).perform
-    end
-
     def select_combo_box(xpath_name, select_value, select_by = :value)
       wait_until_element_visible(xpath_name)
       option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
