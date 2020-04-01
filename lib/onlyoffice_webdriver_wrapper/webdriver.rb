@@ -644,6 +644,8 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Get page source
+    # @return [String] all page source
     def get_page_source
       @driver.execute_script('return document.documentElement.innerHTML;')
     end
