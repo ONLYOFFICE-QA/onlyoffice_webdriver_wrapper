@@ -349,16 +349,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def click_on_one_of_several_with_display_by_text(xpath_several_elements, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if current_element.displayed? && text_to_click == current_element.text
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
     def right_click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if text_to_click == current_element.text
