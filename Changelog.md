@@ -12,6 +12,7 @@
 * Fix `Encoding::UndefinedConversionError` for `Webdriver#download`
 * Fix incorrect file download location
 * Do not try to start selenium once more
+* Fix correct behavior for `Webdriver#get_element_count` with `only_visible: true`
 
 ### Removal
 

@@ -418,10 +418,14 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
     end
 
+    # Return count of elements (visible and not visible)
+    # @param xpath_name [String] xpath to find
+    # @param only_visible [True, False] count only visible elements?
+    # @return [Integer] element count
     def get_element_count(xpath_name, only_visible = true)
       if element_present?(xpath_name)
         elements = @driver.find_elements(:xpath, xpath_name)
-        only_visible ? elements.delete_if { |element| @browser == :firefox && !element.displayed? }.length : elements.length
+        only_visible ? elements.delete_if { |element| !element.displayed? }.length : elements.length
       else
         0
       end
