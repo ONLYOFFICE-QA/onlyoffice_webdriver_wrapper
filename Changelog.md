@@ -23,6 +23,7 @@
 * Remove unused `Webdriver#get_attribute_from_displayed_element`
 * Remove unused `Webdriver#maximize`
 * Remove unused `Webdriver#close_window`
+* Remove unused `Webdriver#get_element_number_by_text`
 
 ## 0.1.2 (2020-02-18)
 

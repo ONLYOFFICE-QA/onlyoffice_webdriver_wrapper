@@ -654,13 +654,6 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def get_element_number_by_text(xpath_list, element_text)
-      @driver.find_elements(:xpath, xpath_list).each_with_index do |current_element, index|
-        return index if element_text == current_element.attribute('innerHTML')
-      end
-      nil
-    end
-
     def get_page_source
       @driver.execute_script('return document.documentElement.innerHTML;')
     end
