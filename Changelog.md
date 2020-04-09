@@ -6,6 +6,7 @@
 
 * Do not remove `@download_directory` if it's not in `/tmp/`
 * `Webdriver#execute_javascript` new param to sleep after execute
+* Add workaround for Webdriver bug with chrome typing with :control
 
 ### Fixes
 

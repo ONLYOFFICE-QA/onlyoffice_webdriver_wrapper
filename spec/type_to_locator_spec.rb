@@ -22,7 +22,8 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#type_to_locator' do
   end
 
   it 'type_to_locator combination with control get no input in locator' do
-    webdriver.type_to_locator('//*[@id="login_field"]', [:control, 'c'])
+    webdriver.type_to_locator('//*[@id="login_field"]', 'pipa')
+    webdriver.type_to_locator('//*[@id="login_field"]', [:control, 'a'])
     expect(webdriver.get_text('//*[@id="login_field"]')).to be_empty
   end
 
