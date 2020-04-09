@@ -87,6 +87,7 @@ module OnlyofficeWebdriverWrapper
 
     def key_down(xpath, key)
       @driver.action.key_down(get_element(xpath), key).perform
+      sleep(1) # for some reason quick key_down select text in control
     end
 
     def key_up(xpath, key)
