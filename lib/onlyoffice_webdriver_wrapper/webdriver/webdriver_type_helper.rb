@@ -40,7 +40,7 @@ module OnlyofficeWebdriverWrapper
             @driver.action.send_keys(symbol).perform
           end
         else
-          @driver.action.send_keys(text_to_send).perform
+          webdriver_bug_8179_workaround(text_to_send)
         end
       end
     end
@@ -91,6 +91,21 @@ module OnlyofficeWebdriverWrapper
 
     def key_up(xpath, key)
       @driver.action.key_up(get_element(xpath), key).perform
+    end
+
+    private
+
+    # Workaround for bug with typing with :control
+    # See https://github.com/SeleniumHQ/selenium/issues/8179
+    # for more details
+    def webdriver_bug_8179_workaround(text_to_send)
+      if text_to_send.is_a?(Array) && text_to_send[0] == :control
+        @driver.action.key_down(:control).perform
+        @driver.action.send_keys(text_to_send[1]).perform
+        @driver.action.key_up(:control).perform
+      else
+        @driver.action.send_keys(text_to_send).perform
+      end
     end
   end
 end
