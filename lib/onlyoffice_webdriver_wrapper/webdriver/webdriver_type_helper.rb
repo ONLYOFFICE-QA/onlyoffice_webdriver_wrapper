@@ -99,10 +99,16 @@ module OnlyofficeWebdriverWrapper
     # See https://github.com/SeleniumHQ/selenium/issues/8179
     # for more details
     def webdriver_bug_8179_workaround(text_to_send)
-      if text_to_send.is_a?(Array) && text_to_send[0] == :control
-        @driver.action.key_down(:control).perform
-        @driver.action.send_keys(text_to_send[1]).perform
-        @driver.action.key_up(:control).perform
+      if text_to_send.is_a?(Array)
+        key_modifiers = text_to_send.select { |i| i.is_a?(Symbol) }
+        letters = text_to_send - key_modifiers
+        key_modifiers.each do |modifier|
+          @driver.action.key_down(modifier).perform
+        end
+        @driver.action.send_keys(letters).perform
+        key_modifiers.each do |modifier|
+          @driver.action.key_up(modifier).perform
+        end
       else
         @driver.action.send_keys(text_to_send).perform
       end
