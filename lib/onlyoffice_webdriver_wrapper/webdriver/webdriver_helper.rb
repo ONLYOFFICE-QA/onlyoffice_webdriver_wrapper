@@ -33,18 +33,5 @@ module OnlyofficeWebdriverWrapper
                                    'It will be not deleted')
       end
     end
-
-    # Perform cleanup if something went wrong during tests
-    # @param forced [True, False] should cleanup run in all cases
-    def self.clean_up(forced = false)
-      return unless OnlyofficeFileHelper::LinuxHelper.user_name.include?('nct-at') ||
-                    OnlyofficeFileHelper::LinuxHelper.user_name.include?('ubuntu') ||
-                    forced == true
-
-      OnlyofficeFileHelper::LinuxHelper.kill_all('chromedriver')
-      OnlyofficeFileHelper::LinuxHelper.kill_all('geckodriver')
-      OnlyofficeFileHelper::LinuxHelper.kill_all('Xvfb')
-      OnlyofficeFileHelper::LinuxHelper.kill_all_browsers
-    end
   end
 end
