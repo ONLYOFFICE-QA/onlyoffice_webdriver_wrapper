@@ -8,6 +8,7 @@
 * `Webdriver#execute_javascript` new param to sleep after execute
 * Add workaround for Webdriver bug with chrome typing with :control
 * Update `chromedriver` to `81.0.4044.69`
+* New method `Webdriver.clean_up` for stopping hang-up browsers
 
 ### Fixes
 

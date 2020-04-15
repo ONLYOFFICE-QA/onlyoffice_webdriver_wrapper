@@ -42,7 +42,7 @@ module OnlyofficeWebdriverWrapper
                                           dimensions: "#{@resolution_x + 1}x#{@resolution_y + 1}x24")
       rescue Exception => e
         OnlyofficeLoggerHelper.log("xvfb not started with problem #{e}")
-        RspecHelper.clean_up(true)
+        WebDriver.clean_up(true)
         @headless_instance = Headless.new(reuse: false,
                                           destroy_at_exit: true,
                                           dimensions: "#{@resolution_x + 1}x#{@resolution_y + 1}x24")
