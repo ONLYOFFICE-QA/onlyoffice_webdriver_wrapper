@@ -109,7 +109,9 @@ module OnlyofficeWebdriverWrapper
         @driver.action.key_down(modifier).perform
       end
 
-      @driver.action.send_keys(letters).perform
+      letters.each do |letter|
+        @driver.action.send_keys(letter.to_s).perform
+      end
 
       key_modifiers.each do |modifier|
         @driver.action.key_up(modifier).perform

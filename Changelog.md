@@ -16,6 +16,7 @@
 * Fix incorrect file download location
 * Do not try to start selenium once more
 * Fix correct behavior for `Webdriver#get_element_count` with `only_visible: true`
+* Fix `WebDriver#type_to_locator` for integer values
 
 ### Removal
 
