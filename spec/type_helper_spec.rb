@@ -58,6 +58,12 @@ describe '#type_helper' do
                                 true)
       expect(webdriver.get_text('//input')).to eq('foo')
     end
+
+    it 'type_to_locator correct type integer value' do
+      text_to_type = -100
+      webdriver.type_to_locator('//input', text_to_type)
+      expect(webdriver.get_text('//input')).to eq(text_to_type.to_s)
+    end
   end
 
   describe 'type_to_input' do
