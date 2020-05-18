@@ -45,7 +45,6 @@
 * Remove unused `Webdriver#get_elements_from_array_before_some`
 * Remove unused `Webdriver#get_elements_from_array_after_some`
 
-
 ## 0.1.2 (2020-02-18)
 
 ### New Features
