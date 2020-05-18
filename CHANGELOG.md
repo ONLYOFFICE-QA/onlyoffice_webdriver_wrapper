@@ -10,6 +10,7 @@
 * Update `chromedriver` to `81.0.4044.69`
 * New method `Webdriver.clean_up` for stopping hang-up browsers
 * Support of `rubocop-performance`
+* Add rake task to release gem on github and rubygems
 
 ### Fixes
 
