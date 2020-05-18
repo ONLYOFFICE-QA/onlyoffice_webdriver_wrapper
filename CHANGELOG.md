@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.2.0 (2020-05-18)
+
 ### Features
 
 * Do not remove `@download_directory` if it's not in `/tmp/`
