@@ -9,6 +9,7 @@
 * Add workaround for Webdriver bug with chrome typing with :control
 * Update `chromedriver` to `81.0.4044.69`
 * New method `Webdriver.clean_up` for stopping hang-up browsers
+* Support of `rubocop-performance`
 
 ### Fixes
 
@@ -21,6 +22,7 @@
 ### Changes
 
 * Minor refactor in gemfile
+* Actualize rubocop todo to 0.83.0
 
 ### Removal
 
