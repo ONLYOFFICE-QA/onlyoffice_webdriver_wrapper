@@ -18,6 +18,10 @@
 * Fix correct behavior for `Webdriver#get_element_count` with `only_visible: true`
 * Fix `WebDriver#type_to_locator` for integer values
 
+### Changes
+
+* Minor refactor in gemfile
+
 ### Removal
 
 * Remove unused `Webdriver.web_console_error`
@@ -40,6 +44,7 @@
 * Remove unused `Webdriver#click_on_one_of_several_with_display_by_number`
 * Remove unused `Webdriver#get_elements_from_array_before_some`
 * Remove unused `Webdriver#get_elements_from_array_after_some`
+
 
 ## 0.1.2 (2020-02-18)
 

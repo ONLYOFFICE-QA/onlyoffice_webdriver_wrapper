@@ -1,18 +1,26 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('lib', __dir__)
-require 'onlyoffice_webdriver_wrapper/version'
+require_relative 'lib/onlyoffice_webdriver_wrapper/name'
+require_relative 'lib/onlyoffice_webdriver_wrapper/version'
+
 Gem::Specification.new do |s|
-  s.name = 'onlyoffice_webdriver_wrapper'
+  s.name = OnlyofficeWebdriverWrapper::Name::STRING
   s.version = OnlyofficeWebdriverWrapper::Version::STRING
   s.platform = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 2.3'
-  s.authors = ['Pavel Lobashov', 'Oleg Nazarov', 'Dmitry Rotaty']
+  s.authors = ['ONLYOFFICE', 'Pavel Lobashov', 'Oleg Nazarov', 'Dmitry Rotaty']
+  s.email = %w[shockwavenn@gmail.com]
   s.summary = 'ONLYOFFICE Webdriver Wrapper Gem'
-  s.description = 'onlyoffice_webdriver_wrapper'
-  s.email = ['shockwavenn@gmail.com', 'dafttrick@gmail.com']
-  s.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
-  s.homepage = 'https://github.com/onlyoffice-testing-robot/onlyoffice_webdriver_wrapper'
+  s.description = 'ONLYOFFICE Webdriver Wrapper Gem. Used in QA'
+  s.homepage = "https://github.com/onlyoffice-testing-robot/#{s.name}"
+  s.metadata = {
+    'bug_tracker_uri' => "#{s.homepage}/issues",
+    'changelog_uri' => "#{s.homepage}/blob/master/CHANGELOG.md",
+    'documentation_uri' => "https://www.rubydoc.info/gems/#{s.name}",
+    'homepage_uri' => s.homepage,
+    'source_code_uri' => s.homepage
+  }
+  s.files = Dir['lib/**/*']
+  s.license = 'AGPL-3.0'
   s.add_runtime_dependency('headless', '~> 2')
   s.add_runtime_dependency('onlyoffice_file_helper', '~> 0.1')
   s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
@@ -20,5 +28,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('page-object', '~> 2')
   s.add_runtime_dependency('selenium-webdriver', '3.142.7')
   s.add_runtime_dependency('watir', '~> 6')
-  s.license = 'AGPL-3.0'
+  s.add_development_dependency('rake', '~> 13.0')
 end
