@@ -19,7 +19,7 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath element to select
     # @return [String] string to select dom by xpath
     def dom_element_by_xpath(xpath)
-      escaped_xpath = xpath.gsub('"', "'")
+      escaped_xpath = xpath.tr('"', "'")
       "document.evaluate(\"#{escaped_xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()"
     end
 
