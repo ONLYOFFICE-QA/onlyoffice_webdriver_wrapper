@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.3.0 (2020-05-22)
+
 ### New Features
 
 * Update `chromedriver` to `83.0.4103.39` 
