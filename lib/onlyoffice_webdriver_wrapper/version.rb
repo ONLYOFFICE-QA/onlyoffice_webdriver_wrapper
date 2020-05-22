@@ -2,6 +2,6 @@
 
 module OnlyofficeWebdriverWrapper
   module Version
-    STRING = '0.2.0'
+    STRING = '0.3.0'
   end
 end
