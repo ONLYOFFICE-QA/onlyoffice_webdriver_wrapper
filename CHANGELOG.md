@@ -5,6 +5,7 @@
 ### Fixes
 
 * Fix taking screenshot inside headless
+* Fix `markdownlint` check in CI
 
 ### Changes
 
@@ -14,7 +15,7 @@
 
 ### New Features
 
-* Update `chromedriver` to `83.0.4103.39` 
+* Update `chromedriver` to `83.0.4103.39`
 
 ## 0.2.0 (2020-05-18)
 

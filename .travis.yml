@@ -18,5 +18,5 @@ matrix:
 
 script:
   - npm install -g markdownlint-cli
-  - markdownlint Changelog.md
+  - markdownlint *.md
   - bundle exec rspec
