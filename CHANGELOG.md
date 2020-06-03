@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.3.1 (2020-06-03)
+
 ### Fixes
 
 * Fix taking screenshot inside headless
