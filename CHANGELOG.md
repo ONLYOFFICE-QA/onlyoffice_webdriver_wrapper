@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix taking screenshot inside headless
+
+### Changes
+
+* Freeze specific version of `headless` gem
+
 ## 0.3.0 (2020-05-22)
 
 ### New Features
