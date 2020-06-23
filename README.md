@@ -1,4 +1,4 @@
-# OnlyofficeLoggerHelper
+# OnlyofficeWebdriverWrapper
 
 Helper gem for logging info messages in Ruby
 
@@ -7,7 +7,7 @@ Helper gem for logging info messages in Ruby
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'onlyoffice_logger_helper'
+gem 'onlyoffice_webdriver_wrapper'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ bundle
 Or install it yourself as:
 
 ```shell script
-gem install onlyoffice_logger_helper
+gem install onlyoffice_webdriver_wrapper
 ```
 
 ## Usage
