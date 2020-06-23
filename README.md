@@ -1,6 +1,6 @@
 # OnlyofficeWebdriverWrapper
 
-Helper gem for logging info messages in Ruby
+ONLYOFFICE Webdriver Wrapper Gem. Used in QA
 
 ## Installation
 
