@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.3.2 (2020-06-30)
+
 ### Changes
 
 * `WebDriver#wait_until_element_disappear`, `WebDriver#wait_until_element_present`
