@@ -1,0 +1,20 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div>
+      Hello world
+    </div>
+    <div id="forAddingElement">
+      
+    </div>
+  </body>
+</html>
+<script>
+function delete_object() {
+  console.log('Add element with id= "newElement"')
+  document.getElementById('forAddingElement').innerHTML = "<div id= \"newElement\">This is new element</div>"
+}
+console.log('Waiting for 5 sec')
+document.onload = setTimeout(delete_object, 5000)
+</script>
