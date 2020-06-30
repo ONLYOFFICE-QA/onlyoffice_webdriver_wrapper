@@ -8,6 +8,7 @@
    has option of timeout
 * `WebDriver#wait_until_element_disappear`, `WebDriver#wait_until_element_present`
    raise `TimeOutError` instead of `RuntimeError`
+* Extract `wait_until*` methods to separate module
 
 ## 0.3.1 (2020-06-03)
 

@@ -7,6 +7,7 @@ require 'selenium-webdriver'
 require 'uri'
 require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
+require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
 require_relative 'webdriver/webdriver_attributes_helper'
 require_relative 'webdriver/webdriver_browser_info_helper'
@@ -26,6 +27,7 @@ module OnlyofficeWebdriverWrapper
     include ChromeHelper
     include FirefoxHelper
     include RubyHelper
+    include WaitUntilMethods
     include WebdriverAlertHelper
     include WebdriverAttributesHelper
     include WebdriverBrowserInfo
@@ -37,7 +39,6 @@ module OnlyofficeWebdriverWrapper
     include WebdriverTabHelper
     include WebdriverUserAgentHelper
     include WebdriverBrowserLogHelper
-    TIMEOUT_WAIT_ELEMENT = 15
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array, String] default switches for chrome
     attr_accessor :driver
@@ -392,40 +393,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    # Wait until some element present
-    # If timeout exceeded - raise an error
-    # @param xpath_name [String] xpath of element
-    # @param timeout [Integer] timeout to wait
-    # @return [Void]
-    def wait_until_element_present(xpath_name, timeout: TIMEOUT_WAIT_ELEMENT)
-      wait = Selenium::WebDriver::Wait.new(timeout: timeout) # seconds
-      begin
-        wait.until { get_element(xpath_name) }
-      rescue Selenium::WebDriver::Error::TimeOutError => e
-        timeout_message = "wait_until_element_present(#{xpath_name}) "\
-                          'Selenium::WebDriver::Error::TimeOutError: '\
-                          "timed out after #{timeout} seconds"
-        webdriver_error(e.class, timeout_message)
-      end
-    end
-
-    # Wait until some element disappear
-    # If timeout exceeded - raise an error
-    # @param xpath_name [String] xpath of element
-    # @param timeout [Integer] timeout to wait
-    # @return [Void]
-    def wait_until_element_disappear(xpath_name, timeout: TIMEOUT_WAIT_ELEMENT)
-      wait = Selenium::WebDriver::Wait.new(timeout: timeout) # seconds
-      begin
-        wait.until { get_element(xpath_name) ? false : true }
-      rescue Selenium::WebDriver::Error::TimeOutError => e
-        timeout_message = "wait_until_element_present(#{xpath_name}) "\
-                          'Selenium::WebDriver::Error::TimeOutError: '\
-                          "timed out after #{timeout} seconds"
-        webdriver_error(e.class, timeout_message)
-      end
-    end
-
     def get_element_by_display(xpath_name)
       @driver.find_elements(:xpath, xpath_name).each do |element|
         return element if element.displayed?
@@ -475,18 +442,6 @@ module OnlyofficeWebdriverWrapper
       else
         false
       end
-    end
-
-    def wait_until_element_visible(xpath_name, timeout = 15)
-      wait_until_element_present(xpath_name)
-      time = 0
-      while !element_visible?(xpath_name) && time < timeout
-        sleep(1)
-        time += 1
-      end
-      return unless time >= timeout
-
-      webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
     end
 
     # Check if any element of xpath is displayed
@@ -588,22 +543,6 @@ module OnlyofficeWebdriverWrapper
       select_top_frame
       current_url = get_url
       raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
-    end
-
-    def wait_until(timeout = ::PageObject.default_page_wait, message = nil, wait_js: true, &block)
-      tries ||= 3
-      wait = Object::Selenium::WebDriver::Wait.new(timeout: timeout, message: message)
-      wait.until(&block)
-      if wait_js
-        wait.until { document_ready? }
-        wait.until { jquery_finished? }
-      end
-    rescue Selenium::WebDriver::Error::TimeOutError
-      webdriver_error("Wait until timeout: #{timeout} seconds in")
-    rescue Selenium::WebDriver::Error::StaleElementReferenceError
-      OnlyofficeLoggerHelper.log("Wait until: rescuing from Stale Element error, #{tries} attempts remaining")
-      retry unless (tries -= 1).zero?
-      webdriver_error('Wait until: rescuing from Stale Element error failed after 3 tries')
     end
 
     def wait_file_for_download(file_name, timeout = TIMEOUT_FILE_DOWNLOAD)
