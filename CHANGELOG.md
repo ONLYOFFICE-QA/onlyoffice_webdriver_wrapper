@@ -2,6 +2,12 @@
 
 ## master (unreleased)
 
+### Changes
+
+* `WebDriver#wait_until_element_disappear` has option of timeout
+* `WebDriver#wait_until_element_disappear` raise `TimeOutError`
+  instead of `RuntimeError`
+
 ## 0.3.1 (2020-06-03)
 
 ### Fixes

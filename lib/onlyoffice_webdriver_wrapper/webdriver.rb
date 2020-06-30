@@ -401,12 +401,20 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    def wait_until_element_disappear(xpath_name)
-      wait = Selenium::WebDriver::Wait.new(timeout: TIMEOUT_WAIT_ELEMENT) # seconds
+    # Wait until some element disappear
+    # If timeout exceeded - raise an error
+    # @param xpath_name [String] xpath of element
+    # @param timeout [Integer] timeout to wait
+    # @return [Void]
+    def wait_until_element_disappear(xpath_name, timeout: TIMEOUT_WAIT_ELEMENT)
+      wait = Selenium::WebDriver::Wait.new(timeout: timeout) # seconds
       begin
         wait.until { get_element(xpath_name) ? false : true }
-      rescue Selenium::WebDriver::Error::TimeOutError
-        webdriver_error("wait_until_element_present(#{xpath_name}) Selenium::WebDriver::Error::TimeOutError: timed out after 15 seconds")
+      rescue Selenium::WebDriver::Error::TimeOutError => e
+        timeout_message = "wait_until_element_present(#{xpath_name}) "\
+                          'Selenium::WebDriver::Error::TimeOutError: '\
+                          "timed out after #{timeout} seconds"
+        webdriver_error(e.class, timeout_message)
       end
     end
 
