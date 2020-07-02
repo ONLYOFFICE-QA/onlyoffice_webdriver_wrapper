@@ -5,11 +5,13 @@
     <div>
       <button onclick="showElement()">ClickMe</button>
     </div>
-    <div id= "newElement" style="display: none">This is new element</div>
+    <div id="forAddingElement">
+      
+    </div>
   </body>
 </html>
 <script>
 function showElement() {
-  document.getElementById('newElement').style.display = "block";
+  document.getElementById('forAddingElement').innerHTML = "<div id= \"newElement\">This is new element</div>"
 }
 </script>	
