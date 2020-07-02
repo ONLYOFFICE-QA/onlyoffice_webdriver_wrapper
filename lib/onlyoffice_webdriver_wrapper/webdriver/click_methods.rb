@@ -10,16 +10,6 @@ module OnlyofficeWebdriverWrapper
       element.click
     end
 
-    def click_and_wait(element_to_click, element_to_wait)
-      element_to_click.click
-      count = 0
-      while !element_to_wait.present? && count < 30
-        sleep 1
-        count += 1
-      end
-      webdriver_error("click_and_wait: Wait for element: #{element_to_click} for 30 seconds") if count == 30
-    end
-
     # Click on locator
     # @param count [Integer] count of clicks
     def click_on_locator(xpath_name, by_javascript = false, count: 1)
