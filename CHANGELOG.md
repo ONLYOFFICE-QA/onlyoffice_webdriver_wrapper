@@ -5,6 +5,7 @@
 ### Changes
 
 * Extract click methods to `ClickMethods` module
+* Increase test coverage of `ClickMethods` module
 
 ## 0.3.2 (2020-06-30)
 

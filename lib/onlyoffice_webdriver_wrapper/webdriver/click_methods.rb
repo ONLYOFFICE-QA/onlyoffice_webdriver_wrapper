@@ -3,6 +3,9 @@
 module OnlyofficeWebdriverWrapper
   # Method to perform different clicks
   module ClickMethods
+    # Click on specified element
+    # @param element [Selenium::WebDriver::Element] element to click
+    # @return [nil] nothing
     def click(element)
       element.click
     end
