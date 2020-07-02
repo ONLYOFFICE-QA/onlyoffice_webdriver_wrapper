@@ -7,6 +7,7 @@ require 'selenium-webdriver'
 require 'uri'
 require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
+require_relative 'webdriver/click_methods'
 require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
 require_relative 'webdriver/webdriver_attributes_helper'
@@ -25,6 +26,7 @@ module OnlyofficeWebdriverWrapper
   # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
   class WebDriver
     include ChromeHelper
+    include ClickMethods
     include FirefoxHelper
     include RubyHelper
     include WaitUntilMethods
@@ -122,20 +124,6 @@ module OnlyofficeWebdriverWrapper
     # @return [Array<String>] values of elements
     def get_text_array(array_elements)
       get_elements(array_elements).map { |current_element| get_text(current_element) }
-    end
-
-    def click(element)
-      element.click
-    end
-
-    def click_and_wait(element_to_click, element_to_wait)
-      element_to_click.click
-      count = 0
-      while !element_to_wait.present? && count < 30
-        sleep 1
-        count += 1
-      end
-      webdriver_error("click_and_wait: Wait for element: #{element_to_click} for 30 seconds") if count == 30
     end
 
     def select_from_list_elements(value, elements_value)
@@ -251,117 +239,10 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    # Click on locator
-    # @param count [Integer] count of clicks
-    def click_on_locator(xpath_name, by_javascript = false, count: 1)
-      element = get_element(xpath_name)
-      return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
-
-      if by_javascript
-        execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
-      else
-        begin
-          count.times { element.click }
-        rescue Selenium::WebDriver::Error::ElementNotVisibleError
-          webdriver_error("Selenium::WebDriver::Error::ElementNotVisibleError: element not visible for xpath: #{xpath_name}")
-        rescue Exception => e
-          webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
-        end
-      end
-    end
-
-    def left_mouse_click(xpath, x_coord, y_coord)
-      @driver.action.move_to(get_element(xpath), x_coord.to_i, y_coord.to_i).click.perform
-    end
-
-    # Context click on locator
-    # @param [String] xpath_name name of xpath to click
-    def context_click_on_locator(xpath_name)
-      wait_until_element_visible(xpath_name)
-
-      element = @driver.find_element(:xpath, xpath_name)
-      @driver.action.context_click(element).perform
-    end
-
-    def right_click(xpath_name)
-      @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
-    end
-
-    def click_on_displayed(xpath_name)
-      element = get_element_by_display(xpath_name)
-      begin
-        element.is_a?(Array) ? element.first.click : element.click
-      rescue Exception => e
-        webdriver_error("Exception #{e} in click_on_displayed(#{xpath_name})")
-      end
-    end
-
-    def click_on_locator_coordinates(xpath_name, right_by, down_by)
-      wait_until_element_visible(xpath_name)
-      element = @driver.find_element(:xpath, xpath_name)
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).perform
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).click.perform
-    end
-
-    def right_click_on_locator_coordinates(xpath_name, right_by = nil, down_by = nil)
-      wait_until_element_visible(xpath_name)
-      element = @driver.find_element(:xpath, xpath_name)
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).perform
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).context_click.perform
-    end
-
-    def double_click(xpath_name)
-      wait_until_element_visible(xpath_name)
-      @driver.action.move_to(@driver.find_element(:xpath, xpath_name)).double_click.perform
-    end
-
-    def double_click_on_locator_coordinates(xpath_name, right_by, down_by)
-      wait_until_element_visible(xpath_name)
-      @driver.action.move_to(@driver.find_element(:xpath, xpath_name), right_by.to_i, down_by.to_i).double_click.perform
-    end
-
     def action_on_locator_coordinates(xpath_name, right_by, down_by, action = :click, times = 1)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
       (0...times).inject(@driver.action.move_to(element, right_by.to_i, down_by.to_i)) { |acc, _elem| acc.send(action) }.perform
-    end
-
-    def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        next unless text_to_click.to_s == current_element.attribute('innerHTML')
-
-        begin
-          current_element.click
-        rescue Exception => e
-          webdriver_error("Error in click_on_one_of_several_by_text(#{xpath_several_elements}, #{text_to_click}): #{e.message}")
-        end
-        return true
-      end
-      false
-    end
-
-    def click_on_one_of_several_by_display(xpath_several_elements)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if current_element.displayed?
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
-    def click_on_one_of_several_by_parameter(xpath_several_elements, parameter_name, parameter_value)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        if current_element.attribute(parameter_name).include? parameter_value
-          current_element.click
-          return true
-        end
-      end
-      false
-    end
-
-    def click_on_one_of_several_xpath_by_number(xpath, number_of_element)
-      click_on_locator("(#{xpath})[#{number_of_element}]")
     end
 
     def move_to_element(element)

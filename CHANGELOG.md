@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Extract click methods to `ClickMethods` module
+
 ## 0.3.2 (2020-06-30)
 
 ### Changes
