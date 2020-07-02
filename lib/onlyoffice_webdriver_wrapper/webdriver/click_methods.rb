@@ -11,6 +11,8 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Click on locator
+    # @param xpath_name [String] xpath to click
+    # @param by_javascript [True, False] should be clicked by javascript
     # @param count [Integer] count of clicks
     def click_on_locator(xpath_name, by_javascript = false, count: 1)
       element = get_element(xpath_name)
@@ -34,7 +36,7 @@ module OnlyofficeWebdriverWrapper
       begin
         element.is_a?(Array) ? element.first.click : element.click
       rescue Exception => e
-        webdriver_error("Exception #{e} in click_on_displayed(#{xpath_name})")
+        webdriver_error(e.class, "Exception #{e} in click_on_displayed(#{xpath_name})")
       end
     end
 

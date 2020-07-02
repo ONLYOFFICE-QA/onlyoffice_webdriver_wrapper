@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Add documentation to some methods
+
 ### Changes
 
 * Extract click methods to `ClickMethods` module
@@ -9,6 +13,7 @@
 * Remove `WebDriver#click_and_wait`
 * `WebDriver#click_on_locator` raise `Selenium::WebDriver::Error::ElementNotVisibleError`
   instead of `RuntimeError`
+* `WebDriver#click_on_displayed` raise a correct exception type if failed
 
 ## 0.3.2 (2020-06-30)
 
