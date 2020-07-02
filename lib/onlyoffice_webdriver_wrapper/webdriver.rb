@@ -7,6 +7,7 @@ require 'selenium-webdriver'
 require 'uri'
 require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
+require_relative 'webdriver/click_methods'
 require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
 require_relative 'webdriver/webdriver_attributes_helper'
@@ -25,6 +26,7 @@ module OnlyofficeWebdriverWrapper
   # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
   class WebDriver
     include ChromeHelper
+    include ClickMethods
     include FirefoxHelper
     include RubyHelper
     include WaitUntilMethods
