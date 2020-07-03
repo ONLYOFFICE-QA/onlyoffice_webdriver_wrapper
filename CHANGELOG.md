@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.3.3 (2020-07-03)
+
 ### Fixes
 
 * Add documentation to some methods
