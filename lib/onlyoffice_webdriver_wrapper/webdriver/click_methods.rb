@@ -110,6 +110,11 @@ module OnlyofficeWebdriverWrapper
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name)).double_click.perform
     end
 
+    # Perform double_click on specified coordinates
+    # @param xpath_name [String] xpath to click
+    # @param right_by [Integer] shift to right
+    # @param down_by [Integer] shift to bottom
+    # @return [nil]
     def double_click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name), right_by.to_i, down_by.to_i).double_click.perform
