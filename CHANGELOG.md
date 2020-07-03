@@ -15,7 +15,7 @@
   instead of `RuntimeError`
 * `WebDriver#click_on_displayed` raise a correct exception type if failed
 * Remove unused `WebDrvier#click_on_one_of_several_by_text`,
-  `WebDriver#click_on_one_of_several_xpath_by_number`, 
+  `WebDriver#click_on_one_of_several_xpath_by_number`,
   `WebDriver#left_mouse_click`
 * `WebDriver#right_click` wait to element to appear
 * Remove `WebDriver#context_click_on_locator` -
