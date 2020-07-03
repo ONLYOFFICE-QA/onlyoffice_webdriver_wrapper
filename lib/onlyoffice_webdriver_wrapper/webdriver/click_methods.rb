@@ -87,6 +87,8 @@ module OnlyofficeWebdriverWrapper
     # @param xpath_name [String] xpath to click
     # @return [nil]
     def right_click(xpath_name)
+      wait_until_element_visible(xpath_name)
+
       @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
 
@@ -118,15 +120,6 @@ module OnlyofficeWebdriverWrapper
     def double_click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name), right_by.to_i, down_by.to_i).double_click.perform
-    end
-
-    # Context click on locator
-    # @param [String] xpath_name name of xpath to click
-    def context_click_on_locator(xpath_name)
-      wait_until_element_visible(xpath_name)
-
-      element = @driver.find_element(:xpath, xpath_name)
-      @driver.action.context_click(element).perform
     end
   end
 end
