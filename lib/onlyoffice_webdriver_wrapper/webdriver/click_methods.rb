@@ -31,6 +31,9 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Click on one of several which displayed
+    # @param xpath_name [String] xpath to find element
+    # @return [nil]
     def click_on_displayed(xpath_name)
       element = get_element_by_display(xpath_name)
       begin
@@ -40,6 +43,11 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Click on locator by coordinates
+    # @param xpath_name [String] xpath to click
+    # @param right_by [Integer] shift to right
+    # @param down_by [Integer] shift to bottom
+    # @return [nil]
     def click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
@@ -47,6 +55,9 @@ module OnlyofficeWebdriverWrapper
       @driver.action.move_to(element, right_by.to_i, down_by.to_i).click.perform
     end
 
+    # Click on one of several which displayed
+    # @param xpath_several_elements [String] xpath to find element
+    # @return [True, False] true if click successful, false if not found
     def click_on_one_of_several_by_display(xpath_several_elements)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if current_element.displayed?
@@ -57,6 +68,11 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
+    # Click on one of several xpath filtered by parameter and value
+    # @param xpath_several_elements [String] xpath to select
+    # @param parameter_name [String] parameter name
+    # @param parameter_value [String] parameter value
+    # @return [True, False] true if click successful, false if not found
     def click_on_one_of_several_by_parameter(xpath_several_elements, parameter_name, parameter_value)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if current_element.attribute(parameter_name).include? parameter_value
