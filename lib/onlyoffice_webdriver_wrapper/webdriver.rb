@@ -418,11 +418,6 @@ module OnlyofficeWebdriverWrapper
       full_file_name
     end
 
-    def service_unavailable?
-      source = get_page_source
-      source.include?('Error 503')
-    end
-
     # Perform cleanup if something went wrong during tests
     # @param forced [True, False] should cleanup run in all cases
     def self.clean_up(forced = false)
