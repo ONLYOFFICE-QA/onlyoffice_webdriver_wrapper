@@ -2,9 +2,24 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Add documentation to some methods
+
 ### Changes
 
 * Extract click methods to `ClickMethods` module
+* Increase test coverage of `ClickMethods` module
+* Remove `WebDriver#click_and_wait`
+* `WebDriver#click_on_locator` raise `Selenium::WebDriver::Error::ElementNotVisibleError`
+  instead of `RuntimeError`
+* `WebDriver#click_on_displayed` raise a correct exception type if failed
+* Remove unused `WebDrvier#click_on_one_of_several_by_text`,
+  `WebDriver#click_on_one_of_several_xpath_by_number`,
+  `WebDriver#left_mouse_click`
+* `WebDriver#right_click` wait to element to appear
+* Remove `WebDriver#context_click_on_locator` -
+  use `WebDriver#right_click` instead
 
 ## 0.3.2 (2020-06-30)
 

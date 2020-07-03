@@ -1,0 +1,16 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div>
+      <button foo="test">ClickMe</button>
+      <button foo="bar" onclick="showElement()">ClickMe</button>
+    </div>
+    <div id= "newElement" style="display: none">This is new element</div>
+  </body>
+</html>
+<script>
+function showElement() {
+  document.getElementById('newElement').style.display = "block";
+}
+</script>

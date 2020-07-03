@@ -38,16 +38,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
       expect { webdriver.type_to_input('//*[@id="unknwon-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
     end
 
-    describe 'right_click_on_locator_coordinates' do
-      it 'right_click_on_locator_coordinates with empty coordinates' do
-        webdriver.right_click_on_locator_coordinates('//body')
-      end
-
-      it 'right_click_on_locator_coordinates with nil coordinates' do
-        webdriver.right_click_on_locator_coordinates('//body', nil, nil)
-      end
-    end
-
     describe 'get_url' do
       it 'get url in frame return url of frame, not mail url' do
         webdriver.open('http://www.google.com')
