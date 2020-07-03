@@ -102,6 +102,9 @@ module OnlyofficeWebdriverWrapper
       @driver.action.move_to(element, right_by.to_i, down_by.to_i).context_click.perform
     end
 
+    # Perform double_click on element
+    # @param xpath_name [String] xpath to click
+    # @return [nil]
     def double_click(xpath_name)
       wait_until_element_visible(xpath_name)
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name)).double_click.perform
