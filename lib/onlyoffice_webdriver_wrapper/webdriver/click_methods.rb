@@ -120,10 +120,6 @@ module OnlyofficeWebdriverWrapper
       @driver.action.move_to(@driver.find_element(:xpath, xpath_name), right_by.to_i, down_by.to_i).double_click.perform
     end
 
-    def left_mouse_click(xpath, x_coord, y_coord)
-      @driver.action.move_to(get_element(xpath), x_coord.to_i, y_coord.to_i).click.perform
-    end
-
     # Context click on locator
     # @param [String] xpath_name name of xpath to click
     def context_click_on_locator(xpath_name)
