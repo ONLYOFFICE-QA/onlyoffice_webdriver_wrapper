@@ -5,6 +5,8 @@
 ### Changes
 
 * Remove unused `WebDriver#remove_event`
+* Remove unused `WebDriver#add_class_by_jquery`
+* Remove unused `WebDriver#remove_class_by_jquery`
 
 ## 0.3.3 (2020-07-03)
 

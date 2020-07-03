@@ -169,14 +169,6 @@ module OnlyofficeWebdriverWrapper
       WebDriver.host_name_by_full_url(get_url)
     end
 
-    def remove_class_by_jquery(selector, class_name)
-      execute_javascript("$(#{dom_element_by_xpath(selector)}).removeClass('#{class_name}');")
-    end
-
-    def add_class_by_jquery(selector, class_name)
-      execute_javascript("$(#{dom_element_by_xpath(selector)}).addClass('#{class_name}');")
-    end
-
     # Perform drag'n'drop action in one element (for example on big canvas area)
     # for drag'n'drop one whole element use 'drag_and_drop_by'
     # ==== Attributes
