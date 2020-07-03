@@ -83,10 +83,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    def click_on_one_of_several_xpath_by_number(xpath, number_of_element)
-      click_on_locator("(#{xpath})[#{number_of_element}]")
-    end
-
     def right_click(xpath_name)
       @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
