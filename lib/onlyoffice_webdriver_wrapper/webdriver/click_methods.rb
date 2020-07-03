@@ -47,20 +47,6 @@ module OnlyofficeWebdriverWrapper
       @driver.action.move_to(element, right_by.to_i, down_by.to_i).click.perform
     end
 
-    def click_on_one_of_several_by_text(xpath_several_elements, text_to_click)
-      @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
-        next unless text_to_click.to_s == current_element.attribute('innerHTML')
-
-        begin
-          current_element.click
-        rescue Exception => e
-          webdriver_error("Error in click_on_one_of_several_by_text(#{xpath_several_elements}, #{text_to_click}): #{e.message}")
-        end
-        return true
-      end
-      false
-    end
-
     def click_on_one_of_several_by_display(xpath_several_elements)
       @driver.find_elements(:xpath, xpath_several_elements).each do |current_element|
         if current_element.displayed?
