@@ -90,6 +90,11 @@ module OnlyofficeWebdriverWrapper
       @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
 
+    # Perform right click on locator with specified coordinates
+    # @param xpath_name [String] xpath to click
+    # @param right_by [Integer] shift to right
+    # @param down_by [Integer] shift to bottom
+    # @return [nil]
     def right_click_on_locator_coordinates(xpath_name, right_by = nil, down_by = nil)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
