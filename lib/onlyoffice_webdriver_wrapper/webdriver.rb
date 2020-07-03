@@ -160,15 +160,6 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log('Go back to previous page')
     end
 
-    def self.host_name_by_full_url(full_url)
-      uri = URI(full_url)
-      uri.port == 80 || uri.port == 443 ? "#{uri.scheme}://#{uri.host}" : "#{uri.scheme}://#{uri.host}:#{uri.port}"
-    end
-
-    def get_host_name
-      WebDriver.host_name_by_full_url(get_url)
-    end
-
     # Perform drag'n'drop action in one element (for example on big canvas area)
     # for drag'n'drop one whole element use 'drag_and_drop_by'
     # ==== Attributes
