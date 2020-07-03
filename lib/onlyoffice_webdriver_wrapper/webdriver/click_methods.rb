@@ -83,6 +83,9 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
+    # Perform right click on xpath
+    # @param xpath_name [String] xpath to click
+    # @return [nil]
     def right_click(xpath_name)
       @driver.action.context_click(@driver.find_element(:xpath, xpath_name)).perform
     end
