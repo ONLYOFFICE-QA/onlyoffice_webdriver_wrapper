@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.3.4 (2020-07-06)
+
 ### Changes
 
 * Remove unused `WebDriver#remove_event`
