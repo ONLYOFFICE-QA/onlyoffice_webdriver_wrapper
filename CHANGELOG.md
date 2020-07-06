@@ -2,6 +2,15 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Remove unused `WebDriver#remove_event`
+* Remove unused `WebDriver#add_class_by_jquery`
+* Remove unused `WebDriver#remove_class_by_jquery`
+* Remove unused `WebDriver#get_host_name`
+* Remove unused `WebDriver#service_unavailable?`
+* Remove unused `WebDriver.host_name_by_full_url`
+
 ## 0.3.3 (2020-07-03)
 
 ### Fixes

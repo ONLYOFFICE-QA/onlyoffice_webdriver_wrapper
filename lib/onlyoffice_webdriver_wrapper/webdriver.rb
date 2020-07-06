@@ -160,27 +160,6 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log('Go back to previous page')
     end
 
-    def self.host_name_by_full_url(full_url)
-      uri = URI(full_url)
-      uri.port == 80 || uri.port == 443 ? "#{uri.scheme}://#{uri.host}" : "#{uri.scheme}://#{uri.host}:#{uri.port}"
-    end
-
-    def get_host_name
-      WebDriver.host_name_by_full_url(get_url)
-    end
-
-    def remove_event(event_name)
-      execute_javascript("jQuery(document).unbind('#{event_name}');")
-    end
-
-    def remove_class_by_jquery(selector, class_name)
-      execute_javascript("$(#{dom_element_by_xpath(selector)}).removeClass('#{class_name}');")
-    end
-
-    def add_class_by_jquery(selector, class_name)
-      execute_javascript("$(#{dom_element_by_xpath(selector)}).addClass('#{class_name}');")
-    end
-
     # Perform drag'n'drop action in one element (for example on big canvas area)
     # for drag'n'drop one whole element use 'drag_and_drop_by'
     # ==== Attributes
@@ -437,11 +416,6 @@ module OnlyofficeWebdriverWrapper
       end
       webdriver_error("File #{full_file_name} not download for #{timeout} seconds") if counter >= timeout
       full_file_name
-    end
-
-    def service_unavailable?
-      source = get_page_source
-      source.include?('Error 503')
     end
 
     # Perform cleanup if something went wrong during tests
