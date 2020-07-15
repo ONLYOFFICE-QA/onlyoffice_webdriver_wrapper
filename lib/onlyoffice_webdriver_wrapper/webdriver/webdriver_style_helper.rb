@@ -20,15 +20,11 @@ module OnlyofficeWebdriverWrapper
     end
 
     def set_style_show_by_xpath(xpath, move_to_center = false)
-      xpath = xpath.tr("'", '"')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.display = "block";')
+      execute_javascript("#{dom_element_by_xpath(xpath)}.style.display = 'block';")
       return unless move_to_center
 
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.left = "410px";')
-      execute_javascript('document.evaluate( \'' + xpath.to_s +
-                             '\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue.style.top = "260px";')
+      execute_javascript("#{dom_element_by_xpath(xpath)}.style.left = '410px';")
+      execute_javascript("#{dom_element_by_xpath(xpath)}.style.top = '260px';")
     end
   end
 end
