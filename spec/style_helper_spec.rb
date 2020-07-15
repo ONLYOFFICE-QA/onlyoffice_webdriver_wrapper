@@ -21,16 +21,4 @@ describe '#style_helper' do
       expect(webdriver.get_style_parameter('//div', 'fake')).to be_nil
     end
   end
-
-  describe '#set_style_parameter' do
-    it '#set_style_parameter for existing attribute is correct' do
-      webdriver.set_style_parameter('//div', 'display', 'none')
-      expect(webdriver.get_style_parameter('//div', 'display')).to eq('none')
-    end
-
-    it '#set_style_parameter can-not create new attribute' do
-      webdriver.set_style_parameter('//div', 'foo', 'bar')
-      expect(webdriver.get_style_parameter('//div', 'foo')).to be_nil
-    end
-  end
 end
