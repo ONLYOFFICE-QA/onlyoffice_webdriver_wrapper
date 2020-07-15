@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.3.5 (2020-07-15)
+
 ### Fixes
 
 * Fix `WebDriver#set_style_attribute` for xpath with single quotes
