@@ -12,6 +12,7 @@
 * Extract `WebDriver#set_style_show_by_xpath` test to separate spec
 * Extract `WebDriver#set_style_parameter` test to separate spec
 * Simplify `WebDriver#set_style_show_by_xpath` by using `dom_element_by_xpath`
+* `WebDriver#set_style_parameter` just an alias to `WebDriver#set_style_attribute`
 
 ## 0.3.4 (2020-07-06)
 

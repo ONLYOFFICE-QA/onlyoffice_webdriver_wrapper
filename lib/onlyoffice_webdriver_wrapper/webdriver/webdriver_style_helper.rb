@@ -10,14 +10,16 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
-    def set_style_parameter(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                             "style.#{attribute}=\"#{attribute_value}\"")
-    end
-
+    # Set style attribute value of element
+    # @param xpath [String] xpath to set
+    # @param attribute [String] style param to set
+    # @param attribute_value [String] attribute value to set
+    # @return [String] result of execution
     def set_style_attribute(xpath, attribute, attribute_value)
       execute_javascript("#{dom_element_by_xpath(xpath)}.style.#{attribute}=\"#{attribute_value}\"")
     end
+
+    alias set_style_parameter set_style_attribute
 
     def set_style_show_by_xpath(xpath, move_to_center = false)
       execute_javascript("#{dom_element_by_xpath(xpath)}.style.display = 'block';")
