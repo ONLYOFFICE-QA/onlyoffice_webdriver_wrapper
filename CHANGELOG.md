@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix `WebDriver#set_style_attribute` for xpath with single quotes
+
 ### Changes
 
 * Extract `WebDriver#set_style_attribute` test to separate spec
