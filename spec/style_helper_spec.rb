@@ -34,18 +34,6 @@ describe '#style_helper' do
     end
   end
 
-  describe '#set_style_attribute' do
-    it '#set_style_attribute for existing attribute is correct' do
-      webdriver.set_style_attribute('//div', 'display', 'none')
-      expect(webdriver.get_style_parameter('//div', 'display')).to eq('none')
-    end
-
-    it '#set_style_attribute can-not create new attribute' do
-      webdriver.set_style_attribute('//div', 'foo', 'bar')
-      expect(webdriver.get_style_parameter('//div', 'foo')).to be_nil
-    end
-  end
-
   describe '#set_style_show_by_xpath' do
     it 'set_style_show_by_xpath by default show object' do
       webdriver.set_style_show_by_xpath('//span')
