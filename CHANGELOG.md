@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Extract `WebDriver#set_style_attribute` test to separate spec
+
 ## 0.3.4 (2020-07-06)
 
 ### Changes
