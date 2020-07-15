@@ -16,8 +16,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     def set_style_attribute(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate('#{xpath}',document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                             "singleNodeValue.style.#{attribute}=\"#{attribute_value}\"")
+      execute_javascript("#{dom_element_by_xpath(xpath)}.style.#{attribute}=\"#{attribute_value}\"")
     end
 
     def set_style_show_by_xpath(xpath, move_to_center = false)
