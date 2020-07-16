@@ -243,9 +243,10 @@ module OnlyofficeWebdriverWrapper
     end
 
     def element_present?(xpath_name)
-      if xpath_name.is_a?(PageObject::Elements::Element)
+      case xpath_name
+      when PageObject::Elements::Element
         xpath_name.present?
-      elsif xpath_name.is_a?(Selenium::WebDriver::Element)
+      when Selenium::WebDriver::Element
         xpath_name.displayed?
       else
         @driver.find_element(:xpath, xpath_name)
