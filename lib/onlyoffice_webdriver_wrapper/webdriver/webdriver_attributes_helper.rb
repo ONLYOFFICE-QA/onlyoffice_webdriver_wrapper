@@ -40,5 +40,25 @@ module OnlyofficeWebdriverWrapper
       end
       0
     end
+
+    # Set element attribute
+    # @param xpath [String] element to select
+    # @param attribute [String] attribute to set
+    # @param attribute_value [String] value of attribute
+    # @return [String] result of execution
+    def set_attribute(xpath, attribute, attribute_value)
+      execute_javascript("#{dom_element_by_xpath(xpath)}.#{attribute}=\"#{attribute_value}\";")
+    end
+
+    alias set_parameter set_attribute
+
+    # Remove attribute of element
+    # @param xpath [String] xpath of element
+    # @param attribute [String] attribute to remove
+    # @return [String] result of execution
+    def remove_attribute(xpath, attribute)
+      execute_javascript("document.evaluate(\"#{xpath}\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
+                             "singleNodeValue.removeAttribute('#{attribute}');")
+    end
   end
 end

@@ -5,6 +5,7 @@
 ### New Features
 
 * Add some missing documentation
+* Add tests to `WebDriver#set_attribute`
 
 ### Fixes
 
@@ -13,6 +14,11 @@
 ### Changes
 
 * Remove unused `WebDriver#server_address`
+* Refactor location of `WebDriver#set_parameter`
+  and `WebDriver#remove_attribute`
+* Rename `WebDriver#set_parameter` to `WebDriver#set_attriubte`.
+  Keep old name as alias
+* Use `WebDriver#dom_element_by_xpath` in `WebDriver#set_attribute`
 
 ## 0.3.5 (2020-07-15)
 
