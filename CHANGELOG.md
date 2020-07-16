@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix `rubocop` issues after upgrade to 0.88.0
+
 ## 0.3.5 (2020-07-15)
 
 ### Fixes
