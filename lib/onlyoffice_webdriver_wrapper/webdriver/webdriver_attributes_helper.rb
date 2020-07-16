@@ -57,8 +57,7 @@ module OnlyofficeWebdriverWrapper
     # @param attribute [String] attribute to remove
     # @return [String] result of execution
     def remove_attribute(xpath, attribute)
-      execute_javascript("document.evaluate(\"#{xpath}\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                             "singleNodeValue.removeAttribute('#{attribute}');")
+      execute_javascript("#{dom_element_by_xpath(xpath)}.removeAttribute('#{attribute}');")
     end
   end
 end

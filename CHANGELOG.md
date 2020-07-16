@@ -6,10 +6,12 @@
 
 * Add some missing documentation
 * Add tests to `WebDriver#set_attribute`
+* Add tests to `WebDriver#remove_attribute`
 
 ### Fixes
 
 * Fix `rubocop` issues after upgrade to 0.88.0
+* Fix `WebDriver#remove_attribute` for xpath with dobule quotes
 
 ### Changes
 
