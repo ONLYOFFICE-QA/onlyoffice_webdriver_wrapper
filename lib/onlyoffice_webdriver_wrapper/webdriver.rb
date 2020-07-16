@@ -44,13 +44,15 @@ module OnlyofficeWebdriverWrapper
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array, String] default switches for chrome
     attr_accessor :driver
+    # @return [Symbol] browser to use
     attr_accessor :browser
     # @return [True, False] is browser currently running
     attr_reader :browser_running
     # @return [Symbol] device of which we try to simulate, default - :desktop_linux
     attr_accessor :device
+    # @return [String] directory to which file is downloaded
     attr_accessor :download_directory
-    attr_accessor :server_address
+    # @return [HeadlessHelper] headless wrapper
     attr_accessor :headless
     # @return [Net::HTTP::Proxy] connection proxy
     attr_accessor :proxy
@@ -241,9 +243,10 @@ module OnlyofficeWebdriverWrapper
     end
 
     def element_present?(xpath_name)
-      if xpath_name.is_a?(PageObject::Elements::Element)
+      case xpath_name
+      when PageObject::Elements::Element
         xpath_name.present?
-      elsif xpath_name.is_a?(Selenium::WebDriver::Element)
+      when Selenium::WebDriver::Element
         xpath_name.displayed?
       else
         @driver.find_element(:xpath, xpath_name)

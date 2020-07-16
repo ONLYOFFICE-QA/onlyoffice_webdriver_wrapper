@@ -2,6 +2,18 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add some missing documentation
+
+### Fixes
+
+* Fix `rubocop` issues after upgrade to 0.88.0
+
+### Changes
+
+* Remove unused `WebDriver#server_address`
+
 ## 0.3.5 (2020-07-15)
 
 ### Fixes
