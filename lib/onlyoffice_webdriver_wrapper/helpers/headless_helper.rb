@@ -10,8 +10,11 @@ module OnlyofficeWebdriverWrapper
   class HeadlessHelper
     include RealDisplayTools
     include RubyHelper
+    # @return [Headless] instance of headless object
     attr_accessor :headless_instance
+    # @return [Integer] x resolution of virtual screen
     attr_accessor :resolution_x
+    # @return [Integer] y resolution of virtual screen
     attr_accessor :resolution_y
 
     def initialize(resolution_x = 1680, resolution_y = 1050)
