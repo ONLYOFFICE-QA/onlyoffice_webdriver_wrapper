@@ -372,16 +372,6 @@ module OnlyofficeWebdriverWrapper
       @driver.find_elements(:xpath, xpath_several_elements).map { |element| element.text unless element.text == '' }.compact
     end
 
-    def set_parameter(xpath, attribute, attribute_value)
-      execute_javascript("document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()." \
-                             "#{attribute}=\"#{attribute_value}\";")
-    end
-
-    def remove_attribute(xpath, attribute)
-      execute_javascript("document.evaluate(\"#{xpath}\",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)." \
-                             "singleNodeValue.removeAttribute('#{attribute}');")
-    end
-
     def select_combo_box(xpath_name, select_value, select_by = :value)
       wait_until_element_visible(xpath_name)
       option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
