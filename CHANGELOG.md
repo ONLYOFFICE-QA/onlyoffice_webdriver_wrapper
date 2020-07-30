@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.4.0 (2020-07-30)
+
 ### New Features
 
 * Add some missing documentation
