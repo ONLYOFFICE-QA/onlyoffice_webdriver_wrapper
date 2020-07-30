@@ -12,6 +12,7 @@
 
 * Fix `rubocop` issues after upgrade to 0.88.0
 * Fix `WebDriver#remove_attribute` for xpath with dobule quotes
+* Fix `get_text_by_js` for `//input` tags
 
 ### Changes
 

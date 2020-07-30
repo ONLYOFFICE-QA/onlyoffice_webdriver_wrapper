@@ -29,7 +29,10 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_text_by_js(xpath)
-      execute_javascript("return document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
+      object_js = "document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()"
+      text = execute_javascript("return #{object_js}.textContent")
+      text = execute_javascript("return #{object_js}.value") if text.empty?
+      text
     end
 
     # Calculate object size using Javascript
