@@ -19,4 +19,14 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_text_by_js' do
   it 'get_text_by_js return text in input' do
     expect(webdriver.get_text_by_js('//input')).to eq('text_in_input')
   end
+
+  it 'get_text_by_js can get to xpath with double quotes' do
+    xpath = '//input[@id="foo"]'
+    expect(webdriver.get_text_by_js(xpath)).to eq('foo_input')
+  end
+
+  it 'get_text_by_js can get to xpath with single quotes' do
+    xpath = "//input[@id='foo']"
+    expect(webdriver.get_text_by_js(xpath)).to eq('foo_input')
+  end
 end

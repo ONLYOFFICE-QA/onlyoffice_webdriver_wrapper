@@ -29,9 +29,8 @@ module OnlyofficeWebdriverWrapper
     end
 
     def get_text_by_js(xpath)
-      object_js = "document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()"
-      text = execute_javascript("return #{object_js}.textContent")
-      text = execute_javascript("return #{object_js}.value") if text.empty?
+      text = execute_javascript("return #{dom_element_by_xpath(xpath)}.textContent")
+      text = execute_javascript("return #{dom_element_by_xpath(xpath)}.value") if text.empty?
       text
     end
 
