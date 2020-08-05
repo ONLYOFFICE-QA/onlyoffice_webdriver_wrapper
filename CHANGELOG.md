@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## New Features
+
+* Update chromedriver to `84.0.4147.30`
+
 ## 0.4.0 (2020-07-30)
 
 ### New Features
