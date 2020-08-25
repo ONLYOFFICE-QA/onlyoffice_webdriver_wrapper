@@ -5,6 +5,8 @@
 ### New Features
 
 * Use GitHub Actions instead of TravisCI
+* Add `rubocop` checks in CI
+* Fixes from update `rubocop` to `0.89.1`
 
 ### Changes
 
