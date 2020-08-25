@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Use GitHub Actions instead of TravisCI
+
 ### Changes
 
 * Freeze exact version of gem dependencies
