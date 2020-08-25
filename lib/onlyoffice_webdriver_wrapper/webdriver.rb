@@ -84,12 +84,10 @@ module OnlyofficeWebdriverWrapper
     def open(url)
       url = "http://#{url}" unless url.include?('http') || url.include?('file://')
       loop do
-        begin
-          @driver.navigate.to url
-          break
-        rescue Timeout::Error
-          @driver.navigate.refresh
-        end
+        @driver.navigate.to url
+        break
+      rescue Timeout::Error
+        @driver.navigate.refresh
       end
       OnlyofficeLoggerHelper.log("Opened page: #{url}")
     end
@@ -333,14 +331,12 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath_name name of current xpath
     def select_frame(xpath_name = '//iframe', count_of_frames = 1)
       (0...count_of_frames).each do
-        begin
-          frame = @driver.find_element(:xpath, xpath_name)
-          @driver.switch_to.frame frame
-        rescue Selenium::WebDriver::Error::NoSuchElementError
-          OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
-        rescue Exception => e
-          webdriver_error("Raise unkwnown exception: #{e}")
-        end
+        frame = @driver.find_element(:xpath, xpath_name)
+        @driver.switch_to.frame frame
+      rescue Selenium::WebDriver::Error::NoSuchElementError
+        OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
+      rescue Exception => e
+        webdriver_error("Raise unkwnown exception: #{e}")
       end
     end
 

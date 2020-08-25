@@ -129,12 +129,6 @@ Style/OptionalBooleanParameter:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_style_helper.rb'
     - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_type_helper.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantBegin:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-
 # Offense count: 14
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
