@@ -6,5 +6,6 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 2.5
   Exclude:
     - lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/headless_screenshot_patch.rb

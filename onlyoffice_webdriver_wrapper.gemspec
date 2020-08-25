@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.name = OnlyofficeWebdriverWrapper::Name::STRING
   s.version = OnlyofficeWebdriverWrapper::Version::STRING
   s.platform = Gem::Platform::RUBY
+  s.required_ruby_version = '>= 2.5'
   s.authors = ['ONLYOFFICE', 'Pavel Lobashov', 'Oleg Nazarov', 'Dmitry Rotaty']
   s.email = %w[shockwavenn@gmail.com]
   s.summary = 'ONLYOFFICE Webdriver Wrapper Gem'

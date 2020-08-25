@@ -6,6 +6,8 @@
 
 * Freeze exact version of gem dependencies
   to correct update via Dependabot
+* Drop support of rubies older, than 2.5, since
+  they are EOLed
 
 ## 0.4.0 (2020-07-30)
 
