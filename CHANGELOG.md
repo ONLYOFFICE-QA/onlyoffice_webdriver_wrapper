@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Freeze exact version of gem dependencies
+  to correct update via Dependabot
+
 ## 0.4.0 (2020-07-30)
 
 ### New Features
