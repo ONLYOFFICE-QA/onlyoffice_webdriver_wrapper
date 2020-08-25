@@ -76,13 +76,13 @@ module OnlyofficeWebdriverWrapper
       when :chrome
         @driver = start_chrome_driver
       else
-        raise 'Unknown Browser: ' + browser.to_s
+        raise("Unknown Browser: #{browser}")
       end
       @browser_running = true
     end
 
     def open(url)
-      url = 'http://' + url unless url.include?('http') || url.include?('file://')
+      url = "http://#{url}" unless url.include?('http') || url.include?('file://')
       loop do
         begin
           @driver.navigate.to url
@@ -210,10 +210,10 @@ module OnlyofficeWebdriverWrapper
     def open_dropdown_selector(xpath_name, horizontal_shift = 30, vertical_shift = 0)
       element = get_element(xpath_name)
       if @browser == :firefox || @browser == :safari
-        set_style_attribute(xpath_name + '/button', 'display', 'none')
+        set_style_attribute("#{xpath_name}/button", 'display', 'none')
         set_style_attribute(xpath_name, 'display', 'inline')
         element.click
-        set_style_attribute(xpath_name + '/button', 'display', 'inline-block')
+        set_style_attribute("#{xpath_name}/button", 'display', 'inline-block')
         set_style_attribute(xpath_name, 'display', 'block')
       else
         @driver.action.move_to(element, horizontal_shift, vertical_shift).click.perform

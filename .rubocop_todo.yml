@@ -135,12 +135,6 @@ Style/RedundantBegin:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/StringConcatenation:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-
 # Offense count: 14
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
