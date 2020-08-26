@@ -8,6 +8,7 @@ describe '#type_helper' do
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
                       'type_helper.html')
+    sleep 5
   end
 
   after { webdriver.quit }
