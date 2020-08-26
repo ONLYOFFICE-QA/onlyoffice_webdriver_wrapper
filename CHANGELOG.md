@@ -12,6 +12,8 @@
 ### Fixes
 
 * Fix `wait_until` test to not to use not-existing localhost page
+* Add sleep for page to open
+  Without it on newest chrome troubles with setting focus
 
 ### Changes
 
