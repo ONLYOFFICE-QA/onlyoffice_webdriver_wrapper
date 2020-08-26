@@ -26,7 +26,7 @@ jobs:
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rake
+        bundle exec rspec --fail-fast
     - name: Check markdown files using `markdownlint`
       run: |
         sudo npm install -g markdownlint-cli
