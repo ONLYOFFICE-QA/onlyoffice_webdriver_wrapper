@@ -24,8 +24,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
 
     it 'element_size_by_js' do
       dimensions = webdriver.element_size_by_js('//body')
-      expect(dimensions.height).to be > 900
-      expect(dimensions.width).to be > 1600
+      expect(dimensions.height).to be > (webdriver.browser_size.y / 2)
+      expect(dimensions.width).to be > (webdriver.browser_size.x / 2)
     end
 
     it 'object_absolute_position' do
