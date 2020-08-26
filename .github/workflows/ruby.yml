@@ -13,6 +13,11 @@ jobs:
             allow-failures: true
     steps:
     - uses: actions/checkout@v2
+    - name: Update to current stable google-chrome
+      run: |
+        echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt -y update
+        sudo apt -y install google-chrome-stable
     - name: Set up Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
       with:

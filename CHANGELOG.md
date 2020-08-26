@@ -20,6 +20,7 @@
 * Drop support of rubies older, than 2.5, since
   they are EOLed
 * Remove `w3c: false` fro Chrome start options
+* Force install current stable Chrome in CI
 
 ## 0.4.0 (2020-07-30)
 
