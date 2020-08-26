@@ -8,6 +8,10 @@
 * Add `rubocop` checks in CI
 * Fixes from update `rubocop` to `0.89.1`
 
+### Fixes
+
+* Fix `wait_until` test to not to use not-existing localhost page
+
 ### Changes
 
 * Freeze exact version of gem dependencies
