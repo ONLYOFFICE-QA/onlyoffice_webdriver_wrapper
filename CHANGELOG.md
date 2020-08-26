@@ -7,10 +7,13 @@
 * Use GitHub Actions instead of TravisCI
 * Add `rubocop` checks in CI
 * Fixes from update `rubocop` to `0.89.1`
+* Update chromedriver to `85.0.4183.83`
 
 ### Fixes
 
 * Fix `wait_until` test to not to use not-existing localhost page
+* Add sleep for page to open
+  Without it on newest chrome troubles with setting focus
 
 ### Changes
 
@@ -19,6 +22,7 @@
 * Drop support of rubies older, than 2.5, since
   they are EOLed
 * Remove `w3c: false` fro Chrome start options
+* Force install current stable Chrome in CI
 
 ## 0.4.0 (2020-07-30)
 

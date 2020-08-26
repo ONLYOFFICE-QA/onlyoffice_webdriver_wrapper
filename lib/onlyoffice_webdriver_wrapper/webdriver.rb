@@ -89,6 +89,7 @@ module OnlyofficeWebdriverWrapper
       rescue Timeout::Error
         @driver.navigate.refresh
       end
+      sleep(1) # Correct wait for Page to init focus
       OnlyofficeLoggerHelper.log("Opened page: #{url}")
     end
 
