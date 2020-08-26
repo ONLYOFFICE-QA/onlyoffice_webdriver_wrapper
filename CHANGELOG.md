@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.5.0 (2020-08-26)
+
 ### New Features
 
 * Use GitHub Actions instead of TravisCI
