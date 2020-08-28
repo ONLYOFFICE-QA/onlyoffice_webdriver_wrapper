@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('onlyoffice_s3_wrapper', '0.1.2')
   s.add_runtime_dependency('page-object', '2.2.6')
   s.add_runtime_dependency('selenium-webdriver', '3.142.7')
-  s.add_runtime_dependency('watir', '6.16.5')
+  s.add_runtime_dependency('watir', '6.17.0')
   s.add_development_dependency('codecov', '0.2.8')
   s.add_development_dependency('overcommit', '0.55.0')
   s.add_development_dependency('rake', '13.0.1')
