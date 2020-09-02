@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Feature
+
+* Ability to record video via `headless` gem
+
 ## 0.5.0 (2020-08-26)
 
 ### New Features
