@@ -17,6 +17,9 @@ module OnlyofficeWebdriverWrapper
     # @return [nil] start capture of file
     def start_capture
       headless_instance.video.start_capture if record_video
+    rescue Headless::Exception => e
+      OnlyofficeLoggerHelper.log("Cannot start video capture: #{e}")
+      @record_video = false
     end
 
     # @return [nil] stop catpure of file
