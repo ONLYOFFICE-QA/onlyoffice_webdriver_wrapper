@@ -28,6 +28,9 @@ module OnlyofficeWebdriverWrapper
 
       headless_instance.video.stop_and_save(recorded_video_file)
       OnlyofficeLoggerHelper.log("Video is saved to #{recorded_video_file}")
+    rescue Headless::Exception => e
+      OnlyofficeLoggerHelper.log("Saving recorded video failed: #{e}")
+      @record_video = false
     end
   end
 end
