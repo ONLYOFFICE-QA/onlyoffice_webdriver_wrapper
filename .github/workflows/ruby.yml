@@ -18,6 +18,8 @@ jobs:
         echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
         sudo apt-get -y update
         sudo apt-get -y install google-chrome-stable
+    - name: Install dependencies
+      run: sudo apt -y isntall ffmpeg
     - name: Set up Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
       with:
