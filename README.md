@@ -4,6 +4,12 @@ ONLYOFFICE Webdriver Wrapper Gem. Used in QA
 
 ## Installation
 
+Install pre-requirements
+
+```shell script
+sudo apt-get install ffmpeg
+```
+
 Add this line to your application's Gemfile:
 
 ```ruby
