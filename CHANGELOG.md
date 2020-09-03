@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `record_video` option to `WebDriver.new`
+
 ### Changes
 
 * Remove unused `_remote_server` param of `WebDriver.new`

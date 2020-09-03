@@ -21,8 +21,8 @@ module OnlyofficeWebdriverWrapper
     # @return [True, False] is video should be recorded
     attr_reader :record_video
 
-    def initialize(resolution_x = 1680,
-                   resolution_y = 1050,
+    def initialize(resolution_x: 1680,
+                   resolution_y: 1050,
                    record_video: true)
       @resolution_x = resolution_x
       @resolution_y = resolution_y
