@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.6.1 (2020-09-03)
+
 ### New Features
 
 * Add `record_video` option to `WebDriver.new`
