@@ -57,18 +57,16 @@ module OnlyofficeWebdriverWrapper
     # @return [Net::HTTP::Proxy] connection proxy
     attr_accessor :proxy
 
-    def initialize(browser = :firefox,
-                   device: :desktop_linux,
-                   proxy: nil)
+    def initialize(browser = :firefox, params = {})
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
 
-      @device = device
+      @device = params.fetch(:device, :desktop_linux)
       @headless = HeadlessHelper.new
       @headless.start
 
       @download_directory = Dir.mktmpdir('webdriver-download')
-      @browser = browser
-      @proxy = proxy
+      @browser = params.fetch(:browser, browser)
+      @proxy = params[:proxy]
       case browser
       when :firefox
         @driver = start_firefox_driver

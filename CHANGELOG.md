@@ -5,6 +5,7 @@
 ### Changes
 
 * Remove unused `_remote_server` param of `WebDriver.new`
+* `WebDriver.new` arguments are `params` hash
 
 ## 0.6.0 (2020-09-03)
 
