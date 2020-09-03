@@ -56,12 +56,15 @@ module OnlyofficeWebdriverWrapper
     attr_accessor :headless
     # @return [Net::HTTP::Proxy] connection proxy
     attr_accessor :proxy
+    # @return [True, False] should video be recorded
+    attr_reader :record_video
 
     def initialize(browser = :firefox, params = {})
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
 
       @device = params.fetch(:device, :desktop_linux)
-      @headless = HeadlessHelper.new
+      @record_video = params.fetch(:record_video, true)
+      @headless = HeadlessHelper.new(record_video: record_video)
       @headless.start
 
       @download_directory = Dir.mktmpdir('webdriver-download')
