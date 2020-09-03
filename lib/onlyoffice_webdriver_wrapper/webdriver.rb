@@ -58,7 +58,6 @@ module OnlyofficeWebdriverWrapper
     attr_accessor :proxy
 
     def initialize(browser = :firefox,
-                   _remote_server = nil,
                    device: :desktop_linux,
                    proxy: nil)
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
