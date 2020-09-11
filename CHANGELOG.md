@@ -2,6 +2,12 @@
 
 ## master (unreleased)
 
+## 0.6.2 (2020-09-11)
+
+### New Features
+
+* Actualize dependencies
+
 ## 0.6.1 (2020-09-03)
 
 ### New Features
