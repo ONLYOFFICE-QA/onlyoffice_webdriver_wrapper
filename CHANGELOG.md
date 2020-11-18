@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `dependabot` config
+
 ### Changes
 
 * Update ChromeDriver to `87.0.4280.20`
