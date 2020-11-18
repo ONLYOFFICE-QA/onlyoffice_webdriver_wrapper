@@ -22,12 +22,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
       expect(webdriver.browser_size.y).to eq(webdriver.headless.resolution_y)
     end
 
-    it 'element_size_by_js' do
-      dimensions = webdriver.element_size_by_js('//body')
-      expect(dimensions.height).to be > (webdriver.browser_size.y / 2)
-      expect(dimensions.width).to be > (webdriver.browser_size.x / 2)
-    end
-
     it 'object_absolute_position' do
       position = webdriver.object_absolute_position('//body')
       expect(position.height).to be > 0
