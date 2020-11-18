@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Update ChromeDriver to `87.0.4280.20`
+
 ## 0.6.3 (2020-09-11)
 
 ### New Features
