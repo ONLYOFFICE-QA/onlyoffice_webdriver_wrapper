@@ -6,6 +6,7 @@
 
 * Update ChromeDriver to `87.0.4280.20`
 * Change test for `WebDriver#element_size_by_js`
+* Freeze development gem version in `Gemfile.lock`
 
 ## 0.6.3 (2020-09-11)
 
