@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'chrome_helper/chrome_version_helper'
+
 module OnlyofficeWebdriverWrapper
   # Class for working with Chrome
   module ChromeHelper
+    include ChromeVersionHelper
+
     DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
                                  --disable-popup-blocking
                                  --disable-infobars
