@@ -5,6 +5,7 @@
 ### New Features
 
 * Add ability to get chrome version
+* Add ability to run `chromedriver` of different version
 
 ### Changes
 
