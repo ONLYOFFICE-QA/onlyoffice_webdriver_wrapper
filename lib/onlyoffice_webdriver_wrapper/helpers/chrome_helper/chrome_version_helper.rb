@@ -10,9 +10,9 @@ module OnlyofficeWebdriverWrapper
     def chrome_version(chrome_command = 'google-chrome')
       return @chrome_version if @chrome_version
 
-      @chrome_version = `#{chrome_command} --product-version`
-      OnlyofficeLoggerHelper.log("Chrome Version is: #{@chrome_version}")
-      @chrome_version = Gem::Version.new(@chrome_version)
+      version_string = `#{chrome_command} --product-version`
+      OnlyofficeLoggerHelper.log("Chrome Version is: #{version_string}")
+      @chrome_version = Gem::Version.new(version_string)
     rescue StandardError => e
       OnlyofficeLoggerHelper.log("Cannot get chrome version because of: #{e}")
       @chrome_version = unknown_chrome_version
