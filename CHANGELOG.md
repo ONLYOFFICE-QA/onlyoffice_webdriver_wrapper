@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add ability to get chrome version
+
 ## 0.7.0 (2020-11-18)
 
 ### New Features
