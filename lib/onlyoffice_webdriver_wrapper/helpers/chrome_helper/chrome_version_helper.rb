@@ -6,6 +6,11 @@ module OnlyofficeWebdriverWrapper
     # @return [Integer] current default chrome version
     CURRENT_DEFAULT_CHROME_VERSION = 87
 
+    # @return [Gem::Version] unknown chrome version
+    def unknown_chrome_version
+      Gem::Version.new('0.0.0.0')
+    end
+
     # @return [Gem::Version] version of chrome. Return unknown_chrome_version if cannot get
     def chrome_version(chrome_command = 'google-chrome')
       return @chrome_version if @chrome_version
@@ -27,11 +32,6 @@ module OnlyofficeWebdriverWrapper
     end
 
     private
-
-    # @return [Gem::Version] unknown chrome version
-    def unknown_chrome_version
-      Gem::Version.new('0.0.0.0')
-    end
 
     # @return [String] default mac chromedriver
     def default_mac
