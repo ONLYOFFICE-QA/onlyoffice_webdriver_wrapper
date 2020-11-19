@@ -19,7 +19,10 @@ module OnlyofficeWebdriverWrapper
       options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
       caps = Selenium::WebDriver::Remote::Capabilities.firefox
       caps[:proxy] = Selenium::WebDriver::Proxy.new(ssl: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
-      driver = Selenium::WebDriver.for :firefox, options: options, service: firefox_service, desired_capabilities: caps
+      webdriver_options = { options: options,
+                            desired_capabilities: caps,
+                            service: firefox_service }
+      driver = Selenium::WebDriver.for(:firefox, webdriver_options)
       driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x, headless.resolution_y) if headless.running?
       driver
     end

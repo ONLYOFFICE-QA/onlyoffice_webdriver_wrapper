@@ -6,6 +6,10 @@
 
 * Add ability to get chrome version
 
+### Fixes
+
+* Fix starting Firefox on `Ruby 3.0`
+
 ## 0.7.0 (2020-11-18)
 
 ### New Features
