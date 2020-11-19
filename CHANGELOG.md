@@ -6,6 +6,10 @@
 
 * Add ability to get chrome version
 
+### Changes
+
+* Update `geckodriver` to `0.28.0`
+
 ## 0.7.0 (2020-11-18)
 
 ### New Features
