@@ -6,6 +6,7 @@
 
 * Add ability to get chrome version
 * Add ability to run `chromedriver` of different version
+* Add option to `WebDriver.new` to not start option
 
 ### Changes
 
