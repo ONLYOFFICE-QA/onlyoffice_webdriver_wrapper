@@ -13,6 +13,7 @@
 * Update `geckodriver` to `0.28.0`
 * Fix firefox `Webdriver#click_on_locator_coordinates` test
   to not rely on google
+* Move repo to `ONLYOFFICE-QA` organization  
 
 ## 0.7.0 (2020-11-18)
 
