@@ -35,17 +35,17 @@ module OnlyofficeWebdriverWrapper
 
     # @return [String] default mac chromedriver
     def default_mac
-      "#{Dir.pwd}/lib/onlyoffice_webdriver_wrapper/helpers/bin/chromedriver_mac"
+      "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_mac"
     end
 
     # @return [String] default linux chromedriver
     def default_linux
-      "#{Dir.pwd}/lib/onlyoffice_webdriver_wrapper/helpers/bin/chromedriver_linux_#{CURRENT_DEFAULT_CHROME_VERSION}"
+      "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_#{CURRENT_DEFAULT_CHROME_VERSION}"
     end
 
     # @return [String] path to chromedriver of version
     def chromedriver_path_cur_chrome
-      file_path = "#{Dir.pwd}/lib/onlyoffice_webdriver_wrapper/helpers/bin/chromedriver_linux_#{chrome_version.segments.first}"
+      file_path = "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_#{chrome_version.segments.first}"
 
       return file_path if File.exist?(file_path)
 
