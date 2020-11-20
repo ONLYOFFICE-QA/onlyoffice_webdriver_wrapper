@@ -13,13 +13,6 @@ module OnlyofficeWebdriverWrapper
                                  --no-sandbox
                                  test-type].freeze
 
-    # @return [String] path to chromedriver
-    def chromedriver_path
-      driver_name = 'bin/chromedriver'
-      driver_name = 'bin/chromedriver_mac' if OSHelper.mac?
-      File.join(File.dirname(__FILE__), driver_name)
-    end
-
     def chrome_service
       @chrome_service ||= Selenium::WebDriver::Chrome::Service.new(path: chromedriver_path)
     end

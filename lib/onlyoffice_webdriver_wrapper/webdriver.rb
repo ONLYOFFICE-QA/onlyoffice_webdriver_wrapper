@@ -70,6 +70,8 @@ module OnlyofficeWebdriverWrapper
       @download_directory = Dir.mktmpdir('webdriver-download')
       @browser = params.fetch(:browser, browser)
       @proxy = params[:proxy]
+      return if params[:do_not_start_browser]
+
       case browser
       when :firefox
         @driver = start_firefox_driver
