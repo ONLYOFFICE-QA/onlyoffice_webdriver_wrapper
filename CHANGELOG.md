@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Allow more generic versions in `gemspec`
+
 ## 0.8.1 (2020-11-20)
 
 ### Fixes

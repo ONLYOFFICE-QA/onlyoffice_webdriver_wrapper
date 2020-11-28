@@ -2,13 +2,13 @@ PATH
   remote: .
   specs:
     onlyoffice_webdriver_wrapper (0.8.1)
-      headless (= 2.3.1)
-      onlyoffice_file_helper (= 0.3.0)
-      onlyoffice_logger_helper (= 1.1.0)
-      onlyoffice_s3_wrapper (= 0.3.0)
-      page-object (= 2.2.6)
-      selenium-webdriver (= 3.142.7)
-      watir (= 6.17.0)
+      headless (~> 2)
+      onlyoffice_file_helper (~> 0)
+      onlyoffice_logger_helper (~> 1)
+      onlyoffice_s3_wrapper (~> 0)
+      page-object (~> 2)
+      selenium-webdriver (~> 3)
+      watir (~> 6)
 
 GEM
   remote: https://rubygems.org/

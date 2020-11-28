@@ -22,13 +22,13 @@ Gem::Specification.new do |s|
   }
   s.files = Dir['lib/**/*']
   s.license = 'AGPL-3.0'
-  s.add_runtime_dependency('headless', '2.3.1')
-  s.add_runtime_dependency('onlyoffice_file_helper', '0.3.0')
-  s.add_runtime_dependency('onlyoffice_logger_helper', '1.1.0')
-  s.add_runtime_dependency('onlyoffice_s3_wrapper', '0.3.0')
-  s.add_runtime_dependency('page-object', '2.2.6')
-  s.add_runtime_dependency('selenium-webdriver', '3.142.7')
-  s.add_runtime_dependency('watir', '6.17.0')
+  s.add_runtime_dependency('headless', '~> 2')
+  s.add_runtime_dependency('onlyoffice_file_helper', '~> 0')
+  s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
+  s.add_runtime_dependency('onlyoffice_s3_wrapper', '~> 0')
+  s.add_runtime_dependency('page-object', '~> 2')
+  s.add_runtime_dependency('selenium-webdriver', '~> 3')
+  s.add_runtime_dependency('watir', '~> 6')
   s.add_development_dependency('codecov', '~> 0')
   s.add_development_dependency('overcommit', '~> 0')
   s.add_development_dependency('rake', '~> 13')
