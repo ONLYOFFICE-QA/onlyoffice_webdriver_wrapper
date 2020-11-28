@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.9.0 (2020-11-28)
+
 ### Changes
 
 * Allow more generic versions in `gemspec`
