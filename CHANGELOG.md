@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Use `--fail-fast` in default `spec` task
+
 ## 0.9.0 (2020-11-28)
 
 ### Changes
