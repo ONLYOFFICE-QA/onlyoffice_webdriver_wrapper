@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `ruby-3.0` to CI matrix
+
 ### Changes
 
 * Use `--fail-fast` in default `spec` task
