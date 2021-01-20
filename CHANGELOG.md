@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add Chromedriver `88.0.4324.27`
+
 ### Changes
 
 * Use `--fail-fast` in default `spec` task
