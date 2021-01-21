@@ -33,7 +33,7 @@ GEM
     childprocess (3.0.0)
     codecov (0.3.0)
       simplecov (>= 0.15, < 0.22)
-    concurrent-ruby (1.1.7)
+    concurrent-ruby (1.1.8)
     data_magic (1.2)
       faker (>= 1.1.2)
       yml_reader (>= 0.6)
