@@ -9,7 +9,7 @@ module OnlyofficeWebdriverWrapper
       element = xpath_name.is_a?(String) ? get_element(xpath_name) : xpath_name
       begin
         attribute_value = element.attribute(attribute)
-        exist = attribute_value.empty? || attribute_value.nil? ? false : true
+        exist = !(attribute_value.empty? || attribute_value.nil?)
       rescue Exception
         exist = false
       end
