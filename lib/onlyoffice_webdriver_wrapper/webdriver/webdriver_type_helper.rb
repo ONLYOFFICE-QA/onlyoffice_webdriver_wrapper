@@ -36,7 +36,7 @@ module OnlyofficeWebdriverWrapper
         element.send_keys text_to_send
       elsif text_to_send != ''
         if text_to_send.is_a?(String)
-          text_to_send.split(//).each do |symbol|
+          text_to_send.chars.each do |symbol|
             @driver.action.send_keys(symbol).perform
           end
         else
