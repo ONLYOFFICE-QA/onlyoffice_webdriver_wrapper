@@ -149,8 +149,8 @@ module OnlyofficeWebdriverWrapper
     # it is a root frame
     def get_url
       execute_javascript('return window.location.href')
-    rescue Selenium::WebDriver::Error::NoSuchDriverError
-      raise 'Browser is crushed or hangup'
+    rescue Exception => e
+      raise(e.class, "Browser is crushed or hangup with #{e}")
     end
 
     def refresh

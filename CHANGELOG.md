@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Do not forever hangup of Timeout Error while `get_url`
+
 ## 0.11.0 (2021-03-03)
 
 ### New Features

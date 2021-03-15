@@ -12,8 +12,14 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log("Executed js: `#{script}` with result: `#{result}`")
       sleep(wait_timeout)
       result
+    rescue TimeoutError => e
+      # Usually this mean browser hang up or some modular
+      # window is blocking browser for execution of any code
+      # in that case performing `webdriver_error` only cause forever loop
+      # since webdriver_error trying to get_url or make screenshots
+      raise(e.class, "Timeout Error #{e} happened while executing #{script}")
     rescue Exception => e
-      webdriver_error("Exception #{e} in execute_javascript: #{script}")
+      webdriver_error(e, "Exception #{e} in execute_javascript: #{script}")
     end
 
     # @param [String] xpath element to select
