@@ -2,6 +2,16 @@
 
 ## master (unreleased)
 
+### 0.13.0 (2021-04-15)
+
+### New Features
+
+* Add Chromedriver `90.0.4430.24`
+
+### Removal
+
+* Remove Chromedriver 87 and 88
+
 ## 0.12.0 (2021-03-15)
 
 ### Fixes
