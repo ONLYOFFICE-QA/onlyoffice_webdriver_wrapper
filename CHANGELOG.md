@@ -10,7 +10,7 @@
 
 * Default `chromedriver` version is latest, not fixed by constant
 
-### 0.13.0 (2021-04-15)
+## 0.13.0 (2021-04-15)
 
 ### New Features
 
