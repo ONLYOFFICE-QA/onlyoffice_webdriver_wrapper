@@ -9,6 +9,7 @@
 ### Changes
 
 * Default `chromedriver` version is latest, not fixed by constant
+* CI run `markdownlint` check before any other checks
 
 ## 0.13.0 (2021-04-15)
 
