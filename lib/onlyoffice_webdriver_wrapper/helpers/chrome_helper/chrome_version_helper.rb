@@ -3,9 +3,6 @@
 module OnlyofficeWebdriverWrapper
   # Class for getting chrome version
   module ChromeVersionHelper
-    # @return [Integer] current default chrome version
-    CURRENT_DEFAULT_CHROME_VERSION = 87
-
     # @return [Gem::Version] unknown chrome version
     def unknown_chrome_version
       Gem::Version.new('0.0.0.0')
@@ -38,9 +35,9 @@ module OnlyofficeWebdriverWrapper
       "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_mac"
     end
 
-    # @return [String] default linux chromedriver
+    # @return [String] default linux chromedriver, always use latest version
     def default_linux
-      "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_#{CURRENT_DEFAULT_CHROME_VERSION}"
+      Dir["#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_*"].max
     end
 
     # @return [String] path to chromedriver of version
