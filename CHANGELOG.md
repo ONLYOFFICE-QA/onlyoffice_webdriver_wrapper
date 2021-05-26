@@ -5,6 +5,7 @@
 ### New Features
 
 * Add Chromedriver `91.0.4472.19`
+* Add support of `rubocop-rake`
 
 ### Changes
 
