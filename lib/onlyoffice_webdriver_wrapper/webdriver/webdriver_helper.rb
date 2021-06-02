@@ -11,10 +11,10 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Download temp file and return it location
-    # @param file [String] url
+    # @param file_url [String] url
     # @return [String] path to file
     def download(file_url)
-      data = Kernel.open(file_url, &:read)
+      data = URI.parse(file_url).open.read
       file = Tempfile.new('onlyoffice-downloaded-file')
       file.write(data.force_encoding('UTF-8'))
       file.close
