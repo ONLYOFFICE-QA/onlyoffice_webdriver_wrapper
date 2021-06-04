@@ -14,7 +14,7 @@ module OnlyofficeWebdriverWrapper
         wait.until { document_ready? }
         wait.until { jquery_finished? }
       end
-    rescue Selenium::WebDriver::Error::TimeOutError
+    rescue Selenium::WebDriver::Error::TimeoutError
       webdriver_error("Wait until timeout: #{timeout} seconds in")
     rescue Selenium::WebDriver::Error::StaleElementReferenceError
       OnlyofficeLoggerHelper.log("Wait until: rescuing from Stale Element error, #{tries} attempts remaining")
@@ -43,9 +43,9 @@ module OnlyofficeWebdriverWrapper
       wait = Selenium::WebDriver::Wait.new(timeout: timeout) # seconds
       begin
         wait.until { get_element(xpath_name) }
-      rescue Selenium::WebDriver::Error::TimeOutError => e
+      rescue Selenium::WebDriver::Error::TimeoutError => e
         timeout_message = "wait_until_element_present(#{xpath_name}) "\
-                            'Selenium::WebDriver::Error::TimeOutError: '\
+                            'Selenium::WebDriver::Error::TimeoutError: '\
                             "timed out after #{timeout} seconds"
         webdriver_error(e.class, timeout_message)
       end
@@ -60,9 +60,9 @@ module OnlyofficeWebdriverWrapper
       wait = Selenium::WebDriver::Wait.new(timeout: timeout) # seconds
       begin
         wait.until { get_element(xpath_name) ? false : true }
-      rescue Selenium::WebDriver::Error::TimeOutError => e
+      rescue Selenium::WebDriver::Error::TimeoutError => e
         timeout_message = "wait_until_element_present(#{xpath_name}) "\
-                            'Selenium::WebDriver::Error::TimeOutError: '\
+                            'Selenium::WebDriver::Error::TimeoutError: '\
                             "timed out after #{timeout} seconds"
         webdriver_error(e.class, timeout_message)
       end

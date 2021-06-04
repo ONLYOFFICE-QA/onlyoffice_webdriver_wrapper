@@ -5,6 +5,7 @@
 ### Changes
 
 * Replace usage of `Kernel.open` to `URI#read`
+* Replace deprecated `TimeOutError` by `TimeoutError`
 
 ## 0.14.0 (2021-05-26)
 
