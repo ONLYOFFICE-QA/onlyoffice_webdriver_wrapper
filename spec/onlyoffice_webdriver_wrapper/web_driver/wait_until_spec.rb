@@ -11,7 +11,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'wait_until.html')
+                   'wait_until.html')
   end
 
   it 'wait_until by default wait for js load' do

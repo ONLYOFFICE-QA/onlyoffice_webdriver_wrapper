@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_url' do
 
   it 'Opening url in new tab for ftp site will not cause forever loop' do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'link_to_ftp.html')
+                   'link_to_ftp.html')
     webdriver.click_on_locator('//a')
     webdriver.choose_tab(2)
     expect { webdriver.get_url }.to raise_error(Net::ReadTimeout)

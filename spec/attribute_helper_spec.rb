@@ -7,7 +7,7 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'attribute_helper.html')
+                   'attribute_helper.html')
   end
 
   describe '#attribute_exist?' do

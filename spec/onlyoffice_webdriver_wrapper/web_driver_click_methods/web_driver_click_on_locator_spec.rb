@@ -8,7 +8,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'element_appear_after_click.html')
+                   'element_appear_after_click.html')
   end
 
   after { webdriver.quit }
@@ -32,7 +32,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
 
   it 'click_on_locator fails if other element hide element to click' do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'element_to_click_hidden_by_other.html')
+                   'element_to_click_hidden_by_other.html')
     expect { webdriver.click_on_locator('//button') }
       .to raise_error(Selenium::WebDriver::Error::ElementClickInterceptedError, /click intercepted/)
   end

@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'element_appear_after_click.html')
+                   'element_appear_after_click.html')
   end
 
   after { webdriver.quit }

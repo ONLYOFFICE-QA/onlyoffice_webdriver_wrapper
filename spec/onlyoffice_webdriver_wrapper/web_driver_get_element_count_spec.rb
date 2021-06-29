@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_element_count' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'get_element_count.html')
+                   'get_element_count.html')
   end
 
   after { webdriver.quit }

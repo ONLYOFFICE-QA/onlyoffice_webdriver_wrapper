@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#set_style_attribute' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'set_style_attribute.html')
+                   'set_style_attribute.html')
   end
 
   after { webdriver.quit }

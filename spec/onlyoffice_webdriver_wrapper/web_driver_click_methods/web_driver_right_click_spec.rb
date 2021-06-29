@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#right_click' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'right_click_alert.html')
+                   'right_click_alert.html')
   end
 
   after { webdriver.quit }
