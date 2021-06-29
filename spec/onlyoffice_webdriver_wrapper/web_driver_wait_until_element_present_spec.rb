@@ -8,7 +8,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until_element_present' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'wait_until_element_present.html')
+                   'wait_until_element_present.html')
   end
 
   after { webdriver.quit }

@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_text_array' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'get_text_array.html')
+                   'get_text_array.html')
   end
 
   after { webdriver.quit }

@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#element_size_by_js' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'web_driver_element_size_by_js_spec.html')
+                   'web_driver_element_size_by_js_spec.html')
   end
 
   after { webdriver.quit }

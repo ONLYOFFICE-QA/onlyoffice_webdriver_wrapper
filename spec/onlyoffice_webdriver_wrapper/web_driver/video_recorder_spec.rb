@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#video_recorder' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'get_element_count.html')
+                   'get_element_count.html')
   end
 
   it 'Can capture video file' do

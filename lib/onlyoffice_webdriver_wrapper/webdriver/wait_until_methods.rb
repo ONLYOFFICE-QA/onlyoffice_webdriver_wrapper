@@ -45,8 +45,8 @@ module OnlyofficeWebdriverWrapper
         wait.until { get_element(xpath_name) }
       rescue Selenium::WebDriver::Error::TimeoutError => e
         timeout_message = "wait_until_element_present(#{xpath_name}) "\
-                            'Selenium::WebDriver::Error::TimeoutError: '\
-                            "timed out after #{timeout} seconds"
+                          'Selenium::WebDriver::Error::TimeoutError: '\
+                          "timed out after #{timeout} seconds"
         webdriver_error(e.class, timeout_message)
       end
     end
@@ -62,8 +62,8 @@ module OnlyofficeWebdriverWrapper
         wait.until { get_element(xpath_name) ? false : true }
       rescue Selenium::WebDriver::Error::TimeoutError => e
         timeout_message = "wait_until_element_present(#{xpath_name}) "\
-                            'Selenium::WebDriver::Error::TimeoutError: '\
-                            "timed out after #{timeout} seconds"
+                          'Selenium::WebDriver::Error::TimeoutError: '\
+                          "timed out after #{timeout} seconds"
         webdriver_error(e.class, timeout_message)
       end
     end

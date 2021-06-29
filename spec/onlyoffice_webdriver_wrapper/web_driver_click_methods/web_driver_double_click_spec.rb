@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#double_click' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'double_click_alert.html')
+                   'double_click_alert.html')
   end
 
   after { webdriver.quit }

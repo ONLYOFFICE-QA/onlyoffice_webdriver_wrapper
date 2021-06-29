@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#remove_attribute' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'remove_attribute.html')
+                   'remove_attribute.html')
   end
 
   after { webdriver.quit }

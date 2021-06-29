@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_one_of_several_by_par
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'click_on_one_of_several_by_parameter.html')
+                   'click_on_one_of_several_by_parameter.html')
   end
 
   after { webdriver.quit }

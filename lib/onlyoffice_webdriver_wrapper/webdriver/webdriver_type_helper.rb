@@ -21,9 +21,9 @@ module OnlyofficeWebdriverWrapper
           element.clear
         rescue Exception => e
           webdriver_error(e.class, "Error in element.clear #{e} for "\
-                          "type_to_locator(#{xpath_name}, #{text_to_send}, "\
-                          "#{clear_content}, #{click_on_it}, "\
-                          "#{by_action}, #{by_element_send_key})")
+                                   "type_to_locator(#{xpath_name}, #{text_to_send}, "\
+                                   "#{clear_content}, #{click_on_it}, "\
+                                   "#{by_action}, #{by_element_send_key})")
         end
       end
 

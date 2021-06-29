@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_text_by_js' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'get_text_by_js.html')
+                   'get_text_by_js.html')
   end
 
   after { webdriver.quit }

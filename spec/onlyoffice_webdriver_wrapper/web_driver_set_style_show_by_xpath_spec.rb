@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#set_style_show_by_xpath' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'set_style_show_by_xpath.html')
+                   'set_style_show_by_xpath.html')
   end
 
   after { webdriver.quit }

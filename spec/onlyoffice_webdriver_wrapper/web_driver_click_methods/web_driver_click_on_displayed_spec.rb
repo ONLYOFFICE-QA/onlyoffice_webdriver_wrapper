@@ -7,7 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_displayed' do
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'element_appear_after_click.html')
+                   'element_appear_after_click.html')
   end
 
   after { webdriver.quit }
@@ -24,7 +24,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_displayed' do
 
   it 'click_on_displayed correct work if displayed second element' do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'element_appear_after_click_click_on_displayed.html')
+                   'element_appear_after_click_click_on_displayed.html')
     webdriver.click_on_displayed('//button')
     expect(webdriver.get_element('//*[@id="newElement"]')).not_to be_nil
   end

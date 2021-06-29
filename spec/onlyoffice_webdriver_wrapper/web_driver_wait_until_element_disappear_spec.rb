@@ -8,7 +8,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until_element_disappear' 
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'wait_until_element_disappear.html')
+                   'wait_until_element_disappear.html')
   end
 
   after { webdriver.quit }

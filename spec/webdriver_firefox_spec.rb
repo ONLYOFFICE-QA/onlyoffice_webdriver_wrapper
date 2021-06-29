@@ -16,7 +16,7 @@ describe 'Webdriver Firefox' do
 
   it 'Webdriver#click_on_locator_coordinates correct for .0 values' do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                      'web_driver_element_size_by_js_spec.html')
+                   'web_driver_element_size_by_js_spec.html')
     webdriver.click_on_locator_coordinates('//div', 20.0, 10)
   end
 
