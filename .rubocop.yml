@@ -11,7 +11,3 @@ AllCops:
   TargetRubyVersion: 2.5
   Exclude:
     - lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/headless_screenshot_patch.rb
-
-# This project contains link to README file on master branch
-Naming/InclusiveLanguage:
-  Enabled: false
