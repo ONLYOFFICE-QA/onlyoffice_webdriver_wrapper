@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.15.0 (2021-07-13)
+
 ### Changes
 
 * Replace usage of `Kernel.open` to `URI#read`
