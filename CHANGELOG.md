@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.16.1 (2021-07-26)
+
 ### Fixes
 
 * Force `-disable-gpu` for `chromedriver`
