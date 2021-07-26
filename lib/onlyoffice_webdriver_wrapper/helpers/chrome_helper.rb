@@ -8,6 +8,7 @@ module OnlyofficeWebdriverWrapper
     include ChromeVersionHelper
 
     DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
+                                 --disable-gpu
                                  --disable-popup-blocking
                                  --disable-infobars
                                  --no-sandbox
