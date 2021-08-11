@@ -14,8 +14,11 @@ require_relative 'webdriver/webdriver_attributes_helper'
 require_relative 'webdriver/webdriver_browser_info_helper'
 require_relative 'webdriver/webdriver_type_helper'
 require_relative 'webdriver/webdriver_exceptions'
+require_relative 'webdriver/webdriver_frame_methods'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
+require_relative 'webdriver/webdriver_move_cursor_methods'
+require_relative 'webdriver/webdriver_navigation_methods'
 require_relative 'webdriver/webdriver_screenshot_helper'
 require_relative 'webdriver/webdriver_style_helper'
 require_relative 'webdriver/webdriver_tab_helper'
@@ -34,8 +37,11 @@ module OnlyofficeWebdriverWrapper
     include WebdriverAttributesHelper
     include WebdriverBrowserInfo
     include WebdriverTypeHelper
+    include WebdriverFrameMethods
     include WebdriverHelper
     include WebdriverJsMethods
+    include WebdriverMoveCursorMethods
+    include WebdriverNavigationMethods
     include WebdriverScreenshotHelper
     include WebdriverStyleHelper
     include WebdriverTabHelper
@@ -83,36 +89,6 @@ module OnlyofficeWebdriverWrapper
       @browser_running = true
     end
 
-    def open(url)
-      url = "http://#{url}" unless url.include?('http') || url.include?('file://')
-      @driver.navigate.to url
-      sleep(1) # Correct wait for Page to init focus
-      OnlyofficeLoggerHelper.log("Opened page: #{url}")
-    rescue StandardError => e
-      message = "Received error `#{e}` while opening page `#{url}`"
-      OnlyofficeLoggerHelper.log(message)
-      raise e.class, message, e.backtrace
-    end
-
-    def quit
-      return unless browser_running
-
-      begin
-        @driver.execute_script('window.onbeforeunload = null') # off popup window
-      rescue StandardError
-        Exception
-      end
-      begin
-        @driver.quit
-      rescue Exception => e
-        OnlyofficeLoggerHelper.log("Some error happened on webdriver.quit #{e.backtrace}")
-      end
-      alert_confirm
-      @headless.stop
-      cleanup_download_folder
-      @browser_running = false
-    end
-
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
 
@@ -144,57 +120,6 @@ module OnlyofficeWebdriverWrapper
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
     end
 
-    # @return [String] url of current frame, or browser url if
-    # it is a root frame
-    def get_url
-      execute_javascript('return window.location.href')
-    rescue Selenium::WebDriver::Error::NoSuchDriverError, TimeoutError => e
-      raise(e.class, "Browser is crushed or hangup with #{e}")
-    end
-
-    def refresh
-      @driver.navigate.refresh
-      OnlyofficeLoggerHelper.log('Refresh page')
-    end
-
-    def go_back
-      @driver.navigate.back
-      OnlyofficeLoggerHelper.log('Go back to previous page')
-    end
-
-    # Perform drag'n'drop action in one element (for example on big canvas area)
-    # for drag'n'drop one whole element use 'drag_and_drop_by'
-    # ==== Attributes
-    #
-    # * +xpath+ - xpath of element on which drag and drop performed
-    # * +x1+ - x coordinate on element to start drag'n'drop
-    # * +y1+ - y coordinate on element to start drag'n'drop
-    # * +x2+ - shift vector x coordinate
-    # * +y2+ - shift vector y coordinate
-    # * +mouse_release+ - release mouse after move
-    def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
-      canvas = get_element(xpath)
-
-      move_action = @driver.action
-                           .move_to(canvas, x1.to_i, y1.to_i)
-                           .click_and_hold
-                           .move_by(x2, y2)
-      move_action = move_action.release if mouse_release
-
-      move_action.perform
-    end
-
-    # Perform drag'n'drop one whole element
-    # for drag'n'drop inside one element (f.e. canvas) use drag_and_drop
-    # ==== Attributes
-    #
-    # * +source+ - xpath of element on which drag and drop performed
-    # * +right_by+ - shift vector x coordinate
-    # * +down_by+ - shift vector y coordinate
-    def drag_and_drop_by(source, right_by, down_by = 0)
-      @driver.action.drag_and_drop_by(get_element(source), right_by, down_by).perform
-    end
-
     def scroll_list_to_element(list_xpath, element_xpath)
       execute_javascript("$(document.evaluate(\"#{list_xpath}\", document, null, XPathResult.ANY_TYPE, null).
           iterateNext()).jScrollPane().data('jsp').scrollToElement(document.evaluate(\"#{element_xpath}\",
@@ -224,22 +149,6 @@ module OnlyofficeWebdriverWrapper
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
       (0...times).inject(@driver.action.move_to(element, right_by.to_i, down_by.to_i)) { |acc, _elem| acc.send(action) }.perform
-    end
-
-    def move_to_element(element)
-      element = get_element(element) if element.is_a?(String)
-      @driver.action.move_to(element).perform
-    end
-
-    def move_to_element_by_locator(xpath_name)
-      element = get_element(xpath_name)
-      @driver.action.move_to(element).perform
-      OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
-    end
-
-    def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
-      wait_until_element_present(xpath_name)
-      @driver.action.move_to(@driver.find_element(:xpath, xpath_name), x_coordinate.to_i, y_coordinate.to_i).perform
     end
 
     def element_present?(xpath_name)
@@ -317,38 +226,6 @@ module OnlyofficeWebdriverWrapper
       false
     rescue Exception => e
       webdriver_error("Raise unkwnown exception: #{e}")
-    end
-
-    def wait_element(xpath_name, period_of_wait = 1, critical_time = 3)
-      wait_until_element_present(xpath_name)
-      time = 0
-      until element_visible?(xpath_name)
-        sleep(period_of_wait)
-        time += 1
-        return if time == critical_time
-      end
-    end
-
-    # Select frame as current
-    # @param [String] xpath_name name of current xpath
-    def select_frame(xpath_name = '//iframe', count_of_frames = 1)
-      (0...count_of_frames).each do
-        frame = @driver.find_element(:xpath, xpath_name)
-        @driver.switch_to.frame frame
-      rescue Selenium::WebDriver::Error::NoSuchElementError
-        OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
-      rescue Exception => e
-        webdriver_error("Raise unkwnown exception: #{e}")
-      end
-    end
-
-    # Select top frame of browser (even if several subframes exists)
-    def select_top_frame
-      @driver.switch_to.default_content
-    rescue Timeout::Error
-      OnlyofficeLoggerHelper.log('Raise TimeoutError in the select_top_frame method')
-    rescue Exception => e
-      raise "Browser is crushed or hangup with error: #{e}"
     end
 
     # Get text of current element

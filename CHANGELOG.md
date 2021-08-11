@@ -9,6 +9,7 @@
 ### Changes
 
 * Remove extra refresh if `WebDriver#open` failed
+* Minor refactoring - extraction `WebDriver` methods to modules
 
 ## 0.16.1 (2021-07-26)
 
