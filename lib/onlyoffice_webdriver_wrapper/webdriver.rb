@@ -85,14 +85,13 @@ module OnlyofficeWebdriverWrapper
 
     def open(url)
       url = "http://#{url}" unless url.include?('http') || url.include?('file://')
-      loop do
-        @driver.navigate.to url
-        break
-      rescue Timeout::Error
-        @driver.navigate.refresh
-      end
+      @driver.navigate.to url
       sleep(1) # Correct wait for Page to init focus
       OnlyofficeLoggerHelper.log("Opened page: #{url}")
+    rescue StandardError => e
+      message = "Received error `#{e}` while opening page `#{url}`"
+      OnlyofficeLoggerHelper.log(message)
+      raise e.class, message, e.backtrace
     end
 
     def quit
