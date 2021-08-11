@@ -275,16 +275,6 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("Raise unkwnown exception: #{e}")
     end
 
-    def wait_element(xpath_name, period_of_wait = 1, critical_time = 3)
-      wait_until_element_present(xpath_name)
-      time = 0
-      until element_visible?(xpath_name)
-        sleep(period_of_wait)
-        time += 1
-        return if time == critical_time
-      end
-    end
-
     # Get text of current element
     # @param [String] xpath_name name of xpath
     # @param [true, false] wait_until_visible wait until element visible [@default = true]
