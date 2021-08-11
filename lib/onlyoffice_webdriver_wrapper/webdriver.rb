@@ -17,6 +17,7 @@ require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_frame_methods'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
+require_relative 'webdriver/webdriver_move_cursor_methods'
 require_relative 'webdriver/webdriver_navigation_methods'
 require_relative 'webdriver/webdriver_screenshot_helper'
 require_relative 'webdriver/webdriver_style_helper'
@@ -39,6 +40,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverFrameMethods
     include WebdriverHelper
     include WebdriverJsMethods
+    include WebdriverMoveCursorMethods
     include WebdriverNavigationMethods
     include WebdriverScreenshotHelper
     include WebdriverStyleHelper
@@ -118,39 +120,6 @@ module OnlyofficeWebdriverWrapper
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
     end
 
-    # Perform drag'n'drop action in one element (for example on big canvas area)
-    # for drag'n'drop one whole element use 'drag_and_drop_by'
-    # ==== Attributes
-    #
-    # * +xpath+ - xpath of element on which drag and drop performed
-    # * +x1+ - x coordinate on element to start drag'n'drop
-    # * +y1+ - y coordinate on element to start drag'n'drop
-    # * +x2+ - shift vector x coordinate
-    # * +y2+ - shift vector y coordinate
-    # * +mouse_release+ - release mouse after move
-    def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
-      canvas = get_element(xpath)
-
-      move_action = @driver.action
-                           .move_to(canvas, x1.to_i, y1.to_i)
-                           .click_and_hold
-                           .move_by(x2, y2)
-      move_action = move_action.release if mouse_release
-
-      move_action.perform
-    end
-
-    # Perform drag'n'drop one whole element
-    # for drag'n'drop inside one element (f.e. canvas) use drag_and_drop
-    # ==== Attributes
-    #
-    # * +source+ - xpath of element on which drag and drop performed
-    # * +right_by+ - shift vector x coordinate
-    # * +down_by+ - shift vector y coordinate
-    def drag_and_drop_by(source, right_by, down_by = 0)
-      @driver.action.drag_and_drop_by(get_element(source), right_by, down_by).perform
-    end
-
     def scroll_list_to_element(list_xpath, element_xpath)
       execute_javascript("$(document.evaluate(\"#{list_xpath}\", document, null, XPathResult.ANY_TYPE, null).
           iterateNext()).jScrollPane().data('jsp').scrollToElement(document.evaluate(\"#{element_xpath}\",
@@ -180,22 +149,6 @@ module OnlyofficeWebdriverWrapper
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
       (0...times).inject(@driver.action.move_to(element, right_by.to_i, down_by.to_i)) { |acc, _elem| acc.send(action) }.perform
-    end
-
-    def move_to_element(element)
-      element = get_element(element) if element.is_a?(String)
-      @driver.action.move_to(element).perform
-    end
-
-    def move_to_element_by_locator(xpath_name)
-      element = get_element(xpath_name)
-      @driver.action.move_to(element).perform
-      OnlyofficeLoggerHelper.log("Moved mouse to element: #{xpath_name}")
-    end
-
-    def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
-      wait_until_element_present(xpath_name)
-      @driver.action.move_to(@driver.find_element(:xpath, xpath_name), x_coordinate.to_i, y_coordinate.to_i).perform
     end
 
     def element_present?(xpath_name)
