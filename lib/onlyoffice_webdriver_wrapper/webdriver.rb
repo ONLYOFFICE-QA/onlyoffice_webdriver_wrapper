@@ -14,6 +14,7 @@ require_relative 'webdriver/webdriver_attributes_helper'
 require_relative 'webdriver/webdriver_browser_info_helper'
 require_relative 'webdriver/webdriver_type_helper'
 require_relative 'webdriver/webdriver_exceptions'
+require_relative 'webdriver/webdriver_frame_methods'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
 require_relative 'webdriver/webdriver_navigation_methods'
@@ -35,6 +36,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverAttributesHelper
     include WebdriverBrowserInfo
     include WebdriverTypeHelper
+    include WebdriverFrameMethods
     include WebdriverHelper
     include WebdriverJsMethods
     include WebdriverNavigationMethods
@@ -281,28 +283,6 @@ module OnlyofficeWebdriverWrapper
         time += 1
         return if time == critical_time
       end
-    end
-
-    # Select frame as current
-    # @param [String] xpath_name name of current xpath
-    def select_frame(xpath_name = '//iframe', count_of_frames = 1)
-      (0...count_of_frames).each do
-        frame = @driver.find_element(:xpath, xpath_name)
-        @driver.switch_to.frame frame
-      rescue Selenium::WebDriver::Error::NoSuchElementError
-        OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
-      rescue Exception => e
-        webdriver_error("Raise unkwnown exception: #{e}")
-      end
-    end
-
-    # Select top frame of browser (even if several subframes exists)
-    def select_top_frame
-      @driver.switch_to.default_content
-    rescue Timeout::Error
-      OnlyofficeLoggerHelper.log('Raise TimeoutError in the select_top_frame method')
-    rescue Exception => e
-      raise "Browser is crushed or hangup with error: #{e}"
     end
 
     # Get text of current element
