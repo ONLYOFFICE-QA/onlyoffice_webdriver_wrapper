@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.17.0 (2021-08-11)
+
 ### New Feature
 
 * Add more details in `WebDriver#open` error
