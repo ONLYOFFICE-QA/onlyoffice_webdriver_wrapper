@@ -6,6 +6,10 @@
 
 * Add more details in `WebDriver#open` error
 
+### Changes
+
+* Remove extra refresh if `WebDriver#open` failed
+
 ## 0.16.1 (2021-07-26)
 
 ### Fixes
