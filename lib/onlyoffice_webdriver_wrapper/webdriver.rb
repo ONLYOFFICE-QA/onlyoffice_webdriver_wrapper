@@ -16,6 +16,7 @@ require_relative 'webdriver/webdriver_type_helper'
 require_relative 'webdriver/webdriver_exceptions'
 require_relative 'webdriver/webdriver_helper'
 require_relative 'webdriver/webdriver_js_methods'
+require_relative 'webdriver/webdriver_navigation_methods'
 require_relative 'webdriver/webdriver_screenshot_helper'
 require_relative 'webdriver/webdriver_style_helper'
 require_relative 'webdriver/webdriver_tab_helper'
@@ -36,6 +37,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverTypeHelper
     include WebdriverHelper
     include WebdriverJsMethods
+    include WebdriverNavigationMethods
     include WebdriverScreenshotHelper
     include WebdriverStyleHelper
     include WebdriverTabHelper
@@ -83,36 +85,6 @@ module OnlyofficeWebdriverWrapper
       @browser_running = true
     end
 
-    def open(url)
-      url = "http://#{url}" unless url.include?('http') || url.include?('file://')
-      @driver.navigate.to url
-      sleep(1) # Correct wait for Page to init focus
-      OnlyofficeLoggerHelper.log("Opened page: #{url}")
-    rescue StandardError => e
-      message = "Received error `#{e}` while opening page `#{url}`"
-      OnlyofficeLoggerHelper.log(message)
-      raise e.class, message, e.backtrace
-    end
-
-    def quit
-      return unless browser_running
-
-      begin
-        @driver.execute_script('window.onbeforeunload = null') # off popup window
-      rescue StandardError
-        Exception
-      end
-      begin
-        @driver.quit
-      rescue Exception => e
-        OnlyofficeLoggerHelper.log("Some error happened on webdriver.quit #{e.backtrace}")
-      end
-      alert_confirm
-      @headless.stop
-      cleanup_download_folder
-      @browser_running = false
-    end
-
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
 
@@ -142,24 +114,6 @@ module OnlyofficeWebdriverWrapper
 
     def get_all_combo_box_values(xpath_name)
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
-    end
-
-    # @return [String] url of current frame, or browser url if
-    # it is a root frame
-    def get_url
-      execute_javascript('return window.location.href')
-    rescue Selenium::WebDriver::Error::NoSuchDriverError, TimeoutError => e
-      raise(e.class, "Browser is crushed or hangup with #{e}")
-    end
-
-    def refresh
-      @driver.navigate.refresh
-      OnlyofficeLoggerHelper.log('Refresh page')
-    end
-
-    def go_back
-      @driver.navigate.back
-      OnlyofficeLoggerHelper.log('Go back to previous page')
     end
 
     # Perform drag'n'drop action in one element (for example on big canvas area)
