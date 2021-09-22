@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New feature
+
+* Add Chromedriver `94.0.4606.41`
+
+### Removal
+
+* Remove support of Chrome 90
+
 ## 0.17.0 (2021-08-11)
 
 ### New Feature
