@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.18.0 (2021-09-22)
+
 ### New feature
 
 * Add Chromedriver `94.0.4606.41`
