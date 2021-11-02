@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('page-object', '~> 2')
   s.add_runtime_dependency('selenium-webdriver', '~> 3')
   s.add_runtime_dependency('watir', '~> 6')
-  s.add_development_dependency('codecov', '~> 0')
   s.add_development_dependency('overcommit', '~> 0')
   s.add_development_dependency('rake', '~> 13')
   s.add_development_dependency('rspec', '~> 3')
@@ -38,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rubocop-performance', '~> 1')
   s.add_development_dependency('rubocop-rake', '~> 0')
   s.add_development_dependency('rubocop-rspec', '~> 2')
+  s.add_development_dependency('simplecov-cobertura', '~> 1')
 end
