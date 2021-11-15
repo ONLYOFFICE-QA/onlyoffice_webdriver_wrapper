@@ -2,9 +2,17 @@
 
 ## master (unreleased)
 
+### New feature
+
+* Add Chromedriver `96.0.4664.35`
+
 ### Changes
 
 * Use new uploader for `codecov` instead of deprecated one
+
+### Removal
+
+* Remove support of Chrome 91
 
 ## 0.18.0 (2021-09-22)
 
