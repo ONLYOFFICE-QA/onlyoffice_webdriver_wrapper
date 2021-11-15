@@ -9,6 +9,7 @@
 ### Changes
 
 * Use new uploader for `codecov` instead of deprecated one
+* Require `mfa` for releasing gem
 
 ### Removal
 
