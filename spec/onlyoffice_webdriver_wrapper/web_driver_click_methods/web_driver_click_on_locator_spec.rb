@@ -20,8 +20,13 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
     expect(webdriver.get_text('//*[@id="demo"]')).to eq('2')
   end
 
-  it 'click_on_locator can correct click via JS' do
-    webdriver.click_on_locator('//button', true)
+  it 'click_on_locator can correct click via JS on xpath with single quotes' do
+    webdriver.click_on_locator("//button[@id='button']", true)
+    expect(webdriver.get_element('//*[@id="newElement"]')).not_to be_nil
+  end
+
+  it 'click_on_locator can correct click via JS on xpath with double quotes' do
+    webdriver.click_on_locator('//button[@id="button"]', true)
     expect(webdriver.get_element('//*[@id="newElement"]')).not_to be_nil
   end
 

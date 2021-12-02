@@ -19,7 +19,7 @@ module OnlyofficeWebdriverWrapper
       return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
 
       if by_javascript
-        execute_javascript("document.evaluate(\"#{xpath_name}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click();")
+        execute_javascript("#{dom_element_by_xpath(xpath_name)}.click();")
       else
         begin
           count.times { element.click }
