@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.20.0 (2021-12-02)
+
 ### Fixes
 
 * Fix `WebDriver#click_on_locator` with JS if xpath has double quotes
