@@ -118,6 +118,9 @@ GEM
     watir (6.19.1)
       regexp_parser (>= 1.2, < 3)
       selenium-webdriver (>= 3.142.7)
+    webrick (1.7.0)
+    yard (0.9.27)
+      webrick (~> 1.7.0)
     yml_reader (0.7)
 
 PLATFORMS
@@ -134,6 +137,7 @@ DEPENDENCIES
   rubocop-rake (~> 0)
   rubocop-rspec (~> 2)
   simplecov-cobertura (~> 2)
+  yard (~> 0, >= 0.9.20)
 
 BUNDLED WITH
    2.2.33
