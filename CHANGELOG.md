@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## New Features
+
+* Add `timeout` option to `WebDriver#choose_tab`
+
 ## 0.21.0 (2021-12-10)
 
 ### Changes

@@ -46,6 +46,11 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
       webdriver.choose_tab(2)
       expect(webdriver.get_title_of_current_tab).to include('Google')
     end
+
+    it 'raise error if no such tab present' do
+      expect { webdriver.choose_tab(3, timeout: 1) }
+        .to raise_error(RuntimeError, /choose_tab: Tab number = 3 not found/)
+    end
   end
 
   describe '#swith_to_main_tab' do
