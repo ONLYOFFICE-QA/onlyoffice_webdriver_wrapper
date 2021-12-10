@@ -46,7 +46,7 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
-    # Get index of element from array with attrribute value
+    # Get index of element from array with attribute value
     # @param [String] xpath to find objects
     # @param [String] attribute to check
     # @param [String] value to compare

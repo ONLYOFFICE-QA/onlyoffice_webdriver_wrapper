@@ -56,7 +56,7 @@ module OnlyofficeWebdriverWrapper
       Dimensions.new(width, height)
     end
 
-    # Get object absolute postion from top left edge of screen
+    # Get object absolute position from top left edge of screen
     # @param xpath [Sting] xpath of object
     # @return [CursorPoint] position of element
     def object_absolute_position(xpath)

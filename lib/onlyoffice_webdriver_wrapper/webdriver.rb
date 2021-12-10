@@ -272,7 +272,7 @@ module OnlyofficeWebdriverWrapper
       end
       false
     rescue Exception => e
-      webdriver_error("Raise unkwnown exception: #{e}")
+      webdriver_error("Raise unknown exception: #{e}")
     end
 
     # Get text of current element

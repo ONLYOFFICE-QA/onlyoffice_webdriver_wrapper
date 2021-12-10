@@ -22,7 +22,7 @@ module OnlyofficeWebdriverWrapper
       @record_video = false
     end
 
-    # @return [nil] stop catpure of file
+    # @return [nil] stop capture of file
     def stop_capture
       return unless record_video
 

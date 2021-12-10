@@ -16,11 +16,11 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
     end
 
     it 'attribute_exist? false' do
-      expect(webdriver).not_to be_attribute_exist('//div', 'pidden')
+      expect(webdriver).not_to be_attribute_exist('//div', 'fake')
     end
 
     it 'attribute_exist? for non-existing element' do
-      expect(webdriver).not_to be_attribute_exist('//div1', 'pidden')
+      expect(webdriver).not_to be_attribute_exist('//div1', 'fake')
     end
   end
 
@@ -46,7 +46,7 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
         .to eq([nil, nil])
     end
 
-    it 'get_attributes_of_several_elements if not-existin element' do
+    it 'get_attributes_of_several_elements if not existing element' do
       expect(webdriver.get_attributes_of_several_elements('//no', 'no-attribute'))
         .to be_empty
     end

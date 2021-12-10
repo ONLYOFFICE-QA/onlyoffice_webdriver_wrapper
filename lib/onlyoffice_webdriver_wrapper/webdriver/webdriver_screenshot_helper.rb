@@ -81,7 +81,7 @@ module OnlyofficeWebdriverWrapper
 
     # Publish screenshot
     # @param [String] path to file
-    # @return [String] publis internet link to file
+    # @return [String] public internet link to file
     def publish_screenshot(path)
       amazon_s3_wrapper.upload_file_and_make_public(path,
                                                     nil,

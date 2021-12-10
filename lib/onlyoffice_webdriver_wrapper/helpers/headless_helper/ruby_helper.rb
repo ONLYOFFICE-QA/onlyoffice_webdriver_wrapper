@@ -9,7 +9,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Check if current os is 64 bit
-    # @return [True, False] result of comparision
+    # @return [True, False] result of check
     def os_64_bit?
       RUBY_PLATFORM.include?('_64')
     end

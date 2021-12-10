@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OnlyofficeWebdriverWrapper
-  # Module for wokring with webdriver useragent
+  # Module for working with webdriver useragent
   module WebdriverUserAgentHelper
     # @return [String] useragent for Android phone browser
     USERAGENT_ANDROID_PHONE = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MDB08M) '\
