@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Upload screenshot with correct `content-type`
+
 ## 0.20.0 (2021-12-02)
 
 ### Fixes
