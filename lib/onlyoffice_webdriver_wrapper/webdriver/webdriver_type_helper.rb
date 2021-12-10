@@ -3,17 +3,35 @@
 module OnlyofficeWebdriverWrapper
   # Class for helping with type stuff
   module WebdriverTypeHelper
+    # Type text to element
+    # @param [String] element to find object
+    # @param [String] text_to_send text to type
+    # @param [Boolean] clear_area should area be cleared
+    # @return [void]
     def type_text(element, text_to_send, clear_area = false)
       element = get_element(element)
       element.clear if clear_area
       element.send_keys(text_to_send)
     end
 
+    # Type text to element and select it
+    # @param [String] element to find object
+    # @param [String] text_to_send text to type
+    # @param [Boolean] clear_area should area be cleared
+    # @return [void]
     def type_text_and_select_it(element, text_to_send, clear_area = false)
       type_text(element, text_to_send, clear_area)
       text_to_send.length.times { element.send_keys %i[shift left] }
     end
 
+    # Type text to object
+    # @param [String] xpath_name to find object
+    # @param [String] text_to_send text to type
+    # @param [Boolean] clear_content should content be cleared
+    # @param [Boolean] click_on_it should object be clicked
+    # @param [Boolean] by_action type by `@driver.action` if true
+    # @param [Boolean] by_element_send_key use `element.send_keys` if true
+    # @return [void]
     def type_to_locator(xpath_name, text_to_send, clear_content = true, click_on_it = false, by_action = false, by_element_send_key = false)
       element = get_element(xpath_name)
       if clear_content
@@ -45,6 +63,12 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Type text to input
+    # @param [String] xpath_name to find object
+    # @param [String] text_to_send text to type
+    # @param [Boolean] clear_content should content be cleared
+    # @param [Boolean] click_on_it should object be clicked
+    # @return [void]
     def type_to_input(xpath_name, text_to_send, clear_content = false, click_on_it = true)
       element = get_element(xpath_name)
       if element.nil?
@@ -65,6 +89,11 @@ module OnlyofficeWebdriverWrapper
       element.send_keys text_to_send
     end
 
+    # Send keys to object
+    # @param [String] xpath_name to find object
+    # @param [String] text_to_send text to type
+    # @param [Boolean] by_action type by `@driver.action` if true
+    # @return [void]
     def send_keys(xpath_name, text_to_send, by_action = true)
       element = get_element(xpath_name)
       @driver.action.click(element).perform if @browser == :firefox
@@ -75,21 +104,36 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Type text to currently focused element
+    # @param [Array<String, Symbol>] keys to send
+    # @param [Integer] count_of_times how much times to repeat
+    # @return [void]
     def send_keys_to_focused_elements(keys, count_of_times = 1)
       command = @driver.action.send_keys(keys)
       (count_of_times - 1).times { command = command.send_keys(keys) }
       command.perform
     end
 
+    # Press some specific key
+    # @param [String, Symbol] key to press
+    # @return [void]
     def press_key(key)
       @driver.action.send_keys(key).perform
     end
 
+    # Simulate pressed down key on object
+    # @param [String] xpath to find object
+    # @param [String, Symbol] key to press
+    # @return [void]
     def key_down(xpath, key)
       @driver.action.key_down(get_element(xpath), key).perform
       sleep(1) # for some reason quick key_down select text in control
     end
 
+    # Release pressed key from object
+    # @param [String] xpath to find object
+    # @param [String, Symbol] key to release
+    # @return [void]
     def key_up(xpath, key)
       @driver.action.key_up(get_element(xpath), key).perform
     end
@@ -99,6 +143,8 @@ module OnlyofficeWebdriverWrapper
     # Workaround for bug with typing with :control
     # See https://github.com/SeleniumHQ/selenium/issues/8179
     # for more details
+    # @param [String] text_to_send text to type
+    # @return [void]
     def webdriver_bug_8179_workaround(text_to_send)
       text_to_send = [text_to_send].flatten
 

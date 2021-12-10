@@ -18,6 +18,9 @@ module OnlyofficeWebdriverWrapper
       '/tmp/screenshot/WebdriverError'
     end
 
+    # Get screenshot of current windows and upload it to cloud storage
+    # @param [String] path_to_screenshot place to store local screenshot
+    # @return [String] url of public screenshot
     def get_screenshot_and_upload(path_to_screenshot = "#{screenshot_folder}/#{StringHelper.generate_random_string}.png")
       begin
         get_screenshot(path_to_screenshot)
@@ -37,6 +40,9 @@ module OnlyofficeWebdriverWrapper
       path_to_screenshot
     end
 
+    # Get screenshot of current window
+    # @param [String] path_to_screenshot place to store local screenshot
+    # @return [void]
     def get_screenshot(path_to_screenshot = "#{screenshot_folder}/#{StringHelper.generate_random_string}.png")
       screenshot_folder = File.dirname(path_to_screenshot)
       FileUtils.mkdir_p(screenshot_folder) unless File.directory?(screenshot_folder)
@@ -44,6 +50,9 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log("get_screenshot(#{path_to_screenshot})")
     end
 
+    # Make a screenshot by webdriver methods
+    # @param [String] screenshot_name random name for file
+    # @return [String] text string with screenshot file location
     def webdriver_screenshot(screenshot_name = SecureRandom.uuid)
       begin
         link = get_screenshot_and_upload("#{screenshot_folder}/#{screenshot_name}.png")

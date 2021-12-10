@@ -6,6 +6,11 @@ module OnlyofficeWebdriverWrapper
     # @return [Integer] default timeout for wait element
     TIMEOUT_WAIT_ELEMENT = 15
 
+    # Wait until something happens
+    # @param [String] timeout How much to wait
+    # @param [String] message which message show if something happens
+    # @param [Boolean] wait_js should we wait for JavaScript actions
+    # @return [void]
     def wait_until(timeout = ::PageObject.default_page_wait, message = nil, wait_js: true, &block)
       tries ||= 3
       wait = Object::Selenium::WebDriver::Wait.new(timeout: timeout, message: message)
@@ -22,6 +27,11 @@ module OnlyofficeWebdriverWrapper
       webdriver_error('Wait until: rescuing from Stale Element error failed after 3 tries')
     end
 
+    # Wait until element is visible
+    # @param [String] xpath_name to find object
+    # @param [Integer] timeout How much to wait
+    # @raise [StandardError] error if element not found for timeout
+    # @return [void]
     def wait_until_element_visible(xpath_name, timeout = 15)
       wait_until_element_present(xpath_name)
       time = 0

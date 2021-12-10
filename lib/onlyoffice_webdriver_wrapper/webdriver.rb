@@ -25,6 +25,7 @@ require_relative 'webdriver/webdriver_tab_helper'
 require_relative 'webdriver/webdriver_user_agent_helper'
 require_relative 'webdriver/webdriver_browser_log_helper'
 
+# Namespace of this gem
 module OnlyofficeWebdriverWrapper
   # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
   class WebDriver
@@ -47,6 +48,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverTabHelper
     include WebdriverUserAgentHelper
     include WebdriverBrowserLogHelper
+    # @return [Integer] Default timeout for waiting to file to download
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array, String] default switches for chrome
     attr_accessor :driver
@@ -89,6 +91,9 @@ module OnlyofficeWebdriverWrapper
       @browser_running = true
     end
 
+    # Get element by it's xpath
+    # @param [String] object_identification xpath of object to find
+    # @return [Object, nil] nil if nothing found
     def get_element(object_identification)
       return object_identification unless object_identification.is_a?(String)
 
@@ -104,11 +109,19 @@ module OnlyofficeWebdriverWrapper
       get_elements(array_elements).map { |current_element| get_text(current_element) }
     end
 
+    # Select from list elements
+    # @param [String] value value to find object
+    # @param [Array<Object>] elements_value elements to check
+    # @return [void]
     def select_from_list_elements(value, elements_value)
       index = get_element_index(value, elements_value)
       elements_value[index].click
     end
 
+    # Get index of element by it's text
+    # @param [String] title to compare text
+    # @param [Array<Objects>] list_elements to find in which
+    # @return [Object, nil] nil if nothing found
     def get_element_index(title, list_elements)
       list_elements.each_with_index do |current, i|
         return i if get_text(current) == title
@@ -116,22 +129,36 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
+    # Get all options for combo box
+    # @param [String] xpath_name to find combobox
+    # @return [Array<String>] values
     def get_all_combo_box_values(xpath_name)
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
     end
 
+    # Scroll list to specific element
+    # @param [String] list_xpath how to find this list
+    # @param [String] element_xpath to which we should scrolled
+    # @return [void]
     def scroll_list_to_element(list_xpath, element_xpath)
       execute_javascript("$(document.evaluate(\"#{list_xpath}\", document, null, XPathResult.ANY_TYPE, null).
           iterateNext()).jScrollPane().data('jsp').scrollToElement(document.evaluate(\"#{element_xpath}\",
           document, null, XPathResult.ANY_TYPE, null).iterateNext());")
     end
 
+    # Scroll list by pixel count
+    # @param [String] list_xpath how to detect this list
+    # @param [Integer] pixels how much to scroll
+    # @return [void]
     def scroll_list_by_pixels(list_xpath, pixels)
       execute_javascript("$(document.evaluate(\"#{list_xpath.tr('"', "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
     end
 
     # Open dropdown selector, like 'Color Selector', which has no element id
     # @param [String] xpath_name name of dropdown list
+    # @param [Integer] horizontal_shift x value
+    # @param [Integer] vertical_shift y value
+    # @return [void]
     def open_dropdown_selector(xpath_name, horizontal_shift = 30, vertical_shift = 0)
       element = get_element(xpath_name)
       if @browser == :firefox || @browser == :safari
@@ -145,12 +172,22 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Perform an action on coordinate
+    # @param [String] xpath_name to find element
+    # @param [Integer] right_by x coordinate
+    # @param [Integer] down_by y coordinate
+    # @param [Symbol] action to perform
+    # @param [Integer] times how much times to repeat
+    # @return [void]
     def action_on_locator_coordinates(xpath_name, right_by, down_by, action = :click, times = 1)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
       (0...times).inject(@driver.action.move_to(element, right_by.to_i, down_by.to_i)) { |acc, _elem| acc.send(action) }.perform
     end
 
+    # Check if element present on page
+    # @param [String] xpath_name to find element
+    # @return [Boolean] result of check
     def element_present?(xpath_name)
       case xpath_name
       when PageObject::Elements::Element
@@ -165,6 +202,9 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
+    # Get first visible element from several
+    # @param [String] xpath_name to find several objects
+    # @return [Object] first visible element
     def get_element_by_display(xpath_name)
       @driver.find_elements(:xpath, xpath_name).each do |element|
         return element if element.displayed?
@@ -186,6 +226,10 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Get array of webdriver object by xpath
+    # @param [String] objects_identification object to find
+    # @param [Boolean] only_visible return invisible if true
+    # @return [Array, Object] list of objects
     def get_elements(objects_identification, only_visible = true)
       return objects_identification if objects_identification.is_a?(Array)
 
@@ -198,6 +242,9 @@ module OnlyofficeWebdriverWrapper
       elements
     end
 
+    # Check if element visible on page
+    # @param [String] xpath_name element to find
+    # @return [Boolean] result of check
     def element_visible?(xpath_name)
       if xpath_name.is_a?(PageObject::Elements::Element) # PageObject always visible
         true
@@ -230,7 +277,8 @@ module OnlyofficeWebdriverWrapper
 
     # Get text of current element
     # @param [String] xpath_name name of xpath
-    # @param [true, false] wait_until_visible wait until element visible [@default = true]
+    # @param [Boolean] wait_until_visible wait until element visible
+    # @return [String] result string
     def get_text(xpath_name, wait_until_visible = true)
       wait_until_element_visible(xpath_name) if wait_until_visible
 
@@ -243,10 +291,18 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Get text from several elements
+    # @param [String] xpath_several_elements to find objects
+    # @return [Array<String>] text of those elements
     def get_text_of_several_elements(xpath_several_elements)
       @driver.find_elements(:xpath, xpath_several_elements).map { |element| element.text unless element.text == '' }.compact
     end
 
+    # Select value of combo box
+    # @param [String] xpath_name to find combobox
+    # @param [String] select_value to select
+    # @param [Symbol] select_by select type
+    # @return [void]
     def select_combo_box(xpath_name, select_value, select_by = :value)
       wait_until_element_visible(xpath_name)
       option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
@@ -263,6 +319,11 @@ module OnlyofficeWebdriverWrapper
       @driver.execute_script('return document.documentElement.innerHTML;')
     end
 
+    # Raise an error, making a screenshot before it
+    # @param [String, Object] exception class to raise
+    # @param [String] error_message to raise
+    # @raise [Object] specified exception
+    # @return [void]
     def webdriver_error(exception, error_message = nil)
       if exception.is_a?(String) # If there is no error_message
         error_message = exception
@@ -273,6 +334,11 @@ module OnlyofficeWebdriverWrapper
       raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
     end
 
+    # Wait for file to be downloaded
+    # @param [String] file_name to wait for download
+    # @param [Integer] timeout to wait for file to download
+    # @raise [StandardError] error if something happened and file not downloaded
+    # @return [String] full file name of downloaded file
     def wait_file_for_download(file_name, timeout = TIMEOUT_FILE_DOWNLOAD)
       full_file_name = "#{@download_directory}/#{file_name}"
       full_file_name = file_name if file_name[0] == '/'

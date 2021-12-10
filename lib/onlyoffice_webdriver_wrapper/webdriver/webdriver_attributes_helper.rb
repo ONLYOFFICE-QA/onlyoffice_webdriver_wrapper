@@ -3,6 +3,10 @@
 module OnlyofficeWebdriverWrapper
   # Module with methods to work with attributes
   module WebdriverAttributesHelper
+    # Check if attribute of xpath is exists
+    # @param [String] xpath_name to find object
+    # @param [String] attribute name to check
+    # @return [Boolean] result of check
     def attribute_exist?(xpath_name, attribute)
       exist = false
 
@@ -16,6 +20,10 @@ module OnlyofficeWebdriverWrapper
       exist
     end
 
+    # Get attribute of element
+    # @param [String] xpath_name to find object
+    # @param [String] attribute to get
+    # @return [String] value of attribute
     def get_attribute(xpath_name, attribute)
       element = xpath_name.is_a?(Selenium::WebDriver::Element) ? xpath_name : get_element(xpath_name)
 
@@ -26,6 +34,10 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Get attributes of several elements
+    # @param [String] xpath_several_elements to find objects
+    # @param [String] attribute to get
+    # @return [Array<String>] list of attributes
     def get_attributes_of_several_elements(xpath_several_elements, attribute)
       elements = @driver.find_elements(:xpath, xpath_several_elements)
 
@@ -34,6 +46,12 @@ module OnlyofficeWebdriverWrapper
       end
     end
 
+    # Get index of element from array with attrribute value
+    # @param [String] xpath to find objects
+    # @param [String] attribute to check
+    # @param [String] value to compare
+    # @param [String] only_visible ignore invisible elements unless only_visible
+    # @return [Integer] index of element or `0` if not found
     def get_index_of_elements_with_attribute(xpath, attribute, value, only_visible = true)
       get_elements(xpath, only_visible).each_with_index do |element, index|
         return (index + 1) if get_attribute(element, attribute).include?(value)

@@ -3,19 +3,28 @@
 module OnlyofficeWebdriverWrapper
   # Module for work with tabs
   module WebdriverTabHelper
+    # @return [Integer] Default timeout for waiting for element
     TIMEOUT_WAIT_ELEMENT = 15
 
+    # Create new tab
+    # @return [void]
     def new_tab
       execute_javascript('window.open()')
     end
 
+    # Resize current tab to specific size
+    # @param [Integer] width to set
+    # @param [Integer] height to set
+    # @return [void]
     def resize_tab(width, height)
       @driver.manage.window.resize_to(width, height)
       OnlyofficeLoggerHelper.log("Resize current window to #{width}x#{height}")
     end
 
+    # Switch to popup window
     # @param after_switch_timeout [Integer] wait after switch to window
     # non-zero to workaround bug with page load hanging up after switch
+    # @return [void]
     def switch_to_popup(after_switch_timeout: 3)
       counter = 0
       while tab_count < 2 && counter < 30
@@ -52,22 +61,29 @@ module OnlyofficeWebdriverWrapper
       @driver.switch_to.window(@driver.window_handles[tab_number - 1])
     end
 
+    # Switch to first tab of chrome
+    # @return [void]
     def switch_to_main_tab
       @driver.switch_to.window(@driver.window_handles.first)
     end
 
+    # Close current active tab and switch to first one
+    # @return [void]
     def close_tab
       @driver.close
       sleep 1
       switch_to_main_tab
     end
 
+    # Wait for popup window, close it and return to first tab
+    # @return [void]
     def close_popup_and_switch_to_main_tab
       switch_to_popup
       close_tab
       switch_to_main_tab
     end
 
+    # @return [String] title of current tab
     def get_title_of_current_tab
       @driver.title
     end

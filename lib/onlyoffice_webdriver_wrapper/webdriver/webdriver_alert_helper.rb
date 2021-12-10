@@ -3,12 +3,14 @@
 module OnlyofficeWebdriverWrapper
   # Methods for working with alerts
   module WebdriverAlertHelper
+    # Confirm current alert
+    # @return [void]
     def alert_confirm
       @driver.switch_to.alert.accept if alert_exists?
     end
 
     # Check if alert exists
-    # @return [True, false]
+    # @return [Boolean]
     def alert_exists?
       @driver.switch_to.alert.text
       true

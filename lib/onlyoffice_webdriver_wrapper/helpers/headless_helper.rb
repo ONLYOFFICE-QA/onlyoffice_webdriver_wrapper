@@ -38,6 +38,8 @@ module OnlyofficeWebdriverWrapper
       true
     end
 
+    # Start headless session
+    # @return [void]
     def start
       create_session = if real_display_connected?
                          should_start?
@@ -64,6 +66,8 @@ module OnlyofficeWebdriverWrapper
       start_capture
     end
 
+    # Stop current headless session
+    # @return [void]
     def stop
       return unless running?
 
@@ -72,10 +76,15 @@ module OnlyofficeWebdriverWrapper
       headless_instance.destroy
     end
 
+    # Check if headless session currently running
+    # @return [Boolean] result of this check
     def running?
       !headless_instance.nil?
     end
 
+    # Take a screenshot of current headless session
+    # @param [String] scr_path Path to store screenshot
+    # @return [void]
     def take_screenshot(scr_path = '/tmp/screenshot.png')
       return unless running?
 

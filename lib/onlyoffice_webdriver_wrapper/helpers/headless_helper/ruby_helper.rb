@@ -3,6 +3,7 @@
 module OnlyofficeWebdriverWrapper
   # Module for check ruby info
   module RubyHelper
+    # @return [Boolean] If current ruby instance run in debug mode
     def debug?
       ENV['RUBYLIB'].to_s.include?('ruby-debug')
     end
