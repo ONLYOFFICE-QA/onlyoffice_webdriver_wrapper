@@ -37,13 +37,18 @@ module OnlyofficeWebdriverWrapper
       tab_count
     end
 
-    def choose_tab(tab_number)
+    # Choose tab by it's number
+    # @param [Integer] tab_number to choose
+    # @param [Integer] timeout how much for this tab
+    # @raise [RuntimeError] error if tab not found
+    # @return [void]
+    def choose_tab(tab_number, timeout: TIMEOUT_WAIT_ELEMENT)
       counter = 0
-      while tab_count < 2 && counter < TIMEOUT_WAIT_ELEMENT
+      while tab_count < tab_number && counter < timeout
         sleep 1
         counter += 1
       end
-      webdriver_error("choose_tab: Tab number = #{tab_number} not found") if counter >= TIMEOUT_WAIT_ELEMENT
+      webdriver_error("choose_tab: Tab number = #{tab_number} not found") if counter >= timeout
       @driver.switch_to.window(@driver.window_handles[tab_number - 1])
     end
 
