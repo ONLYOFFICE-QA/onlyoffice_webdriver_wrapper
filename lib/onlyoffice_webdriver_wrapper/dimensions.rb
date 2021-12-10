@@ -15,6 +15,7 @@ module OnlyofficeWebdriverWrapper
     alias x left
     alias y top
 
+    # @return [String] String representation of Dimensions
     def to_s
       "Dimensions(left: #{@left}, top: #{@top})"
     end

@@ -7,6 +7,7 @@ module OnlyofficeWebdriverWrapper
   module ChromeHelper
     include ChromeVersionHelper
 
+    # @return [String] list of default Chrome command line switches
     DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
                                  --disable-gpu
                                  --disable-popup-blocking
@@ -14,6 +15,7 @@ module OnlyofficeWebdriverWrapper
                                  --no-sandbox
                                  test-type].freeze
 
+    # @return [Selenium::WebDriver::Chrome::Service] Instance of Chrome Service object
     def chrome_service
       @chrome_service ||= Selenium::WebDriver::Chrome::Service.new(path: chromedriver_path)
     end

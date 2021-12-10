@@ -3,6 +3,7 @@
 module OnlyofficeWebdriverWrapper
   # Module for working with firefox
   module FirefoxHelper
+    # @return [Selenium::WebDriver::Firefox::Service] Instance of Firefox Service object
     def firefox_service
       geckodriver = File.join(File.dirname(__FILE__), 'bin/geckodriver')
       @firefox_service ||= Selenium::WebDriver::Firefox::Service.new(path: geckodriver)

@@ -6,6 +6,10 @@ require 'tempfile'
 module OnlyofficeWebdriverWrapper
   # Some additional methods for webdriver
   module WebdriverHelper
+    # Make screenshot by system methods
+    # Works only on Linux
+    # @param [String] file_name to export screenshot
+    # @return [String] result of screenshot command execution
     def system_screenshot(file_name)
       `import -window root #{file_name}`
     end

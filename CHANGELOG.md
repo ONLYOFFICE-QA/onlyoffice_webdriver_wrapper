@@ -5,6 +5,12 @@
 ## New Features
 
 * Add `timeout` option to `WebDriver#choose_tab`
+* Add missing documentation
+* Add check that 100% of code documented
+
+## Fixes
+
+* Fixe several typos in different parts of project
 
 ## 0.21.0 (2021-12-10)
 
@@ -225,7 +231,7 @@
 ### Fixes
 
 * Fix `rubocop` issues after upgrade to 0.88.0
-* Fix `WebDriver#remove_attribute` for xpath with dobule quotes
+* Fix `WebDriver#remove_attribute` for xpath with double quotes
 * Fix `WebDriver#get_text_by_js` for `//input` tags
 
 ### Changes

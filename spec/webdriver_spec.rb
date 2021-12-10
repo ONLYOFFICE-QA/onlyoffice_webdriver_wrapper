@@ -25,7 +25,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     end
 
     it 'type_to_input raise error for nil' do
-      expect { webdriver.type_to_input('//*[@id="unknwon-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
+      expect { webdriver.type_to_input('//*[@id="unknown-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
     end
 
     describe 'get_url' do

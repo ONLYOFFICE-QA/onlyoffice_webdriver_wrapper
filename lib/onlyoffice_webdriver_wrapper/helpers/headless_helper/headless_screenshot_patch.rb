@@ -1,4 +1,9 @@
+# Monkey-patching class from `headless` gem
 class Headless
+  # Fix incorrect taking of screenshots
+  # @param [String] file_path Path to store screenshot
+  # @param [Hash] options Different options
+  # @return [void]
   def take_screenshot(file_path, options={})
     using = options.fetch(:using, :imagemagick)
     case using

@@ -14,11 +14,11 @@ module OnlyofficeWebdriverWrapper
       rescue Selenium::WebDriver::Error::NoSuchElementError
         OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
       rescue Exception => e
-        webdriver_error("Raise unkwnown exception: #{e}")
+        webdriver_error("Raise unknown exception: #{e}")
       end
     end
 
-    # Select top frame of browser (even if several subframes exists)
+    # Select top frame of browser (even if several sub-frames exists)
     # @return [nil]
     def select_top_frame
       @driver.switch_to.default_content

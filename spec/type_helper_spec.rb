@@ -120,11 +120,11 @@ describe '#type_helper' do
 
   describe 'key_up' do
     it 'key_down for control is correct' do
-      webdriver.send_keys_to_focused_elements('foo')
+      webdriver.send_keys_to_focused_elements('mas')
       webdriver.key_down('//input', :control)
       webdriver.key_up('//input', :control)
-      webdriver.send_keys_to_focused_elements('a')
-      expect(webdriver.get_text('//input')).to eq('fooa')
+      webdriver.send_keys_to_focused_elements('k')
+      expect(webdriver.get_text('//input')).to eq('mask')
     end
   end
 end

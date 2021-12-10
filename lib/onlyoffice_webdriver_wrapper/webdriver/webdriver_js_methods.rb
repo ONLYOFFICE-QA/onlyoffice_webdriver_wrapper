@@ -29,6 +29,10 @@ module OnlyofficeWebdriverWrapper
       "document.evaluate(\"#{escaped_xpath}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()"
     end
 
+    # Type to locator by javascript
+    # @param [String] xpath_name to find object where to type
+    # @param [String] text to type
+    # @return [void]
     def type_to_locator_by_javascript(xpath_name, text)
       escaped_text = text.gsub('\\', '\\\\\\\\').gsub('"', '\\"').gsub("\n", '\\n')
       execute_javascript("document.evaluate('#{xpath_name}', document, null, XPathResult.ANY_TYPE, null).iterateNext().value=\"#{escaped_text}\";")
@@ -52,7 +56,7 @@ module OnlyofficeWebdriverWrapper
       Dimensions.new(width, height)
     end
 
-    # Get object absolute postion from top left edge of screen
+    # Get object absolute position from top left edge of screen
     # @param xpath [Sting] xpath of object
     # @return [CursorPoint] position of element
     def object_absolute_position(xpath)
@@ -76,6 +80,7 @@ module OnlyofficeWebdriverWrapper
       execute_javascript('return window.jQuery.active;').zero?
     end
 
+    # @return [Boolean] Is document is ready, finished to be loading
     def document_ready?
       execute_javascript('return document.readyState;') == 'complete'
     end
