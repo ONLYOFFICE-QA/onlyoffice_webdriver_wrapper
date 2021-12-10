@@ -7,6 +7,7 @@ PATH
       onlyoffice_logger_helper (~> 1)
       onlyoffice_s3_wrapper (~> 0, >= 0.5.0)
       page-object (~> 2)
+      parallel_tests (~> 3)
       selenium-webdriver (~> 3)
       watir (~> 6)
 
@@ -61,6 +62,8 @@ GEM
     page_navigation (0.10)
       data_magic (>= 0.22)
     parallel (1.21.0)
+    parallel_tests (3.7.3)
+      parallel
     parser (3.0.3.2)
       ast (~> 2.4.1)
     rainbow (3.0.0)

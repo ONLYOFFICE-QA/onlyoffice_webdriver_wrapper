@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Use `parallel_rspec` to run tests in CI
+
 ## 0.21.0 (2021-12-10)
 
 ### Changes
