@@ -10,7 +10,7 @@ describe OnlyofficeWebdriverWrapper::HeadlessHelper do
   end
 
   it 'Can take screenshot to file' do
-    file = Tempfile.new(['screenshot', '.png'])
+    file = Tempfile.new(%w[screenshot .png])
     headless.take_screenshot(file.path)
     expect(File.size(file.path)).to be > 100
     file.unlink

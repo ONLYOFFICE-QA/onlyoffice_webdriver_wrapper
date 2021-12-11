@@ -11,6 +11,7 @@
 ## Fixes
 
 * Fixe several typos in different parts of project
+* Minor issues with HTML and documentation
 
 ## 0.21.0 (2021-12-10)
 

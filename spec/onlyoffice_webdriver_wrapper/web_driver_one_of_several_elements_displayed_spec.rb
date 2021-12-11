@@ -9,7 +9,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#one_of_several_elements_displa
 
   before do
     webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'get_element_count.html')
+                   'one_of_several_elements_displayed.html')
   end
 
   it 'one_of_several_elements_displayed? is correct for non-existing element' do
