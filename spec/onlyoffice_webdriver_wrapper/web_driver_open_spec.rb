@@ -12,4 +12,14 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#open' do
     expect { webdriver.open(non_existing_url) }
       .to raise_error(Net::ReadTimeout, /#{non_existing_url}/)
   end
+
+  it 'open correct works for public internet page' do
+    url = 'https://google.com'
+    expect(webdriver.open(url)).to be_nil
+  end
+
+  it 'open correct works for local files' do
+    url = "file://#{__FILE__}"
+    expect(webdriver.open(url)).to be_nil
+  end
 end

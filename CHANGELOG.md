@@ -13,6 +13,10 @@
 * Fixe several typos in different parts of project
 * Minor issues with HTML and documentation
 
+## Changes
+
+* Speedup `WebDriver#open` by checking if url is alive before opening it
+
 ## 0.21.0 (2021-12-10)
 
 ### Changes
