@@ -20,7 +20,7 @@ module OnlyofficeWebdriverWrapper
                                 'AppleWebKit/537.36 (KHTML, like Gecko) '\
                                 'Chrome/48.0.2564.23 Safari/537.36'
 
-    # @return [String] user agent string for current device
+    # @return [String, nil] user agent string for current device
     def user_agent_for_device
       case @device
       when :desktop_linux

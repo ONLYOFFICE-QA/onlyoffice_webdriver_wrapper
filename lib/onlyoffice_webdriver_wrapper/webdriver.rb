@@ -357,7 +357,7 @@ module OnlyofficeWebdriverWrapper
     def self.clean_up(forced = false)
       return unless OnlyofficeFileHelper::LinuxHelper.user_name.include?('nct-at') ||
                     OnlyofficeFileHelper::LinuxHelper.user_name.include?('ubuntu') ||
-                    forced == true
+                    forced
 
       OnlyofficeFileHelper::LinuxHelper.kill_all('chromedriver')
       OnlyofficeFileHelper::LinuxHelper.kill_all('geckodriver')

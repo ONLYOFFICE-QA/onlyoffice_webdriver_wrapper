@@ -8,8 +8,6 @@ module OnlyofficeWebdriverWrapper
     # @param [String] attribute name to check
     # @return [Boolean] result of check
     def attribute_exist?(xpath_name, attribute)
-      exist = false
-
       element = xpath_name.is_a?(String) ? get_element(xpath_name) : xpath_name
       begin
         attribute_value = element.attribute(attribute)
@@ -50,7 +48,7 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath to find objects
     # @param [String] attribute to check
     # @param [String] value to compare
-    # @param [String] only_visible ignore invisible elements unless only_visible
+    # @param [Boolean] only_visible ignore invisible elements unless only_visible
     # @return [Integer] index of element or `0` if not found
     def get_index_of_elements_with_attribute(xpath, attribute, value, only_visible = true)
       get_elements(xpath, only_visible).each_with_index do |element, index|

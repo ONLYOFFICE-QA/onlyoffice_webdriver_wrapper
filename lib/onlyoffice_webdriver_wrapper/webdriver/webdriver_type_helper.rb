@@ -105,7 +105,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Type text to currently focused element
-    # @param [Array<String, Symbol>] keys to send
+    # @param [Array<String, Symbol>, String, Symbol] keys to send
     # @param [Integer] count_of_times how much times to repeat
     # @return [void]
     def send_keys_to_focused_elements(keys, count_of_times = 1)
