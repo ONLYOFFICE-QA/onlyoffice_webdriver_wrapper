@@ -71,11 +71,8 @@ module OnlyofficeWebdriverWrapper
     def ensure_url_available(url, timeout: 5)
       return true unless url.start_with?('http://')
 
-      uri = URI.parse(url)
-      req = Net::HTTP.new(uri.host, uri.port)
-      req.read_timeout = timeout
-      req.use_ssl = url.start_with?('https')
-      req.request_head(uri.path)
+      URI.parse(url).open(read_timeout: timeout,
+                          open_timeout: timeout).read
     rescue StandardError => e
       raise Net::ReadTimeout, e
     end
