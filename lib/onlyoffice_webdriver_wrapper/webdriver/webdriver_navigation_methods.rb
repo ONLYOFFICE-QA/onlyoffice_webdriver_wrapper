@@ -74,6 +74,7 @@ module OnlyofficeWebdriverWrapper
       URI.parse(url).open(read_timeout: timeout,
                           open_timeout: timeout).read
     rescue StandardError => e
+      OnlyofficeLoggerHelper.log("Url: #{url} is not available with error `#{e}`")
       raise Net::ReadTimeout, e
     end
   end
