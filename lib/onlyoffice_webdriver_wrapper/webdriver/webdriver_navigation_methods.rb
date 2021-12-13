@@ -8,6 +8,7 @@ module OnlyofficeWebdriverWrapper
     # @return [nil]
     def open(url)
       url = "http://#{url}" unless url.include?('http') || url.include?('file://')
+      ensure_url_available(url)
       @driver.navigate.to url
       sleep(1) # Correct wait for Page to init focus
       OnlyofficeLoggerHelper.log("Opened page: #{url}")
@@ -58,6 +59,22 @@ module OnlyofficeWebdriverWrapper
       @headless.stop
       cleanup_download_folder
       @browser_running = false
+    end
+
+    private
+
+    # Fast check if url available
+    # @param [String] url to check
+    # @param [Integer] timeout for wait for page to load
+    # @raise [Net::ReadTimeout] exception if timeout happened
+    # @return [nil]
+    def ensure_url_available(url, timeout: 5)
+      return true unless url.start_with?('http://')
+
+      URI.parse(url).open(read_timeout: timeout,
+                          open_timeout: timeout).read
+    rescue StandardError => e
+      raise Net::ReadTimeout, e
     end
   end
 end
