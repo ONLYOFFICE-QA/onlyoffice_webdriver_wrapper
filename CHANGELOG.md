@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix incorrect `chromedriver` for Mac
+
 ## 0.22.0 (2021-12-13)
 
 ## New Features
