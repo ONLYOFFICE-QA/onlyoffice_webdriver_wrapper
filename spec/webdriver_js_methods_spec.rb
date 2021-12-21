@@ -12,7 +12,7 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
   end
 
   it 'WebdriverJsMethods#jquery_finished? if jquery on page' do
-    webdriver.open('https://www.teamlab.info')
+    webdriver.open('https://onlyoffice.com')
     expect(webdriver).to be_jquery_finished
   end
 

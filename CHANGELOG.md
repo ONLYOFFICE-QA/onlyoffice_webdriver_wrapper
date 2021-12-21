@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fix
+
+* Fix deprecated url in firefox spec
+
 ## 0.22.1 (2021-12-17)
 
 ### Fixes
