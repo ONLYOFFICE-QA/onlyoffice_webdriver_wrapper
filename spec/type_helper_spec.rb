@@ -46,7 +46,7 @@ describe '#type_helper' do
         webdriver.type_to_locator('//input[@id="disabled"]',
                                   'text',
                                   true)
-      end.to raise_error(Selenium::WebDriver::Error::ElementNotInteractableError)
+      end.to raise_error(Selenium::WebDriver::Error::InvalidElementStateError)
     end
 
     it 'type_to_locator type_to_locator' do
