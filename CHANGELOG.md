@@ -19,6 +19,7 @@
   `Selenium::WebDriver::Error::ElementNotInteractableError`
 * `Selenium::WebDriver::Error::ElementNotInteractableError` replaced with
   `Selenium::WebDriver::Error::InvalidElementStateError`
+* `TimeoutError` replaced with `Timeout::Error`
 * Remove `ruby-2.5` from CI since it's EOLed
 
 ## 0.22.1 (2021-12-17)

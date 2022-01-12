@@ -10,6 +10,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_url' do
                    'link_to_ftp.html')
     webdriver.click_on_locator('//a')
     webdriver.choose_tab(2)
-    webdriver.get_url # TODO: Remove
+    expect { webdriver.get_url }.to raise_error(Net::ReadTimeout)
   end
 end

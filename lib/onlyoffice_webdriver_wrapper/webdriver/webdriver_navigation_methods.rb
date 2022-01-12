@@ -22,7 +22,7 @@ module OnlyofficeWebdriverWrapper
     #   it is a root frame
     def get_url
       execute_javascript('return window.location.href')
-    rescue Selenium::WebDriver::Error::NoSuchFrameError, TimeoutError => e
+    rescue Selenium::WebDriver::Error::NoSuchFrameError, Timeout::Error => e
       raise(e.class, "Browser is crushed or hangup with #{e}")
     end
 
