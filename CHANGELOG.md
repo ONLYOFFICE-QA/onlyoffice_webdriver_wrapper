@@ -2,7 +2,6 @@
 
 ## master (unreleased)
 
-
 ### New Features
 
 * Add `ruby-3.0` to CI
