@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `ruby-3.0` to CI
+* Add `ruby-3.1` to CI
+
 ### Fix
 
 * Fix deprecated url in firefox spec
