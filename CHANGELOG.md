@@ -15,6 +15,7 @@
 
 * Require `webdriver` v4
 * Require `watir` v7
+* Remove `ruby-2.5` from CI since it's EOLed
 
 ## 0.22.1 (2021-12-17)
 
