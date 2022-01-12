@@ -2,9 +2,19 @@
 
 ## master (unreleased)
 
+
+### New Features
+
+* Add `ruby-3.0` to CI
+* Add `ruby-3.1` to CI
+
 ### Fix
 
 * Fix deprecated url in firefox spec
+
+### Changes
+
+* Remove `ruby-2.5` from CI since it's EOLed
 
 ## 0.22.1 (2021-12-17)
 
