@@ -6,6 +6,11 @@
 
 * Fix deprecated url in firefox spec
 
+### Changes
+
+* Require `webdriver` v4
+* Require `watir` v7
+
 ## 0.22.1 (2021-12-17)
 
 ### Fixes
