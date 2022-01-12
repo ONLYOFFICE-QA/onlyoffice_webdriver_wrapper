@@ -7,7 +7,7 @@ module OnlyofficeWebdriverWrapper
     def browser_logs
       return [] if browser == :firefox # not implemented, see https://github.com/mozilla/geckodriver/issues/284
 
-      @driver.manage.logs.get(:browser)
+      @driver.logs.get(:browser)
     end
   end
 end

@@ -39,8 +39,7 @@ module OnlyofficeWebdriverWrapper
       switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
       options = Selenium::WebDriver::Chrome::Options.new(args: switches,
                                                          prefs: prefs)
-      webdriver_options = { options: options,
-                            desired_capabilities: caps,
+      webdriver_options = { capabilities: [caps, options],
                             service: chrome_service }
       driver = Selenium::WebDriver.for :chrome, webdriver_options
       maximize_chrome(driver)
