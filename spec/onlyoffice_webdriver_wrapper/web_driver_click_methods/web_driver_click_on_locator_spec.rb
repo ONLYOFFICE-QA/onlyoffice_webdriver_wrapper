@@ -32,7 +32,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
 
   it 'click_on_locator fails for invisible element with correct exception' do
     expect { webdriver.click_on_locator(element_to_show) }
-      .to raise_error(Selenium::WebDriver::Error::ElementNotVisibleError, /not visible/)
+      .to raise_error(Selenium::WebDriver::Error::ElementNotInteractableError, /not visible/)
   end
 
   it 'click_on_locator fails if other element hide element to click' do
