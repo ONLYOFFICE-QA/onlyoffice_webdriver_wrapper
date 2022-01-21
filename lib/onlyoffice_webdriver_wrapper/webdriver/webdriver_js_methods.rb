@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
       OnlyofficeLoggerHelper.log("Executed js: `#{script}` with result: `#{result}`")
       sleep(wait_timeout)
       result
-    rescue TimeoutError => e
+    rescue Timeout::Error => e
       # Usually this mean browser hang up or some modular
       # window is blocking browser for execution of any code
       # in that case performing `webdriver_error` only cause forever loop

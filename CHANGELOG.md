@@ -2,9 +2,25 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `ruby-3.0` to CI
+* Add `ruby-3.1` to CI
+
 ### Fix
 
 * Fix deprecated url in firefox spec
+
+### Changes
+
+* Require `webdriver` v4
+* Require `watir` v7
+* `Selenium::WebDriver::Error::ElementNotVisibleError` replaced with
+  `Selenium::WebDriver::Error::ElementNotInteractableError`
+* `Selenium::WebDriver::Error::ElementNotInteractableError` replaced with
+  `Selenium::WebDriver::Error::InvalidElementStateError`
+* `TimeoutError` replaced with `Timeout::Error`
+* Remove `ruby-2.5` from CI since it's EOLed
 
 ## 0.22.1 (2021-12-17)
 
