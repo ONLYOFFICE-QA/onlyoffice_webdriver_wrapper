@@ -21,6 +21,8 @@ module OnlyofficeWebdriverWrapper
       end
     rescue Selenium::WebDriver::Error::TimeoutError
       webdriver_error("Wait until timeout: #{timeout} seconds in")
+    rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError => e
+      webdriver_error(e.class, "JS Alert Happened: #{e}")
     rescue Selenium::WebDriver::Error::StaleElementReferenceError
       OnlyofficeLoggerHelper.log("Wait until: rescuing from Stale Element error, #{tries} attempts remaining")
       retry unless (tries -= 1).zero?
