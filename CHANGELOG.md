@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.1.0 (2022-01-25)
+
 ## New Feature
 
 * Handle JS Alerts in `wait_until` method
