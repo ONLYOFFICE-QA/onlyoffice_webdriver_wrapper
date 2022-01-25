@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## New Feature
+
+* Handle JS Alerts in `wait_until` method
+
 ### Changes
 
 * Drop support of `ruby-2.5`, since `selenium-webdriver` v4 do not support it
