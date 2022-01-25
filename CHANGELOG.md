@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Drop support of `ruby-2.5`, since `selenium-webdriver` v4 do not support it
+
 ## 1.0.0 (2022-01-21)
 
 ### New Features
