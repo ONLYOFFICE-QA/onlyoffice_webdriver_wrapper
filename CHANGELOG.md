@@ -2,17 +2,17 @@
 
 ## master (unreleased)
 
-## New Features
+### New Features
 
 * Add Chromedriver `98.0.4758.48`
 
-## Changes
+### Changes
 
 * Remove Chromedriver `92.0.4515.43`
 
 ## 1.1.0 (2022-01-25)
 
-## New Feature
+### New Feature
 
 * Handle JS Alerts in `wait_until` method
 
