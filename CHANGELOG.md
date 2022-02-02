@@ -5,6 +5,7 @@
 ### New Features
 
 * Add Chromedriver `97.0.4692.71`
+* Add `yamllint` in CI
 
 ### Changes
 
