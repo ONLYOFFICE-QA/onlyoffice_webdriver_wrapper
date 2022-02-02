@@ -9,6 +9,7 @@
 ### Changes
 
 * Remove Chromedriver `92.0.4515.43`
+* Remove `codeclimate` config, we don't use it any more
 
 ## 1.1.0 (2022-01-25)
 
