@@ -4,7 +4,7 @@
 
 ### New Features
 
-* Add Chromedriver `98.0.4758.48`
+* Add Chromedriver `97.0.4692.71`
 
 ### Changes
 
