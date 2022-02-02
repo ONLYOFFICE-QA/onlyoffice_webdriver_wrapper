@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.2.0 (2022-02-02)
+
 ### New Features
 
 * Add Chromedriver `97.0.4692.71`
