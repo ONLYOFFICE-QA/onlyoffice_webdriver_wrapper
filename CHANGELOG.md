@@ -6,6 +6,10 @@
 
 * Update `geckodriver` from `0.28.0` to `v0.30.0`
 
+### Changes
+
+* Check `dependabot` at 8:00 Moscow time daily
+
 ## 1.2.0 (2022-02-02)
 
 ### New Features
