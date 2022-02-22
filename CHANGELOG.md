@@ -5,10 +5,12 @@
 ### New Features
 
 * Update `geckodriver` from `0.28.0` to `v0.30.0`
+* Add Chromedriver `98.0.4758.80`
 
 ### Changes
 
 * Check `dependabot` at 8:00 Moscow time daily
+* Remove Chromedriver `94.0.4606.41`
 
 ## 1.2.0 (2022-02-02)
 
