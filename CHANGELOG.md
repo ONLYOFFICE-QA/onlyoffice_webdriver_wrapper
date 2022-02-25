@@ -7,6 +7,10 @@
 * Update `geckodriver` from `0.28.0` to `v0.30.0`
 * Add Chromedriver `98.0.4758.102`
 
+### Fixes
+
+* `WebDriver#wait_until` will show `message` in error
+
 ### Changes
 
 * Check `dependabot` at 8:00 Moscow time daily
