@@ -38,4 +38,13 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until' do
       end
     end.to raise_error(/JS Alert Happened/)
   end
+
+  it 'wait_until will not loose message in case of failure' do
+    message = 'My very custom message of failure'
+    expect do
+      webdriver.wait_until(1, message) do
+        false
+      end
+    end.to raise_error(/#{message}/)
+  end
 end

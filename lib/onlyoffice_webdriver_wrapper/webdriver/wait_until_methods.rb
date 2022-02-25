@@ -7,7 +7,7 @@ module OnlyofficeWebdriverWrapper
     TIMEOUT_WAIT_ELEMENT = 15
 
     # Wait until something happens
-    # @param [String] timeout How much to wait
+    # @param [Integer] timeout How much to wait
     # @param [String] message which message show if something happens
     # @param [Boolean] wait_js should we wait for JavaScript actions
     # @return [void]
@@ -19,8 +19,8 @@ module OnlyofficeWebdriverWrapper
         wait.until { document_ready? }
         wait.until { jquery_finished? }
       end
-    rescue Selenium::WebDriver::Error::TimeoutError
-      webdriver_error("Wait until timeout: #{timeout} seconds in")
+    rescue Selenium::WebDriver::Error::TimeoutError => e
+      webdriver_error("Wait until timeout: #{timeout} seconds for `#{e}` failed")
     rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError => e
       webdriver_error(e.class, "JS Alert Happened: #{e}")
     rescue Selenium::WebDriver::Error::StaleElementReferenceError
