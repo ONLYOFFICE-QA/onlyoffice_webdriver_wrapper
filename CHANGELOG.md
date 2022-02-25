@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.3.0 (2022-02-25)
+
 ### New Features
 
 * Update `geckodriver` from `0.28.0` to `v0.30.0`
