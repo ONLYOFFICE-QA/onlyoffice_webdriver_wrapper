@@ -75,7 +75,7 @@ module OnlyofficeWebdriverWrapper
       @headless = HeadlessHelper.new(record_video: record_video)
       @headless.start
 
-      @download_directory = Dir.mktmpdir('webdriver-download')
+      @download_directory = params.fetch(:download_directory, Dir.mktmpdir('webdriver-download'))
       @browser = params.fetch(:browser, browser)
       @proxy = params[:proxy]
       return if params[:do_not_start_browser]
