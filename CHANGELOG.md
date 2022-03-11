@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Increase test coverage
+* Change expedition in `WebDriver#user_agent_for_device` for better error handling
+
 ## 1.3.0 (2022-02-25)
 
 ### New Features
