@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `rake` task to update chromedriver exe
+
 ### Changes
 
 * Increase test coverage
