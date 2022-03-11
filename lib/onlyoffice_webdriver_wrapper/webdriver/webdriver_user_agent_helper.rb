@@ -34,7 +34,7 @@ module OnlyofficeWebdriverWrapper
       when :nexus_10_chrome
         USERAGENT_NEXUS_10_CHROME
       else
-        webdriver_error("Unknown user device for starting browser: #{@device}")
+        raise("Unknown user device for starting browser: #{@device}")
       end
     end
 
