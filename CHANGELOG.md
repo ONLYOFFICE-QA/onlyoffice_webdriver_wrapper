@@ -5,11 +5,13 @@
 ### New Features
 
 * Add `rake` task to update chromedriver exe
+* Add Chromedriver `100.0.4896.60`
 
 ### Changes
 
 * Increase test coverage
 * Change expedition in `WebDriver#user_agent_for_device` for better error handling
+* Remove Chromedriver `96.0.4664.35`
 
 ## 1.3.0 (2022-02-25)
 
