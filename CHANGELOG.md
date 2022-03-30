@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.4.0 (2022-03-30)
+
 ### New Features
 
 * Add `rake` task to update chromedriver exe
