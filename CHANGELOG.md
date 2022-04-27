@@ -2,9 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add Chromedriver `101.0.4951.15`
+
 ### Changes
 
 * Fix `rubocop-1.28.1` code issues
+* Remove Chromedriver `97.0.4692.71`
 
 ## 1.4.0 (2022-03-30)
 
