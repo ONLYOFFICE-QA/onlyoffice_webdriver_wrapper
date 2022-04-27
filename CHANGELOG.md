@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.5.0 (2022-04-27)
+
 ### New Features
 
 * Add Chromedriver `101.0.4951.15`
