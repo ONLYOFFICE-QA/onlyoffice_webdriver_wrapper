@@ -30,12 +30,14 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Type to locator by javascript
-    # @param [String] xpath_name to find object where to type
+    # @param [String] xpath to find object where to type
     # @param [String] text to type
     # @return [void]
-    def type_to_locator_by_javascript(xpath_name, text)
-      escaped_text = text.gsub('\\', '\\\\\\\\').gsub('"', '\\"').gsub("\n", '\\n')
-      execute_javascript("document.evaluate('#{xpath_name}', document, null, XPathResult.ANY_TYPE, null).iterateNext().value=\"#{escaped_text}\";")
+    def type_to_locator_by_javascript(xpath, text)
+      escaped_text = text.gsub('\\', '\\\\\\\\')
+                         .gsub('"', '\\"')
+                         .gsub("\n", '\\n')
+      execute_javascript("#{dom_element_by_xpath(xpath)}.value=\"#{escaped_text}\";")
     end
 
     # Get text in object by xpath

@@ -12,6 +12,7 @@
 
 * Fix `rubocop-1.28.1` code issues
 * Remove Chromedriver `97.0.4692.71`
+* Increase code coverage for `WebDriver#type_to_locator_by_javascript`
 
 ## 1.4.0 (2022-03-30)
 
