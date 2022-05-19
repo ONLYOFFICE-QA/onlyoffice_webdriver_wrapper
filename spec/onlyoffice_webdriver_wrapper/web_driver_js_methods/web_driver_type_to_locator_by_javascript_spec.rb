@@ -36,4 +36,10 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#type_to_locator_by_javascript'
     webdriver.type_to_locator_by_javascript('//*[@id="login_field"]', data)
     expect(webdriver.get_text('//*[@id="login_field"]')).to eq(data)
   end
+
+  it 'two slashes can be be input' do
+    two_slashes = '\\\\'
+    webdriver.type_to_locator_by_javascript('//*[@id="login_field"]', two_slashes)
+    expect(webdriver.get_text('//*[@id="login_field"]')).to eq(two_slashes)
+  end
 end
