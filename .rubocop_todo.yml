@@ -64,12 +64,6 @@ Naming/MethodParameterName:
   Exclude:
     - 'lib/onlyoffice_webdriver_wrapper/webdriver/webdriver_move_cursor_methods.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Performance/MapCompact:
-  Exclude:
-    - 'lib/onlyoffice_webdriver_wrapper/webdriver.rb'
-
 # Offense count: 7
 # Configuration parameters: IgnoredMetadata.
 RSpec/DescribeClass:
