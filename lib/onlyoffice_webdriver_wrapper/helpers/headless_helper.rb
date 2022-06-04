@@ -3,7 +3,7 @@
 require_relative 'headless_helper/real_display_tools'
 require_relative 'headless_helper/ruby_helper'
 require 'headless'
-require_relative 'headless_helper/headless_screenshot_patch'
+require_relative 'headless_helper/headless_patch'
 require_relative 'headless_helper/headless_video_recorder'
 
 module OnlyofficeWebdriverWrapper

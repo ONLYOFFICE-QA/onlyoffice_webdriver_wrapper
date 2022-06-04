@@ -21,3 +21,20 @@ class Headless
     end
   end
 end
+
+# Until https://github.com/leonid-shevtsov/headless/pull/106
+# is released in stable version
+class VideoRecorder
+  def stop_and_save(path)
+    CliUtil.kill_process(@pid_file_path, :wait => true)
+    if File.exist? @tmp_file_path
+      begin
+        FileUtils.mkdir_p(File.dirname(path))
+        FileUtils.mv(@tmp_file_path, path)
+      rescue Errno::EINVAL
+        nil
+      end
+    end
+  end
+end
+
