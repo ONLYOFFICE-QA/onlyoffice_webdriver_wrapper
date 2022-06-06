@@ -10,4 +10,4 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
   Exclude:
-    - lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/headless_screenshot_patch.rb
+    - lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/headless_patch.rb
