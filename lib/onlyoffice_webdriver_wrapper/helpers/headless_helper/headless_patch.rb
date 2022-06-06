@@ -25,7 +25,11 @@ end
 # Until https://github.com/leonid-shevtsov/headless/pull/106
 # is released in stable version
 class Headless
+  # Class for handling video records
   class VideoRecorder
+    # Stop recording and save it
+    # @param [String] path to save
+    # @retunr [nil, String] path to result file or nil if error
     def stop_and_save(path)
       CliUtil.kill_process(@pid_file_path, :wait => true)
       if File.exist? @tmp_file_path
