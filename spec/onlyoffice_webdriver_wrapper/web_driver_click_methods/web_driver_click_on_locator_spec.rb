@@ -14,8 +14,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
   after { webdriver.quit }
 
   it 'click_on_locator with count 2 should not be double click' do
-    webdriver.open('https://www.w3schools.com/js/tryit.asp?filename=tryjs_function_counter3')
-    webdriver.select_frame('//*[@id="iframeResult"]')
+    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
+                   'click_counter.html')
     webdriver.click_on_locator('//button', false, count: 2)
     expect(webdriver.get_text('//*[@id="demo"]')).to eq('2')
   end

@@ -6,6 +6,7 @@
 
 * Drop `ruby-2.6` support, since it's EOL'ed
 * Patch `Headless` gem to be compatible with `ruby-3.2`
+* Remove `w3school.com` usage from specs
 
 ## 1.6.0 (2022-05-25)
 
