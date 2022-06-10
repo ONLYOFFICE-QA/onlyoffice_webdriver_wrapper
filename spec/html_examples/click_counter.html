@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <body>
 
 <p>Counting with a local variable.</p>
@@ -9,13 +8,15 @@
 <p id="demo">0</p>
 
 <script>
-    var add = (function () {
-        var counter = 0;
-        return function () {return counter += 1;}
+    let add = (function () {
+        let counter = 0;
+        return function () {
+            return counter += 1;
+        }
     })();
 
-    function myFunction(){
-        document.getElementById("demo").innerHTML = add();
+    function myFunction() {
+        document.getElementById("demo").innerHTML = add().toString();
     }
 </script>
 
