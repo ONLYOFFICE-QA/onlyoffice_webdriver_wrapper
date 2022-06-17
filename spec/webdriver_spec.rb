@@ -60,8 +60,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     let(:webdriver) { described_class.new(:chrome) }
 
     it 'open url and get console log output' do
-      file_with_js_error = "#{Dir.pwd}/spec/html_examples/javascript_error.html"
-      webdriver.open("file://#{file_with_js_error}")
+      webdriver.open(local_file('javascript_error.html'))
       webdriver.wait_until { webdriver.document_ready? }
       expect(webdriver.browser_logs).not_to be_empty
     end

@@ -7,15 +7,13 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
   let(:element_to_show) { '//*[@id="newElement"]' }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'element_appear_after_click.html')
+    webdriver.open(local_file('element_appear_after_click.html'))
   end
 
   after { webdriver.quit }
 
   it 'click_on_locator with count 2 should not be double click' do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'click_counter.html')
+    webdriver.open(local_file('click_counter.html'))
     webdriver.click_on_locator('//button', false, count: 2)
     expect(webdriver.get_text('//*[@id="demo"]')).to eq('2')
   end
@@ -36,8 +34,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
   end
 
   it 'click_on_locator fails if other element hide element to click' do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'element_to_click_hidden_by_other.html')
+    webdriver.open(local_file('element_to_click_hidden_by_other.html'))
     expect { webdriver.click_on_locator('//button') }
       .to raise_error(Selenium::WebDriver::Error::ElementClickInterceptedError, /click intercepted/)
   end

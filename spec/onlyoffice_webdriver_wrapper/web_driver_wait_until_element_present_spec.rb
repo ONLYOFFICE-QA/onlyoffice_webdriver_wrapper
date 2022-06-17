@@ -7,8 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until_element_present' do
   let(:element_xpath) { '//div[@id="newElement"]' }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'wait_until_element_present.html')
+    webdriver.open(local_file('wait_until_element_present.html'))
   end
 
   after { webdriver.quit }

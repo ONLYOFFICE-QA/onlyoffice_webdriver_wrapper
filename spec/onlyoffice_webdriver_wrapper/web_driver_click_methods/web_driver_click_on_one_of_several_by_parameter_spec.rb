@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_one_of_several_by_par
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'click_on_one_of_several_by_parameter.html')
+    webdriver.open(local_file('click_on_one_of_several_by_parameter.html'))
   end
 
   after { webdriver.quit }

@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#element_size_by_js' do
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'web_driver_element_size_by_js_spec.html')
+    webdriver.open(local_file('web_driver_element_size_by_js_spec.html'))
   end
 
   after { webdriver.quit }
