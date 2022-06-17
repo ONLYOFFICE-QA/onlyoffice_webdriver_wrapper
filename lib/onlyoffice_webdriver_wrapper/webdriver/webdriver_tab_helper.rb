@@ -22,16 +22,17 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Switch to popup window
+    # @param popup_appear_timeout [Integer] how much time to wait for popup window
     # @param after_switch_timeout [Integer] wait after switch to window
     # non-zero to workaround bug with page load hanging up after switch
     # @return [void]
-    def switch_to_popup(after_switch_timeout: 3)
+    def switch_to_popup(after_switch_timeout: 3, popup_appear_timeout: 30)
       counter = 0
-      while tab_count < 2 && counter < 30
+      while tab_count < 2 && counter < popup_appear_timeout
         sleep 1
         counter += 1
       end
-      webdriver_error('switch_to_popup: Popup window not found') if counter >= 30
+      webdriver_error('switch_to_popup: Popup window not found') if counter >= popup_appear_timeout
       list_of_handlers = @driver.window_handles
       last_window_handler = list_of_handlers.last
       @driver.switch_to.window(last_window_handler)
