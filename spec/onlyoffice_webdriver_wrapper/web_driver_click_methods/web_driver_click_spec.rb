@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click' do
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'element_appear_after_click.html')
+    webdriver.open(local_file('element_appear_after_click.html'))
   end
 
   after { webdriver.quit }

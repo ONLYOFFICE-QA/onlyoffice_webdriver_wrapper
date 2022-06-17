@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#double_click_on_locator_coordi
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'double_click_alert.html')
+    webdriver.open(local_file('double_click_alert.html'))
   end
 
   after { webdriver.quit }

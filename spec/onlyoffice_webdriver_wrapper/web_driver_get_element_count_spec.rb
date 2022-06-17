@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_element_count' do
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'get_element_count.html')
+    webdriver.open(local_file('get_element_count.html'))
   end
 
   after { webdriver.quit }

@@ -7,8 +7,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until_element_disappear' 
   let(:element_xpath) { '//div[@id="forDelete"]' }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'wait_until_element_disappear.html')
+    webdriver.open(local_file('wait_until_element_disappear.html'))
   end
 
   after { webdriver.quit }

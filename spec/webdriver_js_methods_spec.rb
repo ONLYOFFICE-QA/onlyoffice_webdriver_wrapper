@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
   let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
-  let(:pseudo_class_file) { "#{Dir.pwd}/spec/html_examples/pseudo_class_test.html" }
 
   it 'WebdriverJsMethods#jquery_finished? if no jquery on page' do
     webdriver.open('http://www.google.com')
@@ -17,7 +16,7 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
   end
 
   it 'WebdriverJsMethods#computed_style' do
-    webdriver.open("file://#{pseudo_class_file}")
+    webdriver.open(local_file('pseudo_class_test.html'))
     expect(webdriver.computed_style('//*[@id="first_element"]',
                                     ':before',
                                     'content')).to eq('none')
@@ -28,7 +27,7 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
 
   describe 'WebdriverJsMethods#remove_element' do
     before do
-      webdriver.open("file://#{pseudo_class_file}")
+      webdriver.open(local_file('pseudo_class_test.html'))
     end
 
     it 'WebdriverJsMethods#remove_element works for xpath with single quote' do
@@ -45,14 +44,14 @@ describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
   end
 
   it 'WebdriverJsMethods#element_size_by_js return not empty data' do
-    webdriver.open("file://#{pseudo_class_file}")
+    webdriver.open(local_file('pseudo_class_test.html'))
     size = webdriver.element_size_by_js('//*[@id="first_element"]')
     expect(size.x).to be > 0
     expect(size.y).to be > 0
   end
 
   it 'WebdriverJsMethods#object_absolute_position return not empty data' do
-    webdriver.open("file://#{pseudo_class_file}")
+    webdriver.open(local_file('pseudo_class_test.html'))
     size = webdriver.object_absolute_position('//*[@id="first_element"]')
     expect(size.x).to be > 0
     expect(size.y).to be > 0

@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#right_click' do
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'right_click_alert.html')
+    webdriver.open(local_file('right_click_alert.html'))
   end
 
   after { webdriver.quit }

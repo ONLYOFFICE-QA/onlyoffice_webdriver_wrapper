@@ -6,8 +6,7 @@ describe '#type_helper' do
   let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'type_helper.html')
+    webdriver.open(local_file('type_helper.html'))
   end
 
   after { webdriver.quit }

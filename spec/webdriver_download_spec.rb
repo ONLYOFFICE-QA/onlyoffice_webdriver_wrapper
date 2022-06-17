@@ -14,7 +14,7 @@ describe 'Working with download directory' do
   end
 
   it 'check if file downloaded in correct directory' do
-    webdriver.open("file://#{docx_file}")
+    webdriver.open(local_file('test.docx'))
     expect(webdriver.wait_file_for_download(File.basename(docx_file))).to be_truthy
   end
 end

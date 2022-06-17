@@ -8,8 +8,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#switch_to_popup' do
   after { webdriver.quit }
 
   it 'Calling webdriver method on popup window until it stopped loading not cause it never load' do
-    file_with_popup = "#{Dir.pwd}/spec/html_examples/switch_to_popup_get_element.html"
-    webdriver.open("file://#{file_with_popup}")
+    webdriver.open(local_file('switch_to_popup_get_element.html'))
     webdriver.click_on_locator('//a')
     webdriver.switch_to_popup
     expect(webdriver.get_url).not_to be_empty

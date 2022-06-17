@@ -8,8 +8,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#one_of_several_elements_displa
   after { webdriver.quit }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'one_of_several_elements_displayed.html')
+    webdriver.open(local_file('one_of_several_elements_displayed.html'))
   end
 
   it 'one_of_several_elements_displayed? is correct for non-existing element' do

@@ -6,8 +6,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_text_array' do
   let(:webdriver) { described_class.new(:chrome) }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'get_text_array.html')
+    webdriver.open(local_file('get_text_array.html'))
   end
 
   after { webdriver.quit }

@@ -10,8 +10,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until' do
   after { webdriver.quit }
 
   before do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/"\
-                   'wait_until.html')
+    webdriver.open(local_file('wait_until.html'))
   end
 
   it 'wait_until by default wait for js load' do
@@ -31,7 +30,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#wait_until' do
   end
 
   it 'wait_until correct error for page with JS Alert' do
-    webdriver.open("file://#{Dir.pwd}/spec/html_examples/wait_until_with_js_alert.html")
+    webdriver.open(local_file('wait_until_with_js_alert.html'))
     expect do
       webdriver.wait_until(::PageObject.default_page_wait, nil, wait_js: false) do
         !webdriver.get_page_source.empty?
