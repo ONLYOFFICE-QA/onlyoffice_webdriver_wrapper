@@ -16,7 +16,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#switch_to_popup' do
   end
 
   it 'switch_to_popup will raise an error if only one tab' do
-    expect { webdriver.switch_to_popup }
+    expect { webdriver.switch_to_popup(after_switch_timeout: 1, popup_appear_timeout: 1) }
       .to raise_error(RuntimeError, /Popup window not found/)
   end
 end
