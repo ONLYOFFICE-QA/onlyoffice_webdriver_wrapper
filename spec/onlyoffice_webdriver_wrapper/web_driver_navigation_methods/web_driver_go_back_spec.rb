@@ -8,9 +8,9 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#go_back' do
   after { webdriver.quit }
 
   it 'go_back return to previous url' do
-    url_to_open = 'https://www.google.com/'
+    url_to_open = local_file('type_helper.html')
     webdriver.open(url_to_open)
-    webdriver.open('https://github.com')
+    webdriver.open(local_file('set_attribute.html'))
     webdriver.go_back
     expect(webdriver.get_url).to eq(url_to_open)
   end
