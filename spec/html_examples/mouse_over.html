@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        function bgChange(bg) {
+            document.body.style.background = bg;
+        }
+    </script>
+    <title>Mouse Over</title>
+</head>
+<body>
+<div onmouseover="bgChange(this.style.backgroundColor)"
+     onmouseout="bgChange('transparent')"
+     style="background-color:rgb(0, 0, 0);">
+    Test
+</div>
+</body>
+</html>

@@ -10,6 +10,7 @@
 * Add timeout options to `WebDriver#switch_to_popup` method
 * Add `spec` method to get path of local file
 * Remove unused `WebDriver#move_to_element` method
+* Increase test coverage
 
 ## 1.6.0 (2022-05-25)
 
