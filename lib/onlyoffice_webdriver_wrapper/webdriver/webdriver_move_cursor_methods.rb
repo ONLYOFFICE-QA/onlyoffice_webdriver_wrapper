@@ -37,14 +37,6 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Move cursor to element
-    # @param [String, Selenium::WebDriver::Element] element xpath or webdriver element
-    # @return [nil]
-    def move_to_element(element)
-      element = get_element(element) if element.is_a?(String)
-      @driver.action.move_to(element).perform
-    end
-
-    # Move cursor to element
     # @param [String] xpath_name
     # @return [nil]
     def move_to_element_by_locator(xpath_name)
