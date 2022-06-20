@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix forgotten `quit` command in some specs
+
 ### Changes
 
 * Drop `ruby-2.6` support, since it's EOL'ed

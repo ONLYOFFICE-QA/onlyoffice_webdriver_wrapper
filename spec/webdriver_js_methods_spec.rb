@@ -5,6 +5,8 @@ require 'spec_helper'
 describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
   let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
 
+  after { webdriver.quit }
+
   it 'WebdriverJsMethods#jquery_finished? if no jquery on page' do
     webdriver.open('http://www.google.com')
     expect(webdriver).to be_jquery_finished

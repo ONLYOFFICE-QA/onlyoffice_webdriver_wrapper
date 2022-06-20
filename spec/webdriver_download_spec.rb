@@ -6,6 +6,8 @@ describe 'Working with download directory' do
   let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
   let(:docx_file) { "#{Dir.pwd}/spec/html_examples/test.docx" }
 
+  after { webdriver.quit }
+
   it 'download directory is deleted after browser stop' do
     download_dir = webdriver.download_directory
     expect(Dir).to exist(download_dir)

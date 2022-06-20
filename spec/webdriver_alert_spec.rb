@@ -6,6 +6,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
   let(:webdriver) { described_class.new(:chrome) }
   let(:no_alert_file) { "#{Dir.pwd}/spec/html_examples/jquery.html" }
 
+  after { webdriver.quit }
+
   it 'alert_exists? return true for file with alert' do
     webdriver.open(local_file('alert.html'))
     expect(webdriver).to be_alert_exists
