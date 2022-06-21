@@ -16,3 +16,14 @@ def local_file(file_name)
   "file://#{Dir.pwd}/spec/html_examples/"\
     "#{file_name}"
 end
+
+# Class for describing current page page object
+class CurrentPagePageObject
+  include PageObject
+
+  element(:div, xpath: '//div')
+
+  def initialize(webdriver)
+    super(webdriver.driver)
+  end
+end
