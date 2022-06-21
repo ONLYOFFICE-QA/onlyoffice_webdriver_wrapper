@@ -254,7 +254,8 @@ module OnlyofficeWebdriverWrapper
 
         begin
           visible = element.displayed?
-        rescue Exception
+        rescue Exception => e
+          OnlyofficeLoggerHelper.log("Element #{xpath_name} is not visible because of: #{e.message}")
           visible = false
         end
         visible
