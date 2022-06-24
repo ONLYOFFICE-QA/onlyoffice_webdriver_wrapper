@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add Chromedriver `103.0.5060.53`
+
 ### Fixes
 
 * Fix forgotten `quit` command in some specs
@@ -17,6 +21,7 @@
 * Add `spec` method to get path of local file
 * Remove unused `WebDriver#move_to_element` method
 * Increase test coverage
+* Remove Chromedriver `100.0.4896.60`
 
 ## 1.6.0 (2022-05-25)
 
