@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.7.0 (2022-06-24)
+
 ### New Features
 
 * Add Chromedriver `103.0.5060.53`
