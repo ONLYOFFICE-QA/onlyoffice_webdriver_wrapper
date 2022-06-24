@@ -15,9 +15,10 @@ module OnlyofficeWebdriverWrapper
     # * +mouse_release+ - release mouse after move
     def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
       canvas = get_element(xpath)
-
+      shift_to_zero = move_to_shift_to_top_left(xpath)
       move_action = @driver.action
-                           .move_to(canvas, x1.to_i, y1.to_i)
+                           .move_to(canvas, x1.to_i - shift_to_zero.x,
+                                    y1.to_i - shift_to_zero.y)
                            .click_and_hold
                            .move_by(x2, y2)
       move_action = move_action.release if mouse_release
@@ -33,7 +34,10 @@ module OnlyofficeWebdriverWrapper
     # * +right_by+ - shift vector x coordinate
     # * +down_by+ - shift vector y coordinate
     def drag_and_drop_by(source, right_by, down_by = 0)
-      @driver.action.drag_and_drop_by(get_element(source), right_by, down_by).perform
+      shift_to_zero = move_to_shift_to_top_left(source)
+      @driver.action.drag_and_drop_by(get_element(source),
+                                      right_by - shift_to_zero.x,
+                                      down_by - shift_to_zero.y).perform
     end
 
     # Move cursor to element
@@ -52,7 +56,22 @@ module OnlyofficeWebdriverWrapper
     # @return [nil]
     def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
       wait_until_element_present(xpath_name)
-      @driver.action.move_to(@driver.find_element(:xpath, xpath_name), x_coordinate.to_i, y_coordinate.to_i).perform
+      shift_to_zero = move_to_shift_to_top_left(xpath_name)
+      @driver.action.move_to(@driver.find_element(:xpath, xpath_name),
+                             x_coordinate.to_i - shift_to_zero.x,
+                             y_coordinate.to_i - shift_to_zero.y).perform
+    end
+
+    # Since v4.3.0 of `webdriver` gem `move_to` method is moving
+    # from the center of the element
+    # Add additional negative shift if this version is used
+    def move_to_shift_to_top_left(xpath)
+      if Gem.loaded_specs['selenium-webdriver'].version >= Gem::Version.new('4.3.0')
+        element_size = element_size_by_js(xpath)
+        Dimensions.new(element_size.x / 2, element_size.y / 2)
+      else
+        Dimensions.new(0, 0)
+      end
     end
   end
 end

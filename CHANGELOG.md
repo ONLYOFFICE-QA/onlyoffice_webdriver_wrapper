@@ -8,6 +8,8 @@
 
 ### Changes
 
+* Add support of `ActionBuilder#move_to` with shift from center.
+  It was introduced in `selenium-webdriver` v4.3.0
 * Drop `ruby-2.6` support, since it's EOL'ed
 * Patch `Headless` gem to be compatible with `ruby-3.2`
 * Remove `w3school.com` usage from specs

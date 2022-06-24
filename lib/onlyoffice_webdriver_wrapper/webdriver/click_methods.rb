@@ -51,8 +51,9 @@ module OnlyofficeWebdriverWrapper
     def click_on_locator_coordinates(xpath_name, right_by, down_by)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).perform
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).click.perform
+      shift_to_zero = move_to_shift_to_top_left(xpath_name)
+      @driver.action.move_to(element, right_by.to_i - shift_to_zero.x, down_by.to_i - shift_to_zero.y).perform
+      @driver.action.move_to(element, right_by.to_i - shift_to_zero.x, down_by.to_i - shift_to_zero.y).click.perform
     end
 
     # Click on one of several which displayed
@@ -100,8 +101,9 @@ module OnlyofficeWebdriverWrapper
     def right_click_on_locator_coordinates(xpath_name, right_by = nil, down_by = nil)
       wait_until_element_visible(xpath_name)
       element = @driver.find_element(:xpath, xpath_name)
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).perform
-      @driver.action.move_to(element, right_by.to_i, down_by.to_i).context_click.perform
+      shift_to_zero = move_to_shift_to_top_left(xpath_name)
+      @driver.action.move_to(element, right_by.to_i - shift_to_zero.x, down_by.to_i - shift_to_zero.y).perform
+      @driver.action.move_to(element, right_by.to_i - shift_to_zero.x, down_by.to_i - shift_to_zero.y).context_click.perform
     end
 
     # Perform double_click on element
