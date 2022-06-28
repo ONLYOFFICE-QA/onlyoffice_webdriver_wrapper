@@ -29,7 +29,7 @@ module OnlyofficeWebdriverWrapper
 
     # @return [Array<String>] list of formats to save
     def read_firefox_files_to_save
-      path_to_file = "#{Dir.pwd}/lib/onlyoffice_webdriver_wrapper/"\
+      path_to_file = "#{Dir.pwd}/lib/onlyoffice_webdriver_wrapper/" \
                      'helpers/firefox_helper/save_to_disk_files.list'
       OnlyofficeFileHelper::FileHelper.read_array_from_file(path_to_file)
                                       .join(', ')

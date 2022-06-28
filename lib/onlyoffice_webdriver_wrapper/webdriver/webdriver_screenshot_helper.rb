@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'fileutils'
 require 'onlyoffice_s3_wrapper'
 module OnlyofficeWebdriverWrapper
   # Working with screenshots
@@ -25,7 +26,7 @@ module OnlyofficeWebdriverWrapper
       begin
         get_screenshot(path_to_screenshot)
         cloud_screenshot = publish_screenshot(path_to_screenshot)
-        File.delete(path_to_screenshot) if File.exist?(path_to_screenshot)
+        FileUtils.rm_rf(path_to_screenshot)
         OnlyofficeLoggerHelper.log("upload screenshot: #{cloud_screenshot}")
         return cloud_screenshot
       rescue Errno::ENOENT => e

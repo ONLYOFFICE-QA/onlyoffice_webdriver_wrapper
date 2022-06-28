@@ -13,7 +13,7 @@ require 'onlyoffice_webdriver_wrapper'
 # @param file_name [String] name of file to load
 # @return [String] path to local file
 def local_file(file_name)
-  "file://#{Dir.pwd}/spec/html_examples/"\
+  "file://#{Dir.pwd}/spec/html_examples/" \
     "#{file_name}"
 end
 
