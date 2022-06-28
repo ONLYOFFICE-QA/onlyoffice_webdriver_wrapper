@@ -38,9 +38,9 @@ module OnlyofficeWebdriverWrapper
         begin
           element.clear
         rescue Exception => e
-          webdriver_error(e.class, "Error in element.clear #{e} for "\
-                                   "type_to_locator(#{xpath_name}, #{text_to_send}, "\
-                                   "#{clear_content}, #{click_on_it}, "\
+          webdriver_error(e.class, "Error in element.clear #{e} for " \
+                                   "type_to_locator(#{xpath_name}, #{text_to_send}, " \
+                                   "#{clear_content}, #{click_on_it}, " \
                                    "#{by_action}, #{by_element_send_key})")
         end
       end
@@ -73,7 +73,7 @@ module OnlyofficeWebdriverWrapper
       element = get_element(xpath_name)
       if element.nil?
         webdriver_error(Selenium::WebDriver::Error::NoSuchElementError,
-                        "type_to_input(#{xpath_name}, #{text_to_send}, "\
+                        "type_to_input(#{xpath_name}, #{text_to_send}, " \
                         "#{clear_content}, #{click_on_it}): element not found")
       end
       element.clear if clear_content

@@ -104,8 +104,8 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath of element to remove
     # @return [String] result of javascript execution
     def remove_element(xpath)
-      script = "element = #{dom_element_by_xpath(xpath)};"\
-               'if (element !== null) '\
+      script = "element = #{dom_element_by_xpath(xpath)};" \
+               'if (element !== null) ' \
                '{element.parentNode.removeChild(element);};'
       execute_javascript(script)
     end
