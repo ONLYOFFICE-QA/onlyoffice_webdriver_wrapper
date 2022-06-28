@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'fileutils'
 require 'onlyoffice_s3_wrapper'
 module OnlyofficeWebdriverWrapper
   # Working with screenshots
