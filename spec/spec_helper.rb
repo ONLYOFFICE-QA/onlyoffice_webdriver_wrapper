@@ -22,6 +22,7 @@ class CurrentPagePageObject
   include PageObject
 
   element(:div, xpath: '//div')
+  elements(:spans, xpath: '//span')
 
   def initialize(webdriver)
     super(webdriver.driver)
