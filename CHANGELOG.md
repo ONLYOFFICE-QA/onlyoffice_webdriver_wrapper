@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix documentation for `WebDriver#get_element_index`
+
 ## 1.7.0 (2022-06-24)
 
 ### New Features

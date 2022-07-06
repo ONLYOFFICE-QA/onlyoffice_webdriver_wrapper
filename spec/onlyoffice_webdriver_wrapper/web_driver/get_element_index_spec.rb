@@ -11,6 +11,11 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#get_element_index' do
 
   it 'get_element_index works for several elements' do
     page = CurrentPagePageObject.new(webdriver)
-    expect(webdriver.get_element_index('bar', page.spans)).to eq(1)
+    expect(webdriver.get_element_index('bar', page.spans_elements)).to eq(1)
+  end
+
+  it 'get_element_index return nil for unknown text' do
+    page = CurrentPagePageObject.new(webdriver)
+    expect(webdriver.get_element_index('fake-text', page.spans_elements)).to be_nil
   end
 end
