@@ -120,7 +120,8 @@ module OnlyofficeWebdriverWrapper
 
     # Get index of element by it's text
     # @param [String] text to compare text
-    # @param [Array<PageObject::Elements::Element>] list_elements array with elements to find
+    # @param [Array<PageObject::Elements::Element>] list_elements array with
+    #   PageObject elements to find in
     # @return [Integer, nil] nil if nothing found, index if found
     def get_element_index(text, list_elements)
       list_elements.each_with_index do |current, i|
