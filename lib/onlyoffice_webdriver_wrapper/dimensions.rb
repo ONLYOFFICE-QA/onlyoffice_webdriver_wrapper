@@ -16,7 +16,7 @@ module OnlyofficeWebdriverWrapper
     def ==(other)
       return false unless other.respond_to?(:left) && other.respond_to?(:top)
 
-      @left == other&.left && @top == other&.top
+      @left == other.left && @top == other.top
     end
 
     alias width left
