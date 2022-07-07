@@ -191,6 +191,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Check if element present on page
+    # It may be visible or invisible, but should be present in DOM tree
     # @param [String] xpath_name to find element
     # @return [Boolean] result of check
     def element_present?(xpath_name)
@@ -248,6 +249,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Check if element visible on page
+    # It should be part of DOM and should be visible on current visible part of page
     # @param [String] xpath_name element to find
     # @return [Boolean] result of check
     def element_visible?(xpath_name)
