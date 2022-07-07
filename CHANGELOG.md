@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Better documentation for several methods
+
 ## 1.8.0 (2022-07-07)
 
 ### New Features
