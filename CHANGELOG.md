@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.8.0 (2022-07-07)
+
 ### New Features
 
 * Add `Dimesnions#center` method
