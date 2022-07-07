@@ -2,9 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `Dimesnions#center` method
+
 ### Fixes
 
 * Fix documentation for `WebDriver#get_element_index`
+* Fix comparison of `Dimensions`
 
 ## 1.7.0 (2022-06-24)
 
