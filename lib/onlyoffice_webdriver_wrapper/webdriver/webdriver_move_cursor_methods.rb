@@ -13,14 +13,10 @@ module OnlyofficeWebdriverWrapper
     # * +x2+ - shift vector x coordinate
     # * +y2+ - shift vector y coordinate
     # * +mouse_release+ - release mouse after move
-    def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
-      canvas = get_element(xpath)
-      shift_to_zero = move_to_shift_to_top_left(xpath)
-      move_action = @driver.action
-                           .move_to(canvas, x1.to_i - shift_to_zero.x,
-                                    y1.to_i - shift_to_zero.y)
-                           .click_and_hold
-                           .move_by(x2, y2)
+    def drag_and_drop(xpath, x1, _y1, x2, y2, mouse_release: true)
+      move_action = move_to_driver_action(xpath, x1, x2)
+                    .click_and_hold
+                    .move_by(x2, y2)
       move_action = move_action.release if mouse_release
 
       move_action.perform
@@ -56,11 +52,10 @@ module OnlyofficeWebdriverWrapper
     # @return [nil]
     def mouse_over(xpath_name, x_coordinate = 0, y_coordinate = 0)
       wait_until_element_present(xpath_name)
-      shift_to_zero = move_to_shift_to_top_left(xpath_name)
-      @driver.action.move_to(@driver.find_element(:xpath, xpath_name),
-                             x_coordinate.to_i - shift_to_zero.x,
-                             y_coordinate.to_i - shift_to_zero.y).perform
+      move_to_driver_action(xpath_name, x_coordinate, y_coordinate).perform
     end
+
+    private
 
     # Since v4.3.0 of `webdriver` gem `move_to` method is moving
     # from the center of the element
@@ -72,6 +67,19 @@ module OnlyofficeWebdriverWrapper
       else
         Dimensions.new(0, 0)
       end
+    end
+
+    # Generate action to move cursor to element
+    # @param [String] xpath xpath to move
+    # @param [Integer] right_by shift vector x coordinate
+    # @param [Integer] down_by shift vector y coordinate
+    # @return [Selenium::WebDriver::ActionBuilder] object to perform actions
+    def move_to_driver_action(xpath, right_by, down_by)
+      element = @driver.find_element(:xpath, xpath)
+      shift_to_zero = move_to_shift_to_top_left(xpath)
+      @driver.action.move_to(element,
+                             right_by.to_i - shift_to_zero.x,
+                             down_by.to_i - shift_to_zero.y)
     end
   end
 end
