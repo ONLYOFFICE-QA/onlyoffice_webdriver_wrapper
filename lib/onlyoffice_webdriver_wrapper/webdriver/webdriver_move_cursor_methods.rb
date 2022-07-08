@@ -13,8 +13,8 @@ module OnlyofficeWebdriverWrapper
     # * +x2+ - shift vector x coordinate
     # * +y2+ - shift vector y coordinate
     # * +mouse_release+ - release mouse after move
-    def drag_and_drop(xpath, x1, _y1, x2, y2, mouse_release: true)
-      move_action = move_to_driver_action(xpath, x1, x2)
+    def drag_and_drop(xpath, x1, y1, x2, y2, mouse_release: true)
+      move_action = move_to_driver_action(xpath, x1, y1)
                     .click_and_hold
                     .move_by(x2, y2)
       move_action = move_action.release if mouse_release
