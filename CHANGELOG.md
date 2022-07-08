@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix `WebDriver#double_click_on_locator_coordinates` for
+  new `ActionBuilder#move_to` coordinates system
+
 ### Changes
 
 * Better documentation for several methods

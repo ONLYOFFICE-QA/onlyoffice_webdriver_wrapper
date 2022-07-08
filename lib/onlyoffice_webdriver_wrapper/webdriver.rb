@@ -169,8 +169,7 @@ module OnlyofficeWebdriverWrapper
         set_style_attribute("#{xpath_name}/button", 'display', 'inline-block')
         set_style_attribute(xpath_name, 'display', 'block')
       else
-        shift_to_zero = move_to_shift_to_top_left(xpath_name)
-        @driver.action.move_to(element, horizontal_shift - shift_to_zero.x, vertical_shift - shift_to_zero.y).click.perform
+        move_to_driver_action(xpath_name, horizontal_shift, vertical_shift).click.perform
       end
     end
 
@@ -183,11 +182,7 @@ module OnlyofficeWebdriverWrapper
     # @return [void]
     def action_on_locator_coordinates(xpath_name, right_by, down_by, action = :click, times = 1)
       wait_until_element_visible(xpath_name)
-      element = @driver.find_element(:xpath, xpath_name)
-      shift_to_zero = move_to_shift_to_top_left(xpath_name)
-      (0...times).inject(@driver.action.move_to(element,
-                                                right_by.to_i - shift_to_zero.x,
-                                                down_by.to_i - shift_to_zero.y)) { |acc, _elem| acc.send(action) }.perform
+      (0...times).inject(move_to_driver_action(xpath_name, right_by, down_by)) { |acc, _elem| acc.send(action) }.perform
     end
 
     # Check if element present on page
