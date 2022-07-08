@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.8.1 (2022-07-08)
+
 ### Fixes
 
 * Fix `WebDriver#double_click_on_locator_coordinates` for
