@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Increase test coverage
+
 ## 1.8.1 (2022-07-08)
 
 ### Fixes

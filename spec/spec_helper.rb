@@ -23,6 +23,8 @@ class CurrentPagePageObject
 
   element(:div, xpath: '//div')
   elements(:spans, xpath: '//span')
+  elements(:car_elements, xpath: '//select/option')
+  select(:car_select, xpath: '//select')
 
   def initialize(webdriver)
     super(webdriver.driver)

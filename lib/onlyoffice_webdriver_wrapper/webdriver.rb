@@ -111,7 +111,7 @@ module OnlyofficeWebdriverWrapper
 
     # Select from list elements
     # @param [String] value value to find object
-    # @param [Array<Object>] elements_value elements to check
+    # @param [Array<PageObject::Elements::Element>] elements_value `elements` page object to select from
     # @return [void]
     def select_from_list_elements(value, elements_value)
       index = get_element_index(value, elements_value)
