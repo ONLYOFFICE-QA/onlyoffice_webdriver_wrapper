@@ -269,6 +269,7 @@ module OnlyofficeWebdriverWrapper
     end
 
     # Get text from several elements
+    # This method filter out all elements with empty text
     # @param [String] xpath_several_elements to find objects
     # @return [Array<String>] text of those elements
     def get_text_of_several_elements(xpath_several_elements)
