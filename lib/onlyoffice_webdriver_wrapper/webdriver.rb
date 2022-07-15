@@ -96,16 +96,6 @@ module OnlyofficeWebdriverWrapper
       @browser_running = true
     end
 
-    # Scroll list to specific element
-    # @param [String] list_xpath how to find this list
-    # @param [String] element_xpath to which we should scrolled
-    # @return [void]
-    def scroll_list_to_element(list_xpath, element_xpath)
-      execute_javascript("$(document.evaluate(\"#{list_xpath}\", document, null, XPathResult.ANY_TYPE, null).
-          iterateNext()).jScrollPane().data('jsp').scrollToElement(document.evaluate(\"#{element_xpath}\",
-          document, null, XPathResult.ANY_TYPE, null).iterateNext());")
-    end
-
     # Scroll list by pixel count
     # @param [String] list_xpath how to detect this list
     # @param [Integer] pixels how much to scroll
