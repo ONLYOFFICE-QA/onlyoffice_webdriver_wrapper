@@ -8,6 +8,7 @@ require 'uri'
 require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
 require_relative 'webdriver/click_methods'
+require_relative 'webdriver/get_text_methods'
 require_relative 'webdriver/select_list_methods'
 require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
@@ -32,6 +33,7 @@ module OnlyofficeWebdriverWrapper
   class WebDriver
     include ChromeHelper
     include ClickMethods
+    include GetTextMethods
     include SelectListMethods
     include FirefoxHelper
     include RubyHelper
@@ -102,13 +104,6 @@ module OnlyofficeWebdriverWrapper
       @driver.find_element(:xpath, object_identification)
     rescue StandardError
       nil
-    end
-
-    # Get text from all elements with specified xpath
-    # @param array_elements [String] xpath of elements
-    # @return [Array<String>] values of elements
-    def get_text_array(array_elements)
-      get_elements(array_elements).map { |current_element| get_text(current_element) }
     end
 
     # Scroll list to specific element
@@ -250,30 +245,6 @@ module OnlyofficeWebdriverWrapper
       false
     rescue Exception => e
       webdriver_error("Raise unknown exception: #{e}")
-    end
-
-    # Get text of current element
-    # @param [String] xpath_name name of xpath
-    # @param [Boolean] wait_until_visible wait until element visible
-    # @return [String] result string
-    def get_text(xpath_name, wait_until_visible = true)
-      wait_until_element_visible(xpath_name) if wait_until_visible
-
-      element = get_element(xpath_name)
-      webdriver_error("get_text(#{xpath_name}, #{wait_until_visible}) not found element by xpath") if element.nil?
-      if element.tag_name == 'input' || element.tag_name == 'textarea'
-        element.attribute('value')
-      else
-        element.text
-      end
-    end
-
-    # Get text from several elements
-    # This method filter out all elements with empty text
-    # @param [String] xpath_several_elements to find objects
-    # @return [Array<String>] text of those elements
-    def get_text_of_several_elements(xpath_several_elements)
-      @driver.find_elements(:xpath, xpath_several_elements).filter_map { |element| element.text unless element.text == '' }
     end
 
     # Get page source

@@ -40,15 +40,6 @@ module OnlyofficeWebdriverWrapper
       execute_javascript("#{dom_element_by_xpath(xpath)}.value=\"#{escaped_text}\";")
     end
 
-    # Get text in object by xpath
-    # @param xpath [String] xpath to get text
-    # @return [String] text in xpath
-    def get_text_by_js(xpath)
-      text = execute_javascript("return #{dom_element_by_xpath(xpath)}.textContent")
-      text = execute_javascript("return #{dom_element_by_xpath(xpath)}.value") if text.empty?
-      text
-    end
-
     # Calculate object size using Javascript
     # @param xpath [Sting] xpath of object
     # @return [Dimensions] size of element
