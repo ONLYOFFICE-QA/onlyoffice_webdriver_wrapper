@@ -29,7 +29,7 @@ class Headless
   class VideoRecorder
     # Stop recording and save it
     # @param [String] path to save
-    # @retunr [nil, String] path to result file or nil if error
+    # @return [nil, String] path to result file or nil if error
     def stop_and_save(path)
       CliUtil.kill_process(@pid_file_path, :wait => true)
       if File.exist? @tmp_file_path
