@@ -133,8 +133,8 @@ module OnlyofficeWebdriverWrapper
       nil
     end
 
-    # Get all options for combo box
-    # @param [String] xpath_name to find combobox
+    # Get all options for combobox or select
+    # @param [String] xpath_name to find element
     # @return [Array<String>] values
     def get_all_combo_box_values(xpath_name)
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
