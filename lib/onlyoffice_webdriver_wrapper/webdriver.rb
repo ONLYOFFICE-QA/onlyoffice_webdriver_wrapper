@@ -8,6 +8,7 @@ require 'uri'
 require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
 require_relative 'webdriver/click_methods'
+require_relative 'webdriver/select_list_methods'
 require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
 require_relative 'webdriver/webdriver_attributes_helper'
@@ -31,6 +32,7 @@ module OnlyofficeWebdriverWrapper
   class WebDriver
     include ChromeHelper
     include ClickMethods
+    include SelectListMethods
     include FirefoxHelper
     include RubyHelper
     include WaitUntilMethods
@@ -107,34 +109,6 @@ module OnlyofficeWebdriverWrapper
     # @return [Array<String>] values of elements
     def get_text_array(array_elements)
       get_elements(array_elements).map { |current_element| get_text(current_element) }
-    end
-
-    # Select from list elements
-    # @param [String] value value to find object
-    # @param [Array<Object>] elements_value elements to check
-    # @return [void]
-    def select_from_list_elements(value, elements_value)
-      index = get_element_index(value, elements_value)
-      elements_value[index].click
-    end
-
-    # Get index of element by it's text
-    # @param [String] text to compare text
-    # @param [Array<PageObject::Elements::Element>] list_elements array with
-    #   PageObject elements to find in
-    # @return [Integer, nil] nil if nothing found, index if found
-    def get_element_index(text, list_elements)
-      list_elements.each_with_index do |current, i|
-        return i if get_text(current) == text
-      end
-      nil
-    end
-
-    # Get all options for combo box
-    # @param [String] xpath_name to find combobox
-    # @return [Array<String>] values
-    def get_all_combo_box_values(xpath_name)
-      @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
     end
 
     # Scroll list to specific element
