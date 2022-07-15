@@ -112,9 +112,12 @@ module OnlyofficeWebdriverWrapper
     # Select from list elements
     # @param [String] value value to find object
     # @param [Array<PageObject::Elements::Element>] elements_value `elements` page object to select from
+    # @raise [SelectEntryNotFound] if value not found in select list
     # @return [void]
     def select_from_list_elements(value, elements_value)
       index = get_element_index(value, elements_value)
+      webdriver_error(SelectEntryNotFound, "Select entry `#{value}` not found in #{elements_value}") if index.nil?
+
       elements_value[index].click
     end
 

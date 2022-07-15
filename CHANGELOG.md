@@ -5,6 +5,7 @@
 ### Changes
 
 * Increase test coverage
+* `WebDriver#select_from_list_elements` raise an exception if entry not found
 
 ## 1.8.1 (2022-07-08)
 
