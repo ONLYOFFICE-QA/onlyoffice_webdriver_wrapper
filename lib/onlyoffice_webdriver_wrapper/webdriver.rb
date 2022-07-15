@@ -8,6 +8,8 @@ require 'uri'
 require_relative 'helpers/chrome_helper'
 require_relative 'helpers/firefox_helper'
 require_relative 'webdriver/click_methods'
+require_relative 'webdriver/element_getters'
+require_relative 'webdriver/get_text_methods'
 require_relative 'webdriver/select_list_methods'
 require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
@@ -32,6 +34,7 @@ module OnlyofficeWebdriverWrapper
   class WebDriver
     include ChromeHelper
     include ClickMethods
+    include GetTextMethods
     include SelectListMethods
     include FirefoxHelper
     include RubyHelper
@@ -93,34 +96,6 @@ module OnlyofficeWebdriverWrapper
       @browser_running = true
     end
 
-    # Get element by it's xpath
-    # @param [String] object_identification xpath of object to find
-    # @return [Object, nil] nil if nothing found
-    def get_element(object_identification)
-      return object_identification unless object_identification.is_a?(String)
-
-      @driver.find_element(:xpath, object_identification)
-    rescue StandardError
-      nil
-    end
-
-    # Get text from all elements with specified xpath
-    # @param array_elements [String] xpath of elements
-    # @return [Array<String>] values of elements
-    def get_text_array(array_elements)
-      get_elements(array_elements).map { |current_element| get_text(current_element) }
-    end
-
-    # Scroll list to specific element
-    # @param [String] list_xpath how to find this list
-    # @param [String] element_xpath to which we should scrolled
-    # @return [void]
-    def scroll_list_to_element(list_xpath, element_xpath)
-      execute_javascript("$(document.evaluate(\"#{list_xpath}\", document, null, XPathResult.ANY_TYPE, null).
-          iterateNext()).jScrollPane().data('jsp').scrollToElement(document.evaluate(\"#{element_xpath}\",
-          document, null, XPathResult.ANY_TYPE, null).iterateNext());")
-    end
-
     # Scroll list by pixel count
     # @param [String] list_xpath how to detect this list
     # @param [Integer] pixels how much to scroll
@@ -177,17 +152,6 @@ module OnlyofficeWebdriverWrapper
       false
     end
 
-    # Get first visible element from several
-    # @param [String] xpath_name to find several objects
-    # @return [Object] first visible element
-    def get_element_by_display(xpath_name)
-      @driver.find_elements(:xpath, xpath_name).each do |element|
-        return element if element.displayed?
-      end
-    rescue Selenium::WebDriver::Error::InvalidSelectorError
-      webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
-    end
-
     # Return count of elements (visible and not visible)
     # @param xpath_name [String] xpath to find
     # @param only_visible [True, False] count only visible elements?
@@ -199,22 +163,6 @@ module OnlyofficeWebdriverWrapper
       else
         0
       end
-    end
-
-    # Get array of webdriver object by xpath
-    # @param [String] objects_identification object to find
-    # @param [Boolean] only_visible return invisible if true
-    # @return [Array, Object] list of objects
-    def get_elements(objects_identification, only_visible = true)
-      return objects_identification if objects_identification.is_a?(Array)
-
-      elements = @driver.find_elements(:xpath, objects_identification)
-      if only_visible
-        elements.each do |current|
-          elements.delete(current) unless @browser == :firefox || current.displayed?
-        end
-      end
-      elements
     end
 
     # Check if element visible on page
@@ -250,44 +198,6 @@ module OnlyofficeWebdriverWrapper
       false
     rescue Exception => e
       webdriver_error("Raise unknown exception: #{e}")
-    end
-
-    # Get text of current element
-    # @param [String] xpath_name name of xpath
-    # @param [Boolean] wait_until_visible wait until element visible
-    # @return [String] result string
-    def get_text(xpath_name, wait_until_visible = true)
-      wait_until_element_visible(xpath_name) if wait_until_visible
-
-      element = get_element(xpath_name)
-      webdriver_error("get_text(#{xpath_name}, #{wait_until_visible}) not found element by xpath") if element.nil?
-      if element.tag_name == 'input' || element.tag_name == 'textarea'
-        element.attribute('value')
-      else
-        element.text
-      end
-    end
-
-    # Get text from several elements
-    # @param [String] xpath_several_elements to find objects
-    # @return [Array<String>] text of those elements
-    def get_text_of_several_elements(xpath_several_elements)
-      @driver.find_elements(:xpath, xpath_several_elements).filter_map { |element| element.text unless element.text == '' }
-    end
-
-    # Select value of combo box
-    # @param [String] xpath_name to find combobox
-    # @param [String] select_value to select
-    # @param [Symbol] select_by select type
-    # @return [void]
-    def select_combo_box(xpath_name, select_value, select_by = :value)
-      wait_until_element_visible(xpath_name)
-      option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
-      begin
-        option.select_by(select_by, select_value)
-      rescue StandardError
-        option.select_by(:text, select_value)
-      end
     end
 
     # Get page source

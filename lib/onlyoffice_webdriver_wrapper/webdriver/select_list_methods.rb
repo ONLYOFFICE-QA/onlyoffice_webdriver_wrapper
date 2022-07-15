@@ -33,5 +33,20 @@ module OnlyofficeWebdriverWrapper
     def get_all_combo_box_values(xpath_name)
       @driver.find_element(:xpath, xpath_name).find_elements(tag_name: 'option').map { |el| el.attribute('value') }
     end
+
+    # Select value of combo box
+    # @param [String] xpath_name to find combobox
+    # @param [String] select_value to select
+    # @param [Symbol] select_by select type, can be `:value` or `:text`
+    # @return [void]
+    def select_combo_box(xpath_name, select_value, select_by = :value)
+      wait_until_element_visible(xpath_name)
+      option = Selenium::WebDriver::Support::Select.new(get_element(xpath_name))
+      begin
+        option.select_by(select_by, select_value)
+      rescue StandardError
+        option.select_by(:text, select_value)
+      end
+    end
   end
 end
