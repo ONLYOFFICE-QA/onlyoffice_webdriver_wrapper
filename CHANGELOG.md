@@ -7,6 +7,7 @@
 * Increase test coverage
 * `WebDriver#select_from_list_elements` raise an exception if entry not found
 * Remove unused `WebDriver#scroll_list_to_element` method
+* `WebDriver#get_element_by_display` raise more detailed exception
 
 ## 1.8.1 (2022-07-08)
 
