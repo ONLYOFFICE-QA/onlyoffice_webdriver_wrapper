@@ -16,13 +16,15 @@ module OnlyofficeWebdriverWrapper
 
     # Get first visible element from several
     # @param [String] xpath_name to find several objects
+    # @raise [Selenium::WebDriver::Error::InvalidSelectorError] if selector is invalid
     # @return [Object] first visible element
     def get_element_by_display(xpath_name)
       @driver.find_elements(:xpath, xpath_name).each do |element|
         return element if element.displayed?
       end
     rescue Selenium::WebDriver::Error::InvalidSelectorError
-      webdriver_error("get_element_by_display(#{xpath_name}): invalid selector: Unable to locate an element with the xpath expression")
+      webdriver_error(Selenium::WebDriver::Error::InvalidSelectorError,
+                      "Invalid Selector: get_element_by_display('#{xpath_name}')")
     end
 
     # Get array of webdriver object by xpath
