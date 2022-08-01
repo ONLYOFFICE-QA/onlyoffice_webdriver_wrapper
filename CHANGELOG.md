@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.9.0 (2022-08-01)
+
 ### New Features
 
 * Add chromedriver `104.0.5112.29`
