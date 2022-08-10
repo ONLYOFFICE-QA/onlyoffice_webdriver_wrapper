@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe OnlyofficeWebdriverWrapper::WebdriverJsMethods do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#javascript_methods' do
+  let(:webdriver) { described_class.new(:chrome) }
 
   after { webdriver.quit }
 

@@ -2,8 +2,8 @@
 
 require 'rspec'
 
-describe '#type_helper' do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#type_helper' do
+  let(:webdriver) { described_class.new(:chrome) }
 
   before do
     webdriver.open(local_file('type_helper.html'))

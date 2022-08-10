@@ -2,8 +2,8 @@
 
 require 'rspec'
 
-describe '#style_helper' do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#get_style_parameter' do
+  let(:webdriver) { described_class.new(:chrome) }
 
   before do
     webdriver.open(local_file('style_helper.html'))

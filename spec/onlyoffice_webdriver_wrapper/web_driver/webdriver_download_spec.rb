@@ -2,8 +2,8 @@
 
 require 'rspec'
 
-describe 'Working with download directory' do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#download' do
+  let(:webdriver) { described_class.new(:chrome) }
   let(:docx_file) { "#{Dir.pwd}/spec/html_examples/test.docx" }
 
   after { webdriver.quit }

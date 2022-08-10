@@ -2,8 +2,8 @@
 
 require 'rspec'
 
-describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#attribute_helper' do
+  let(:webdriver) { described_class.new(:chrome) }
 
   before do
     webdriver.open(local_file('attribute_helper.html'))

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OnlyofficeWebdriverWrapper::WebDriver do
+describe OnlyofficeWebdriverWrapper::WebDriver, '#tab_helper' do
   let(:webdriver) { described_class.new(:chrome) }
 
   after { webdriver.quit }
