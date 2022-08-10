@@ -15,17 +15,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
       expect(webdriver.tab_count).to eq(2)
     end
 
-    it 'Check for browser size' do
-      expect(webdriver.browser_size.x).to eq(webdriver.headless.resolution_x)
-      expect(webdriver.browser_size.y).to eq(webdriver.headless.resolution_y)
-    end
-
-    it 'object_absolute_position' do
-      position = webdriver.object_absolute_position('//body')
-      expect(position.height).to be > 0
-      expect(position.width).to be > 0
-    end
-
     it 'type_to_input raise error for nil' do
       expect { webdriver.type_to_input('//*[@id="unknown-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
     end

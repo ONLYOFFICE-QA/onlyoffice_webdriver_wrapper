@@ -8,9 +8,13 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#download' do
 
   after { webdriver.quit }
 
-  it 'download directory is deleted after browser stop' do
+  it 'download directory is exists after browser start' do
     download_dir = webdriver.download_directory
     expect(Dir).to exist(download_dir)
+  end
+
+  it 'download directory is deleted after browser stop' do
+    download_dir = webdriver.download_directory
     webdriver.quit
     expect(Dir).not_to exist(download_dir)
   end

@@ -17,16 +17,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#javascript_methods' do
     expect(webdriver).to be_jquery_finished
   end
 
-  it 'WebdriverJsMethods#computed_style' do
-    webdriver.open(local_file('pseudo_class_test.html'))
-    expect(webdriver.computed_style('//*[@id="first_element"]',
-                                    ':before',
-                                    'content')).to eq('none')
-    expect(webdriver.computed_style('//*[@id="second_element"]',
-                                    ':before',
-                                    'content')).to eq('with_pseudo_')
-  end
-
   describe 'WebdriverJsMethods#remove_element' do
     before do
       webdriver.open(local_file('pseudo_class_test.html'))
@@ -43,19 +33,5 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#javascript_methods' do
       webdriver.remove_element(element_to_remove)
       expect(webdriver.get_element(element_to_remove)).to be_nil
     end
-  end
-
-  it 'WebdriverJsMethods#element_size_by_js return not empty data' do
-    webdriver.open(local_file('pseudo_class_test.html'))
-    size = webdriver.element_size_by_js('//*[@id="first_element"]')
-    expect(size.x).to be > 0
-    expect(size.y).to be > 0
-  end
-
-  it 'WebdriverJsMethods#object_absolute_position return not empty data' do
-    webdriver.open(local_file('pseudo_class_test.html'))
-    size = webdriver.object_absolute_position('//*[@id="first_element"]')
-    expect(size.x).to be > 0
-    expect(size.y).to be > 0
   end
 end
