@@ -2,15 +2,19 @@
 
 require 'rspec'
 
-describe 'Working with download directory' do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#download' do
+  let(:webdriver) { described_class.new(:chrome) }
   let(:docx_file) { "#{Dir.pwd}/spec/html_examples/test.docx" }
 
   after { webdriver.quit }
 
-  it 'download directory is deleted after browser stop' do
+  it 'download directory is exists after browser start' do
     download_dir = webdriver.download_directory
     expect(Dir).to exist(download_dir)
+  end
+
+  it 'download directory is deleted after browser stop' do
+    download_dir = webdriver.download_directory
     webdriver.quit
     expect(Dir).not_to exist(download_dir)
   end

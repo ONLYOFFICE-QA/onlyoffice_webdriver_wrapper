@@ -24,8 +24,10 @@ module OnlyofficeWebdriverWrapper
         begin
           count.times { element.click }
         rescue Selenium::WebDriver::Error::ElementNotInteractableError => e
-          webdriver_error(e.class, "Selenium::WebDriver::Error::ElementNotInteractableError: element not visible for xpath: #{xpath_name}")
-        rescue Exception => e
+          webdriver_error(e.class,
+                          'Selenium::WebDriver::Error::ElementNotInteractableError: ' \
+                          "element not visible for xpath: #{xpath_name}")
+        rescue StandardError => e
           webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
         end
       end
@@ -38,7 +40,7 @@ module OnlyofficeWebdriverWrapper
       element = get_element_by_display(xpath_name)
       begin
         element.is_a?(Array) ? element.first.click : element.click
-      rescue Exception => e
+      rescue StandardError => e
         webdriver_error(e.class, "Exception #{e} in click_on_displayed(#{xpath_name})")
       end
     end

@@ -3,29 +3,25 @@
 require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebDriver do
+  after { webdriver.quit }
+
   describe 'Default tests' do
     let(:webdriver) { described_class.new(:chrome) }
 
-    iframe_js = "var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';ifr.id = 'my-frame';document.body.appendChild(ifr)"
+    iframe_js = "var ifr = document.createElement('iframe');" \
+                "ifr.src = 'https://www.example.com/';" \
+                "ifr.id = 'my-frame';document.body.appendChild(ifr)"
 
     it 'Check for popup open' do
       webdriver.new_tab
       expect(webdriver.tab_count).to eq(2)
     end
 
-    it 'Check for browser size' do
-      expect(webdriver.browser_size.x).to eq(webdriver.headless.resolution_x)
-      expect(webdriver.browser_size.y).to eq(webdriver.headless.resolution_y)
-    end
-
-    it 'object_absolute_position' do
-      position = webdriver.object_absolute_position('//body')
-      expect(position.height).to be > 0
-      expect(position.width).to be > 0
-    end
-
     it 'type_to_input raise error for nil' do
-      expect { webdriver.type_to_input('//*[@id="unknown-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
+      expect do
+        webdriver.type_to_input('//*[@id="unknown-id"',
+                                'test')
+      end.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
     end
 
     describe 'get_url' do
@@ -65,6 +61,4 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
       expect(webdriver.browser_logs).not_to be_empty
     end
   end
-
-  after { webdriver.quit }
 end

@@ -2,6 +2,12 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Deprecate `WebDriver#get_title_of_current_tab`, `WebDriver#get_page_source`,
+  `WebDriver#get_url` and replace them with another method name
+* Fix several `rubocop` offenses
+
 ## 1.9.0 (2022-08-01)
 
 ### New Features

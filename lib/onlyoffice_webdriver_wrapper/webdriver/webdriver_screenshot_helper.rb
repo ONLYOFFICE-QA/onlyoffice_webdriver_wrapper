@@ -22,7 +22,8 @@ module OnlyofficeWebdriverWrapper
     # Get screenshot of current windows and upload it to cloud storage
     # @param [String] path_to_screenshot place to store local screenshot
     # @return [String] url of public screenshot
-    def get_screenshot_and_upload(path_to_screenshot = "#{screenshot_folder}/#{StringHelper.generate_random_string}.png")
+    def get_screenshot_and_upload(path_to_screenshot = nil)
+      path_to_screenshot ||= "#{screenshot_folder}/#{StringHelper.generate_random_string}.png"
       begin
         get_screenshot(path_to_screenshot)
         cloud_screenshot = publish_screenshot(path_to_screenshot)
@@ -57,20 +58,20 @@ module OnlyofficeWebdriverWrapper
     def webdriver_screenshot(screenshot_name = SecureRandom.uuid)
       begin
         link = get_screenshot_and_upload("#{screenshot_folder}/#{screenshot_name}.png")
-      rescue Exception => e
+      rescue StandardError => e
         OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. Trying to get headless screenshot")
         if @headless.headless_instance.nil?
           system_screenshot("/tmp/#{screenshot_name}.png")
           begin
             link = publish_screenshot("/tmp/#{screenshot_name}.png")
-          rescue Exception => e
+          rescue StandardError => e
             OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. System screenshot #{link}")
           end
         else
           @headless.take_screenshot("/tmp/#{screenshot_name}.png")
           begin
             link = publish_screenshot("/tmp/#{screenshot_name}.png")
-          rescue Exception => e
+          rescue StandardError => e
             OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. Headless screenshot #{link}")
           end
         end

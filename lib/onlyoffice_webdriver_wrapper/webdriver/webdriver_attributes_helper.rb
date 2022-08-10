@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
       begin
         attribute_value = element.attribute(attribute)
         exist = !(attribute_value.empty? || attribute_value.nil?)
-      rescue Exception
+      rescue StandardError
         exist = false
       end
       exist

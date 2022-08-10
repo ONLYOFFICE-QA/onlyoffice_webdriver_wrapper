@@ -2,12 +2,14 @@
 
 require 'rspec'
 
-describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
-  let(:webdriver) { OnlyofficeWebdriverWrapper::WebDriver.new(:chrome) }
+describe OnlyofficeWebdriverWrapper::WebDriver, '#attribute_helper' do
+  let(:webdriver) { described_class.new(:chrome) }
 
   before do
     webdriver.open(local_file('attribute_helper.html'))
   end
+
+  after { webdriver.quit }
 
   describe '#attribute_exist?' do
     it 'attribute_exist? true' do
@@ -64,6 +66,4 @@ describe 'OnlyofficeWebdriverWrapper::WebDriver#WebdriverAttributesHelper' do
       expect(webdriver.get_index_of_elements_with_attribute('//no', 'custom-attribute', 'findable')).to eq(0)
     end
   end
-
-  after { webdriver.quit }
 end

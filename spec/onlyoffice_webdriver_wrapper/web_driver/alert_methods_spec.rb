@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OnlyofficeWebdriverWrapper::WebDriver do
+describe OnlyofficeWebdriverWrapper::WebDriver, '#alert_methods' do
   let(:webdriver) { described_class.new(:chrome) }
   let(:no_alert_file) { "#{Dir.pwd}/spec/html_examples/jquery.html" }
 

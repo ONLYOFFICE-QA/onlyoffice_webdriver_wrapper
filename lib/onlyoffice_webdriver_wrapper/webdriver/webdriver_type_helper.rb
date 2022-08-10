@@ -32,12 +32,17 @@ module OnlyofficeWebdriverWrapper
     # @param [Boolean] by_action type by `@driver.action` if true
     # @param [Boolean] by_element_send_key use `element.send_keys` if true
     # @return [void]
-    def type_to_locator(xpath_name, text_to_send, clear_content = true, click_on_it = false, by_action = false, by_element_send_key = false)
+    def type_to_locator(xpath_name,
+                        text_to_send,
+                        clear_content = true,
+                        click_on_it = false,
+                        by_action = false,
+                        by_element_send_key = false)
       element = get_element(xpath_name)
       if clear_content
         begin
           element.clear
-        rescue Exception => e
+        rescue StandardError => e
           webdriver_error(e.class, "Error in element.clear #{e} for " \
                                    "type_to_locator(#{xpath_name}, #{text_to_send}, " \
                                    "#{clear_content}, #{click_on_it}, " \
@@ -81,8 +86,11 @@ module OnlyofficeWebdriverWrapper
       if click_on_it
         begin
           element.click
-        rescue Exception => e
-          webdriver_error(e.class, "type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}) error in 'element.click' error: #{e}")
+        rescue StandardError => e
+          webdriver_error(e.class,
+                          "type_to_input(#{xpath_name}, #{text_to_send}, " \
+                          "#{clear_content}, #{click_on_it}) " \
+                          "error in 'element.click' error: #{e}")
         end
         sleep 0.2
       end

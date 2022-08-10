@@ -101,7 +101,7 @@ module OnlyofficeWebdriverWrapper
     # @param [Integer] pixels how much to scroll
     # @return [void]
     def scroll_list_by_pixels(list_xpath, pixels)
-      execute_javascript("$(document.evaluate(\"#{list_xpath.tr('"', "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
+      execute_javascript("#{dom_element_by_xpath(list_xpath)}.scrollTop(#{pixels})")
     end
 
     # Open dropdown selector, like 'Color Selector', which has no element id
@@ -148,7 +148,7 @@ module OnlyofficeWebdriverWrapper
         @driver.find_element(:xpath, xpath_name)
         true
       end
-    rescue Exception
+    rescue StandardError
       false
     end
 
@@ -178,7 +178,7 @@ module OnlyofficeWebdriverWrapper
 
         begin
           visible = element.displayed?
-        rescue Exception => e
+        rescue StandardError => e
           OnlyofficeLoggerHelper.log("Element #{xpath_name} is not visible because of: #{e.message}")
           visible = false
         end
@@ -196,15 +196,20 @@ module OnlyofficeWebdriverWrapper
         return true if current_element.displayed?
       end
       false
-    rescue Exception => e
+    rescue StandardError => e
       webdriver_error("Raise unknown exception: #{e}")
     end
 
     # Get page source
     # @return [String] all page source
-    def get_page_source
+    def page_source
       @driver.execute_script('return document.documentElement.innerHTML;')
     end
+
+    alias get_page_source page_source
+
+    extend Gem::Deprecate
+    deprecate :get_page_source, 'page_source', 2069, 1
 
     # Raise an error, making a screenshot before it
     # @param [String, Object] exception class to raise

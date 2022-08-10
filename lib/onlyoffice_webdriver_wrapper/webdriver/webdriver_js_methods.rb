@@ -18,7 +18,7 @@ module OnlyofficeWebdriverWrapper
       # in that case performing `webdriver_error` only cause forever loop
       # since webdriver_error trying to get_url or make screenshots
       raise(e.class, "Timeout Error #{e} happened while executing #{script}")
-    rescue Exception => e
+    rescue StandardError => e
       webdriver_error(e, "Exception #{e} in execute_javascript: #{script}")
     end
 
@@ -84,7 +84,7 @@ module OnlyofficeWebdriverWrapper
     # @param property [String] property to get
     # @return [String] value of property
     def computed_style(xpath, pseudo_element = 'null', property = nil)
-      element_by_xpath = "document.evaluate(\"#{xpath.tr('"', "'")}\",document, null, XPathResult.ANY_TYPE, null ).iterateNext()"
+      element_by_xpath = dom_element_by_xpath(xpath)
       style = "window.getComputedStyle(#{element_by_xpath}, '#{pseudo_element}')"
       full_command = "#{style}.getPropertyValue('#{property}')"
       result = execute_javascript("return #{full_command}")
