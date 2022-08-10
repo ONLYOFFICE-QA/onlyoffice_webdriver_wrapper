@@ -8,7 +8,9 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
   describe 'Default tests' do
     let(:webdriver) { described_class.new(:chrome) }
 
-    iframe_js = "var ifr = document.createElement('iframe');ifr.src = 'https://www.example.com/';ifr.id = 'my-frame';document.body.appendChild(ifr)"
+    iframe_js = "var ifr = document.createElement('iframe');" \
+                "ifr.src = 'https://www.example.com/';" \
+                "ifr.id = 'my-frame';document.body.appendChild(ifr)"
 
     it 'Check for popup open' do
       webdriver.new_tab
@@ -16,7 +18,10 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
     end
 
     it 'type_to_input raise error for nil' do
-      expect { webdriver.type_to_input('//*[@id="unknown-id"', 'test') }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
+      expect do
+        webdriver.type_to_input('//*[@id="unknown-id"',
+                                'test')
+      end.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
     end
 
     describe 'get_url' do

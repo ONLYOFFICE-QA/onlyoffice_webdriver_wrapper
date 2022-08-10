@@ -101,7 +101,7 @@ module OnlyofficeWebdriverWrapper
     # @param [Integer] pixels how much to scroll
     # @return [void]
     def scroll_list_by_pixels(list_xpath, pixels)
-      execute_javascript("$(document.evaluate(\"#{list_xpath.tr('"', "'")}\", document, null, XPathResult.ANY_TYPE, null).iterateNext()).scrollTop(#{pixels})")
+      execute_javascript("#{dom_element_by_xpath(list_xpath)}.scrollTop(#{pixels})")
     end
 
     # Open dropdown selector, like 'Color Selector', which has no element id

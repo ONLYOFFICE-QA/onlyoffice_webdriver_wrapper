@@ -40,7 +40,9 @@ module OnlyofficeWebdriverWrapper
     # @param [String] xpath_several_elements to find objects
     # @return [Array<String>] text of those elements
     def get_text_of_several_elements(xpath_several_elements)
-      @driver.find_elements(:xpath, xpath_several_elements).filter_map { |element| element.text unless element.text == '' }
+      @driver.find_elements(:xpath, xpath_several_elements).filter_map do |element|
+        element.text unless element.text == ''
+      end
     end
   end
 end
