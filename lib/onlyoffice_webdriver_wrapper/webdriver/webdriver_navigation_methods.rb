@@ -20,11 +20,15 @@ module OnlyofficeWebdriverWrapper
 
     # @return [String] url of current frame, or browser url if
     #   it is a root frame
-    def get_url
+    def current_url
       execute_javascript('return window.location.href')
     rescue Selenium::WebDriver::Error::NoSuchFrameError, Timeout::Error => e
       raise(e.class, "Browser is crushed or hangup with #{e}")
     end
+
+    alias get_url current_url
+    extend Gem::Deprecate
+    deprecate :get_url, 'current_url', 2069, 1
 
     # Refresh current page
     # @return [nil]

@@ -85,8 +85,13 @@ module OnlyofficeWebdriverWrapper
     end
 
     # @return [String] title of current tab
-    def get_title_of_current_tab
+    def title_of_current_tab
       @driver.title
     end
+
+    alias get_title_of_current_tab title_of_current_tab
+
+    extend Gem::Deprecate
+    deprecate :get_title_of_current_tab, 'title_of_current_tab', 2069, 1
   end
 end

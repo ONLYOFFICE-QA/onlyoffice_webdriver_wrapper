@@ -202,9 +202,14 @@ module OnlyofficeWebdriverWrapper
 
     # Get page source
     # @return [String] all page source
-    def get_page_source
+    def page_source
       @driver.execute_script('return document.documentElement.innerHTML;')
     end
+
+    alias get_page_source page_source
+
+    extend Gem::Deprecate
+    deprecate :get_page_source, 'page_source', 2069, 1
 
     # Raise an error, making a screenshot before it
     # @param [String, Object] exception class to raise
