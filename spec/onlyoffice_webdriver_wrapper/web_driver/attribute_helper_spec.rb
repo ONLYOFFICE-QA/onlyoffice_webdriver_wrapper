@@ -9,6 +9,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#attribute_helper' do
     webdriver.open(local_file('attribute_helper.html'))
   end
 
+  after { webdriver.quit }
+
   describe '#attribute_exist?' do
     it 'attribute_exist? true' do
       expect(webdriver).to be_attribute_exist('//div', 'hidden')
@@ -64,6 +66,4 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#attribute_helper' do
       expect(webdriver.get_index_of_elements_with_attribute('//no', 'custom-attribute', 'findable')).to eq(0)
     end
   end
-
-  after { webdriver.quit }
 end

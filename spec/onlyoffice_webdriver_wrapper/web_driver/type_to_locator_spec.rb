@@ -9,6 +9,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#type_to_locator' do
     webdriver.open('https://github.com/login')
   end
 
+  after { webdriver.quit }
+
   it 'type_to_locator without click enter password in correct field' do
     webdriver.type_to_locator('//*[@id="login_field"]', 'user@example.com')
     webdriver.type_to_locator('//*[@id="password"]', 'password')
@@ -26,6 +28,4 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#type_to_locator' do
     webdriver.type_to_locator('//*[@id="login_field"]', [:control, 'a'])
     expect(webdriver.get_text('//*[@id="login_field"]')).to be_empty
   end
-
-  after { webdriver.quit }
 end

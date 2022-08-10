@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe OnlyofficeWebdriverWrapper::WebDriver do
+  after { webdriver.quit }
+
   describe 'Default tests' do
     let(:webdriver) { described_class.new(:chrome) }
 
@@ -65,6 +67,4 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
       expect(webdriver.browser_logs).not_to be_empty
     end
   end
-
-  after { webdriver.quit }
 end
