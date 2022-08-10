@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.10.1 (2022-08-10)
+
 ### Fixes
 
 * Fix `WebDriver#scroll_list_by_pixels` failure
