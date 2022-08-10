@@ -148,7 +148,7 @@ module OnlyofficeWebdriverWrapper
         @driver.find_element(:xpath, xpath_name)
         true
       end
-    rescue Exception
+    rescue StandardError
       false
     end
 
@@ -178,7 +178,7 @@ module OnlyofficeWebdriverWrapper
 
         begin
           visible = element.displayed?
-        rescue Exception => e
+        rescue StandardError => e
           OnlyofficeLoggerHelper.log("Element #{xpath_name} is not visible because of: #{e.message}")
           visible = false
         end
@@ -196,7 +196,7 @@ module OnlyofficeWebdriverWrapper
         return true if current_element.displayed?
       end
       false
-    rescue Exception => e
+    rescue StandardError => e
       webdriver_error("Raise unknown exception: #{e}")
     end
 

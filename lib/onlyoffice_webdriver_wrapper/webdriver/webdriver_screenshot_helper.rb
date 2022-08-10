@@ -57,20 +57,20 @@ module OnlyofficeWebdriverWrapper
     def webdriver_screenshot(screenshot_name = SecureRandom.uuid)
       begin
         link = get_screenshot_and_upload("#{screenshot_folder}/#{screenshot_name}.png")
-      rescue Exception => e
+      rescue StandardError => e
         OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. Trying to get headless screenshot")
         if @headless.headless_instance.nil?
           system_screenshot("/tmp/#{screenshot_name}.png")
           begin
             link = publish_screenshot("/tmp/#{screenshot_name}.png")
-          rescue Exception => e
+          rescue StandardError => e
             OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. System screenshot #{link}")
           end
         else
           @headless.take_screenshot("/tmp/#{screenshot_name}.png")
           begin
             link = publish_screenshot("/tmp/#{screenshot_name}.png")
-          rescue Exception => e
+          rescue StandardError => e
             OnlyofficeLoggerHelper.log("Error in get screenshot: #{e}. Headless screenshot #{link}")
           end
         end

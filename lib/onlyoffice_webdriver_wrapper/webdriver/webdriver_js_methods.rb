@@ -18,7 +18,7 @@ module OnlyofficeWebdriverWrapper
       # in that case performing `webdriver_error` only cause forever loop
       # since webdriver_error trying to get_url or make screenshots
       raise(e.class, "Timeout Error #{e} happened while executing #{script}")
-    rescue Exception => e
+    rescue StandardError => e
       webdriver_error(e, "Exception #{e} in execute_javascript: #{script}")
     end
 

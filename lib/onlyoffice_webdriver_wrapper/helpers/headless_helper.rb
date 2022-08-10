@@ -54,7 +54,7 @@ module OnlyofficeWebdriverWrapper
                                           destroy_at_exit: true,
                                           dimensions: "#{@resolution_x + 1}x#{@resolution_y + 1}x24",
                                           video: { provider: :ffmpeg })
-      rescue Exception => e
+      rescue StandardError => e
         OnlyofficeLoggerHelper.log("xvfb not started with problem #{e}")
         WebDriver.clean_up(true)
         @headless_instance = Headless.new(reuse: false,

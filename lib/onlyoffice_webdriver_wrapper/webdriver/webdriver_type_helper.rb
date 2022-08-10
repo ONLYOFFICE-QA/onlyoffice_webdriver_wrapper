@@ -37,7 +37,7 @@ module OnlyofficeWebdriverWrapper
       if clear_content
         begin
           element.clear
-        rescue Exception => e
+        rescue StandardError => e
           webdriver_error(e.class, "Error in element.clear #{e} for " \
                                    "type_to_locator(#{xpath_name}, #{text_to_send}, " \
                                    "#{clear_content}, #{click_on_it}, " \
@@ -81,7 +81,7 @@ module OnlyofficeWebdriverWrapper
       if click_on_it
         begin
           element.click
-        rescue Exception => e
+        rescue StandardError => e
           webdriver_error(e.class, "type_to_input(#{xpath_name}, #{text_to_send}, #{clear_content}, #{click_on_it}) error in 'element.click' error: #{e}")
         end
         sleep 0.2

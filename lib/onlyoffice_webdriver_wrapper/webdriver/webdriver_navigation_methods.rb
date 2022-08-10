@@ -48,11 +48,11 @@ module OnlyofficeWebdriverWrapper
       begin
         @driver.execute_script('window.onbeforeunload = null') # off popup window
       rescue StandardError
-        Exception
+        StandardError
       end
       begin
         @driver.quit
-      rescue Exception => e
+      rescue StandardError => e
         OnlyofficeLoggerHelper.log("Some error happened on webdriver.quit #{e.backtrace}")
       end
       alert_confirm

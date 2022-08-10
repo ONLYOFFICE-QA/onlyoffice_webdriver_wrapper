@@ -13,7 +13,7 @@ module OnlyofficeWebdriverWrapper
         @driver.switch_to.frame frame
       rescue Selenium::WebDriver::Error::NoSuchElementError
         OnlyofficeLoggerHelper.log('Raise NoSuchElementError in the select_frame method')
-      rescue Exception => e
+      rescue StandardError => e
         webdriver_error("Raise unknown exception: #{e}")
       end
     end
@@ -24,7 +24,7 @@ module OnlyofficeWebdriverWrapper
       @driver.switch_to.default_content
     rescue Timeout::Error
       OnlyofficeLoggerHelper.log('Raise TimeoutError in the select_top_frame method')
-    rescue Exception => e
+    rescue StandardError => e
       raise "Browser is crushed or hangup with error: #{e}"
     end
   end
