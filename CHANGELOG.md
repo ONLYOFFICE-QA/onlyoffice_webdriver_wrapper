@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.10.0 (2018-10-01)
+
 ### Changes
 
 * Deprecate `WebDriver#get_title_of_current_tab`, `WebDriver#get_page_source`,
