@@ -30,7 +30,7 @@ require_relative 'webdriver/webdriver_browser_log_helper'
 
 # Namespace of this gem
 module OnlyofficeWebdriverWrapper
-  # noinspection RubyTooManyMethodsInspection, RubyInstanceMethodNamingConvention, RubyParameterNamingConvention
+  # Class for working with webdriver, main class of project
   class WebDriver
     include ChromeHelper
     include ClickMethods

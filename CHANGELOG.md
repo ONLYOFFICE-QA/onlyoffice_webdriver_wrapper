@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Remove old comments from `RubyMine` code inspection
+
 ## 1.10.1 (2022-08-10)
 
 ### Fixes
