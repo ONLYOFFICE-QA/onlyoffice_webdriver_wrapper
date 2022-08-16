@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Ignore `.rake_tasks~` autocomplete file
+
 ### Changes
 
 * Remove old comments from `RubyMine` code inspection
