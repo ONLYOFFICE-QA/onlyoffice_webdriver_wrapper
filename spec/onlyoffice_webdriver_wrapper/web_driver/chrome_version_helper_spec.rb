@@ -12,4 +12,12 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#chrome_version_helper' do
   it 'chrome_version return 0 version for unknown exe' do
     expect(chrome_version('fake-exe').to_s).to start_with('0.')
   end
+
+  it 'chromedriver_path return path for mac' do
+    expect(chromedriver_path(:mac)).to be_a(String)
+  end
+
+  it 'chromedriver_path return path for linux' do
+    expect(chromedriver_path(:linux)).to be_a(String)
+  end
 end

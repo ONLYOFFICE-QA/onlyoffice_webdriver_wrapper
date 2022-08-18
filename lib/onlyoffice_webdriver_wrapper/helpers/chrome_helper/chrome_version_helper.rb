@@ -20,10 +20,12 @@ module OnlyofficeWebdriverWrapper
       @chrome_version = unknown_chrome_version
     end
 
+    # @param [Symbol] force_os force OS for chrome version (`:linux` or `:mac`),
+    #   if empty - will try to autodetect current os
     # @return [String] path to chromedriver
-    def chromedriver_path
-      return default_mac if OSHelper.mac?
-      return default_linux if chrome_version == unknown_chrome_version
+    def chromedriver_path(force_os = nil)
+      return default_mac if OSHelper.mac? || force_os == :mac
+      return default_linux if (chrome_version == unknown_chrome_version) || force_os == :linux
 
       chromedriver_path_cur_chrome
     end
