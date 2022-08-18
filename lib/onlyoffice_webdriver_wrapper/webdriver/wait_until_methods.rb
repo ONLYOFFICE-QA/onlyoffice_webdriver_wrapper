@@ -46,21 +46,6 @@ module OnlyofficeWebdriverWrapper
       webdriver_error("Element #{xpath_name} not visible for #{timeout} seconds")
     end
 
-    # Wait until element present and visible
-    # @param [String] xpath_name xpath of element
-    # @param [Integer] period_of_wait how much time sleep each iteration of wait
-    # @param [Integer] critical_time maximum time for wait for element
-    # @return [nil]
-    def wait_element(xpath_name, period_of_wait = 1, critical_time = 3)
-      wait_until_element_present(xpath_name)
-      time = 0
-      until element_visible?(xpath_name)
-        sleep(period_of_wait)
-        time += 1
-        return if time == critical_time
-      end
-    end
-
     # Wait until some element present
     # If timeout exceeded - raise an error
     # @param xpath_name [String] xpath of element
