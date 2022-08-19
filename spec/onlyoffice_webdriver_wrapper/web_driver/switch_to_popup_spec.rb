@@ -11,7 +11,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#switch_to_popup' do
     webdriver.open(local_file('switch_to_popup_get_element.html'))
     webdriver.click_on_locator('//a')
     webdriver.switch_to_popup
-    expect(webdriver.get_url).not_to be_empty
+    expect(webdriver.current_url).not_to be_empty
   end
 
   it 'switch_to_popup will raise an error if only one tab' do
