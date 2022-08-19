@@ -11,6 +11,7 @@
 * Remove old comments from `RubyMine` code inspection
 * Remove `WebDriver#wait_element` since it's not raise any error if wait failed.
   Use `WebDriver#wait_until_element_visible` instead
+* Increase test coverage
 
 ## 1.10.1 (2022-08-10)
 
