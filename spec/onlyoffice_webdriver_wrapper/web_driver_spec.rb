@@ -8,10 +8,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
   describe 'Default tests' do
     let(:webdriver) { described_class.new(:chrome) }
 
-    iframe_js = "var ifr = document.createElement('iframe');" \
-                "ifr.src = 'https://www.example.com/';" \
-                "ifr.id = 'my-frame';document.body.appendChild(ifr)"
-
     it 'Check for popup open' do
       webdriver.new_tab
       expect(webdriver.tab_count).to eq(2)
@@ -22,15 +18,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver do
         webdriver.type_to_input('//*[@id="unknown-id"',
                                 'test')
       end.to raise_error(Selenium::WebDriver::Error::NoSuchElementError, /element not found/)
-    end
-
-    describe 'get_url' do
-      it 'get url in frame return url of frame, not mail url' do
-        webdriver.open('http://www.google.com')
-        webdriver.execute_javascript(iframe_js, wait_timeout: 5)
-        webdriver.select_frame('//*[@id="my-frame"]')
-        expect(webdriver.get_url).to eq('https://www.example.com/')
-      end
     end
   end
 

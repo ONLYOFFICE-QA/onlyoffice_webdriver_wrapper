@@ -39,12 +39,12 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#tab_helper' do
     end
 
     it 'correctly choose first tab' do
-      expect(webdriver.get_title_of_current_tab).to include('Яндекс')
+      expect(webdriver.title_of_current_tab).to include('Яндекс')
     end
 
     it 'correctly choose second tab' do
       webdriver.choose_tab(2)
-      expect(webdriver.get_title_of_current_tab).to include('Google')
+      expect(webdriver.title_of_current_tab).to include('Google')
     end
 
     it 'raise error if no such tab present' do
@@ -59,7 +59,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#tab_helper' do
       webdriver.choose_tab(2)
       webdriver.open('https://google.com')
       webdriver.switch_to_main_tab
-      expect(webdriver.get_title_of_current_tab).not_to include('Google')
+      expect(webdriver.title_of_current_tab).not_to include('Google')
     end
   end
 
@@ -80,7 +80,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#tab_helper' do
     end
 
     it 'close_popup_and_switch_to_main_tab return focus to main tab' do
-      expect(webdriver.get_title_of_current_tab).not_to include('Google')
+      expect(webdriver.title_of_current_tab).not_to include('Google')
     end
 
     it 'close_popup_and_switch_to_main_tab make tab count equal 1' do

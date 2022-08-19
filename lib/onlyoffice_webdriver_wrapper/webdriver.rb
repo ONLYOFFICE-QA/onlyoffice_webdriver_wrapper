@@ -222,7 +222,6 @@ module OnlyofficeWebdriverWrapper
         exception = RuntimeError
       end
       select_top_frame
-      current_url = get_url
       raise exception, "#{error_message}\n\nPage address: #{current_url}\n\nError #{webdriver_screenshot}"
     end
 
