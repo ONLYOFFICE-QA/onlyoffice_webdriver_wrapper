@@ -110,16 +110,7 @@ module OnlyofficeWebdriverWrapper
     # @param [Integer] vertical_shift y value
     # @return [void]
     def open_dropdown_selector(xpath_name, horizontal_shift = 30, vertical_shift = 0)
-      element = get_element(xpath_name)
-      if @browser == :firefox || @browser == :safari
-        set_style_attribute("#{xpath_name}/button", 'display', 'none')
-        set_style_attribute(xpath_name, 'display', 'inline')
-        element.click
-        set_style_attribute("#{xpath_name}/button", 'display', 'inline-block')
-        set_style_attribute(xpath_name, 'display', 'block')
-      else
-        move_to_driver_action(xpath_name, horizontal_shift, vertical_shift).click.perform
-      end
+      move_to_driver_action(xpath_name, horizontal_shift, vertical_shift).click.perform
     end
 
     # Perform an action on coordinate
