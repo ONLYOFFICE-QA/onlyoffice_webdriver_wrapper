@@ -13,6 +13,7 @@
   Use `WebDriver#wait_until_element_visible` instead
 * Increase test coverage
 * Remove calls to methods deprecated in `v1.10.0`
+* Simplify `WebDriver#open_dropdown_selector` for firefox and add test for it
 
 ## 1.10.1 (2022-08-10)
 
