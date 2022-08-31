@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.11.0 (2022-08-31)
+
 ### New Features
 
 * Ignore `.rake_tasks~` autocomplete file
