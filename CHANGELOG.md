@@ -5,6 +5,7 @@
 ### New Features
 
 * Ignore `.rake_tasks~` autocomplete file
+* Add chromedriver `105.0.5195.52`
 
 ### Changes
 
@@ -14,6 +15,7 @@
 * Increase test coverage
 * Remove calls to methods deprecated in `v1.10.0`
 * Simplify `WebDriver#open_dropdown_selector` for firefox and add test for it
+* Remove Chromedriver `102.0.5005.61`
 
 ## 1.10.1 (2022-08-10)
 
