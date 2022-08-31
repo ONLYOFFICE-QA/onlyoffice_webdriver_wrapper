@@ -6,6 +6,7 @@
 
 * Ignore `.rake_tasks~` autocomplete file
 * Add chromedriver `105.0.5195.52`
+* Update `geckodriver` from `v0.30.0` to `v0.31.0`
 
 ### Changes
 
