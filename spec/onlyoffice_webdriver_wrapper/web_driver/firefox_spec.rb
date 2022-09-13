@@ -21,6 +21,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#firefox' do
   it 'Webdriver#click_on_locator_coordinates correct for .0 values' do
     webdriver.open(local_file('web_driver_element_size_by_js_spec.html'))
     webdriver.click_on_locator_coordinates('//div', 20.0, 10)
+    expect(webdriver.browser_logs).to be_empty
   end
 
   it 'Check That firefox return empty browser logs' do
