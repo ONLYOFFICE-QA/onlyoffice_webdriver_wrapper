@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `106.0.5249.61`
+
+### Changes
+
+* Remove chromedriver `103.0.5060.53`
+
 ## 1.11.0 (2022-08-31)
 
 ### New Features
