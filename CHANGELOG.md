@@ -5,10 +5,12 @@
 ### New Features
 
 * Add chromedriver `107.0.5304.62`
+* Add chromedriver `108.0.5359.71`
 
 ### Changes
 
 * Remove chromedriver `104.0.5112.29`
+* Remove chromedriver `105.0.5195.52`
 
 ## 1.12.0 (2022-10-10)
 
