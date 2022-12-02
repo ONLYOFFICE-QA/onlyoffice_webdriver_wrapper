@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.13.0 (2022-12-02)
+
 ### New Features
 
 * Add chromedriver `107.0.5304.62`
