@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.14.0 (2023-01-18)
+
 ### New Features
 
 * Add chromedriver `109.0.5414.74`
