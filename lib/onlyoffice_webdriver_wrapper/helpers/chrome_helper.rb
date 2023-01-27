@@ -34,12 +34,10 @@ module OnlyofficeWebdriverWrapper
         },
         credentials_enable_service: false
       }
-      caps = Selenium::WebDriver::Remote::Capabilities.chrome
-      caps[:proxy] = Selenium::WebDriver::Proxy.new(ssl: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
       switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
       options = Selenium::WebDriver::Chrome::Options.new(args: switches,
                                                          prefs: prefs)
-      webdriver_options = { capabilities: [caps, options],
+      webdriver_options = { options: options,
                             service: chrome_service }
       driver = Selenium::WebDriver.for :chrome, webdriver_options
       maximize_chrome(driver)

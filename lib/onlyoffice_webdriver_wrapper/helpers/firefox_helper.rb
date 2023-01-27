@@ -18,9 +18,7 @@ module OnlyofficeWebdriverWrapper
       profile['browser.download.manager.showWhenStarting'] = false
       profile['dom.disable_window_move_resize'] = false
       options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
-      caps = Selenium::WebDriver::Remote::Capabilities.firefox
-      caps[:proxy] = Selenium::WebDriver::Proxy.new(ssl: "#{@proxy.proxy_address}:#{@proxy.proxy_port}") if @proxy
-      driver = Selenium::WebDriver.for :firefox, service: firefox_service, capabilities: [caps, options]
+      driver = Selenium::WebDriver.for :firefox, service: firefox_service, options: options
       if headless.running?
         driver.manage.window.size = Selenium::WebDriver::Dimension.new(headless.resolution_x,
                                                                        headless.resolution_y)
