@@ -3,6 +3,11 @@
 module OnlyofficeWebdriverWrapper
   # Methods for working with alerts
   module WebdriverAlertHelper
+    # Exception which happens if there is no alerts
+    NO_ALERT_EXCEPTIONS = [Errno::ECONNREFUSED,
+                           Selenium::WebDriver::Error::InvalidSessionIdError,
+                           Selenium::WebDriver::Error::NoSuchAlertError].freeze
+
     # Confirm current alert
     # @return [void]
     def alert_confirm
@@ -14,7 +19,7 @@ module OnlyofficeWebdriverWrapper
     def alert_exists?
       @driver.switch_to.alert.text
       true
-    rescue Selenium::WebDriver::Error::NoSuchAlertError, Errno::ECONNREFUSED
+    rescue *NO_ALERT_EXCEPTIONS
       false
     end
 
