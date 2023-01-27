@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Add support for `selenium-webdriver-4.8.0`
+
 ## 1.14.0 (2023-01-18)
 
 ### New Features
