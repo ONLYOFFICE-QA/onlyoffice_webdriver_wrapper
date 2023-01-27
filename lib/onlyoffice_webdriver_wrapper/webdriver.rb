@@ -67,8 +67,6 @@ module OnlyofficeWebdriverWrapper
     attr_accessor :download_directory
     # @return [HeadlessHelper] headless wrapper
     attr_accessor :headless
-    # @return [Net::HTTP::Proxy] connection proxy
-    attr_accessor :proxy
     # @return [True, False] should video be recorded
     attr_reader :record_video
 
@@ -82,7 +80,6 @@ module OnlyofficeWebdriverWrapper
 
       @download_directory = params.fetch(:download_directory, Dir.mktmpdir('webdriver-download'))
       @browser = params.fetch(:browser, browser)
-      @proxy = params[:proxy]
       return if params[:do_not_start_browser]
 
       case browser

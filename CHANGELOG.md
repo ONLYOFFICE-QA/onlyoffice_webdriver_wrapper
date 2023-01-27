@@ -5,6 +5,9 @@
 ### Changes
 
 * Add support for `selenium-webdriver-4.8.0`
+* Remove browser proxy support, it's not used for a long time
+* Remove usage of browser capabilities.
+  They will be deprecated in `selenium-webdriver` in the future
 
 ## 1.14.0 (2023-01-18)
 
