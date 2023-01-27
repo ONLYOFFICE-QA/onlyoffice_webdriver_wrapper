@@ -5,6 +5,7 @@ module OnlyofficeWebdriverWrapper
   module WebdriverAlertHelper
     # Exception which happens if there is no alerts
     NO_ALERT_EXCEPTIONS = [Errno::ECONNREFUSED,
+                           Net::ReadTimeout,
                            Selenium::WebDriver::Error::InvalidSessionIdError,
                            Selenium::WebDriver::Error::NoSuchAlertError].freeze
 
