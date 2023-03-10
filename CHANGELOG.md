@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.16.0 (2023-03-10)
+
 ### New Features
 
 * Add chromedriver `110.0.5481.77`
