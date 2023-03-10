@@ -31,20 +31,20 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#tab_helper' do
 
   describe '#choose_tab' do
     before do
-      webdriver.open('https://ya.ru')
+      webdriver.open(local_file('tab_helper_file_1.html'))
       webdriver.new_tab
       webdriver.choose_tab(2)
-      webdriver.open('https://google.com')
+      webdriver.open(local_file('tab_helper_file_2.html'))
       webdriver.choose_tab(1)
     end
 
     it 'correctly choose first tab' do
-      expect(webdriver.title_of_current_tab).to include('Яндекс')
+      expect(webdriver.title_of_current_tab).to include('Tab 1')
     end
 
     it 'correctly choose second tab' do
       webdriver.choose_tab(2)
-      expect(webdriver.title_of_current_tab).to include('Google')
+      expect(webdriver.title_of_current_tab).to include('Tab 2')
     end
 
     it 'raise error if no such tab present' do
