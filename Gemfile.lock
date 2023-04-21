@@ -61,7 +61,7 @@ GEM
       watir (>= 6.10.3)
     page_navigation (0.10)
       data_magic (>= 0.22)
-    parallel (1.22.1)
+    parallel (1.23.0)
     parser (3.2.2.0)
       ast (~> 2.4.1)
     rainbow (3.1.1)
