@@ -10,6 +10,7 @@
 
 * Remove chromedriver `110.0.5481.77`
 * Try to start Chrome several times
+* Use current stable v3 of `codecov-action`
 
 ## 1.17.0 (2023-04-13)
 
