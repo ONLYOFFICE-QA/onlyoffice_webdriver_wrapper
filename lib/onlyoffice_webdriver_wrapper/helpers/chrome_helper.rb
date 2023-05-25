@@ -12,6 +12,7 @@ module OnlyofficeWebdriverWrapper
                                  --disable-gpu
                                  --disable-popup-blocking
                                  --disable-infobars
+                                 --disable-dev-shm-usage
                                  --no-sandbox
                                  test-type].freeze
 
