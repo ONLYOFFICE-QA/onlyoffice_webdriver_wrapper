@@ -20,7 +20,7 @@ module OnlyofficeWebdriverWrapper
       @chrome_service ||= Selenium::WebDriver::Chrome::Service.new(path: chromedriver_path)
     end
 
-    # @return [Webdriver::Chrome] Chrome webdriver
+    # @return [Selenium::WebDriver::Chrome::Driver] Chrome webdriver
     def start_chrome_driver
       prefs = {
         download: {
@@ -39,12 +39,32 @@ module OnlyofficeWebdriverWrapper
                                                          prefs: prefs)
       webdriver_options = { options: options,
                             service: chrome_service }
-      driver = Selenium::WebDriver.for :chrome, webdriver_options
+      driver = ensure_chrome_started(webdriver_options)
       maximize_chrome(driver)
       driver
     end
 
     private
+
+    # Ensure that chrome started
+    # Retry it several times if some unexpected error happened
+    # @param options [Selenium::WebDriver::Chrome::Options] options to use
+    # @return [Selenium::WebDriver::Chrome::Driver] driver
+    def ensure_chrome_started(options)
+      retries = 3
+      begin
+        retries -= 1
+        return Selenium::WebDriver.for :chrome, options
+      rescue Selenium::WebDriver::Error::SessionNotCreatedError => e
+        OnlyofficeLoggerHelper.log("Starting chrome failed with error: #{e.message}")
+        if retries > 0
+          sleep(rand(1..5)) # Random timeout to start
+          retry
+        else
+          raise e
+        end
+      end
+    end
 
     # Maximize chrome
     # @param driver [Selenium::WebDriver] driver to use
