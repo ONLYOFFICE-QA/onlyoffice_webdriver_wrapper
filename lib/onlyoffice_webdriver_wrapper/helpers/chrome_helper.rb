@@ -9,6 +9,7 @@ module OnlyofficeWebdriverWrapper
 
     # @return [String] list of default Chrome command line switches
     DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
+                                 --disable-dev-shm-usage
                                  --disable-gpu
                                  --disable-popup-blocking
                                  --disable-infobars
