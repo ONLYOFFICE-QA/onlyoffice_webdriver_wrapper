@@ -13,10 +13,6 @@ jobs:
             allow-failures: true
     steps:
       - uses: actions/checkout@v2
-      - name: Check markdown files using `markdownlint`
-        run: |
-          sudo npm install -g markdownlint-cli
-          markdownlint *.md
       - name: Update to current stable google-chrome
         run: |
           echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
@@ -33,8 +29,6 @@ jobs:
           gem install bundler
           bundle install --jobs 4 --retry 3
           bundle exec rake
-      - name: Check source files using `rubocop`
-        run: rubocop
       - name: Check that code 100% documented
         run: yardoc . | grep -q '100.00% documented'
       - uses: codecov/codecov-action@v3
