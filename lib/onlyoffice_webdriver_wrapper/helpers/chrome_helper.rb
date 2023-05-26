@@ -60,7 +60,7 @@ module OnlyofficeWebdriverWrapper
       # Selenium::WebDriver::Error::SessionNotCreatedError:
       #   session not created
       #   from no such execution context: loader has changed while resolving nodes
-      sleep(1)
+      sleep(2)
       driver
     end
 
