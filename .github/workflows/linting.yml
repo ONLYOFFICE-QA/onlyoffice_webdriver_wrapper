@@ -13,3 +13,29 @@ jobs:
           yamllint_comment: true
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  markdownlint:
+    name: markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: Check markdown files using `markdownlint`
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint *.md
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up latest stable ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+      - name: Setup rubocop
+        run: |
+          bundle config set with 'development'
+          bundle install
+      - name: Run Rubocop
+        run: rubocop
