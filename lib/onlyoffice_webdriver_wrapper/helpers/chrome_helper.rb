@@ -35,6 +35,9 @@ module OnlyofficeWebdriverWrapper
         credentials_enable_service: false
       }
       switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
+      if @headless.running?
+        switches << '--headless=new'
+      end
       options = Selenium::WebDriver::Chrome::Options.new(args: switches,
                                                          prefs: prefs)
       webdriver_options = { options: options,
