@@ -55,7 +55,9 @@ module OnlyofficeWebdriverWrapper
       retries = 3
       begin
         retries -= 1
-        Selenium::WebDriver.for :chrome, options
+        chrome = Selenium::WebDriver.for :chrome, options
+        sleep(5)
+        chrome
       rescue Selenium::WebDriver::Error::SessionNotCreatedError => e
         OnlyofficeLoggerHelper.log("Starting chrome failed with error: #{e.message}")
         raise e unless retries.positive?
