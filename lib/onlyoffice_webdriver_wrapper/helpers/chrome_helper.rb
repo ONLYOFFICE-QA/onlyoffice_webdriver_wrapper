@@ -39,12 +39,29 @@ module OnlyofficeWebdriverWrapper
                                                          prefs: prefs)
       webdriver_options = { options: options,
                             service: chrome_service }
-      driver = Selenium::WebDriver.for :chrome, webdriver_options
+      driver = chrome_start(webdriver_options)
       maximize_chrome(driver)
       driver
     end
 
     private
+
+    # Start chrome
+    # @param options [Hash] options for chrome
+    # @return [Selenium::WebDriver] driver to use
+    def chrome_start(options)
+      driver = Selenium::WebDriver.for(:chrome, options)
+      # Timeout for Chrome to start, without it it can fail with
+      # some random errors like:
+      # Selenium::WebDriver::Error::UnknownError:
+      #   unknown error: cannot determine loading status
+      # or
+      # Selenium::WebDriver::Error::SessionNotCreatedError:
+      #   session not created
+      #   from no such execution context: loader has changed while resolving nodes
+      sleep(1)
+      driver
+    end
 
     # Maximize chrome
     # @param driver [Selenium::WebDriver] driver to use

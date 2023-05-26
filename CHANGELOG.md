@@ -13,6 +13,10 @@
 * Extract all linting tasks to separate workflow
 * Increase code coverage
 
+### Fixes
+
+* Fix chrome start random errors via adding start timeout
+
 ## 1.17.0 (2023-04-13)
 
 ### New Features
