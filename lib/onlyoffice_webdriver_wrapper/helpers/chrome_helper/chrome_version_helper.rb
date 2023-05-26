@@ -27,7 +27,7 @@ module OnlyofficeWebdriverWrapper
       return default_mac if OSHelper.mac? || force_os == :mac
       return default_linux if (chrome_version == unknown_chrome_version) || force_os == :linux
 
-      chromedriver_path_cur_chrome
+      chromedriver_path_for_version(chrome_version.segments.first)
     end
 
     private
@@ -42,13 +42,16 @@ module OnlyofficeWebdriverWrapper
       Dir["#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_*"].max
     end
 
+    # @param [String] major_version major version of chrome
     # @return [String] path to chromedriver of version
-    def chromedriver_path_cur_chrome
-      file_path = "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_#{chrome_version.segments.first}"
+    def chromedriver_path_for_version(major_version)
+      file_path = "#{File.dirname(__FILE__)}/chromedriver_bin/chromedriver_linux_#{major_version}"
+      if File.exist?(file_path)
+        OnlyofficeLoggerHelper.log("Chromedriver found by version #{major_version}. Using it")
+        return file_path
+      end
 
-      return file_path if File.exist?(file_path)
-
-      OnlyofficeLoggerHelper.log("Cannot file chromedriver by version #{chrome_version.version}. Using Default")
+      OnlyofficeLoggerHelper.log("Cannot file chromedriver by version #{major_version}. Using Default")
       default_linux
     end
   end
