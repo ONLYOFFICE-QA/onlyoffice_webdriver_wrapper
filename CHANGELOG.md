@@ -5,6 +5,7 @@
 ### New Features
 
 * Add chromedriver `113.0.5672.63`
+* Add chromedriver `114.0.5735.90`
 
 ### Changes
 
@@ -13,6 +14,7 @@
 * Extract all linting tasks to separate workflow
 * Increase code coverage
 * Drop `ruby-2.7` support, since it's EOLed
+* Remove chromedriver `111.0.5563.64`
 
 ## 1.17.0 (2023-04-13)
 
