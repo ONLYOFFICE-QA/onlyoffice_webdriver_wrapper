@@ -77,7 +77,7 @@ module OnlyofficeWebdriverWrapper
 
       ensure_supported_browser(browser)
       @device = params.fetch(:device, :desktop_linux)
-      @record_video = params.fetch(:record_video, true)
+      @record_video = params.fetch(:record_video, false)
       @headless = HeadlessHelper.new(record_video: record_video)
       @headless.start
 
