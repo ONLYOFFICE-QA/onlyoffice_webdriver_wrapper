@@ -11,8 +11,9 @@ require 'onlyoffice_webdriver_wrapper'
 
 RSpec.configure do |config|
   config.before do
-    puts 'Logging memory usage:'
-    puts `cat /proc/meminfo`
+    pid = Process.pid
+    puts "Logging memory usage of PID #{pid}"
+    puts "RAM USAGE: #{`pmap #{Process.pid} | tail -1`[10, 40].strip}"
   end
 end
 
