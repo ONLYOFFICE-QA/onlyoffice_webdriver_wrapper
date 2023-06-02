@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix memory leak for unsupported browser
+
 ## 1.18.0 (2023-06-02)
 
 ### New Features

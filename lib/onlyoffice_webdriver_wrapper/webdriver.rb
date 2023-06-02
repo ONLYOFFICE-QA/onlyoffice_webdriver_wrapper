@@ -55,6 +55,8 @@ module OnlyofficeWebdriverWrapper
     include WebdriverBrowserLogHelper
     # @return [Integer] Default timeout for waiting to file to download
     TIMEOUT_FILE_DOWNLOAD = 100
+    # @return [Array<Symbol>] list of supported browsers
+    SUPPORTED_BROWSERS = %i[firefox chrome].freeze
     # @return [Array, String] default switches for chrome
     attr_accessor :driver
     # @return [Symbol] browser to use
@@ -73,6 +75,7 @@ module OnlyofficeWebdriverWrapper
     def initialize(browser = :firefox, params = {})
       raise WebdriverSystemNotSupported, 'Your OS is not 64 bit. It is not supported' unless os_64_bit?
 
+      ensure_supported_browser(browser)
       @device = params.fetch(:device, :desktop_linux)
       @record_video = params.fetch(:record_video, true)
       @headless = HeadlessHelper.new(record_video: record_video)
@@ -87,10 +90,18 @@ module OnlyofficeWebdriverWrapper
         @driver = start_firefox_driver
       when :chrome
         @driver = start_chrome_driver
-      else
-        raise("Unknown Browser: #{browser}")
       end
       @browser_running = true
+    end
+
+    # Ensure that browser is supported
+    # @param [Symbol] browser to check
+    # @raise [RuntimeError] if browser is not supported
+    # @return [void]
+    def ensure_supported_browser(browser)
+      return if SUPPORTED_BROWSERS.include?(browser)
+
+      raise("Unknown Browser: #{browser}")
     end
 
     # Scroll list by pixel count
