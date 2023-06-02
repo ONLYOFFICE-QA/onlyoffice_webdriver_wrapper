@@ -9,14 +9,6 @@ if ENV['CI']
 end
 require 'onlyoffice_webdriver_wrapper'
 
-RSpec.configure do |config|
-  config.before do
-    pid = Process.pid
-    puts "Logging memory usage of PID #{pid}"
-    puts "RAM USAGE: #{`pmap #{Process.pid} | tail -1`[10, 40].strip}"
-  end
-end
-
 # Get full path for open in browser of local file
 # @param file_name [String] name of file to load
 # @return [String] path to local file
