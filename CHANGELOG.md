@@ -7,6 +7,10 @@
 * Fix memory leak for unsupported browser
 * Fix minor headless leak in spec
 
+### Changes
+
+* Simplify taking screenshot code
+
 ## 1.18.0 (2023-06-02)
 
 ### New Features
