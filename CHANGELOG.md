@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.18.0 (2023-06-02)
+
 ### New Features
 
 * Add chromedriver `113.0.5672.63`
