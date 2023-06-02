@@ -5,6 +5,7 @@
 ### Fixes
 
 * Fix memory leak for unsupported browser
+* Fix minor headless leak in spec
 
 ## 1.18.0 (2023-06-02)
 
