@@ -9,6 +9,13 @@ if ENV['CI']
 end
 require 'onlyoffice_webdriver_wrapper'
 
+RSpec.configure do |config|
+  config.before do
+    puts 'Logging memory usage:'
+    puts `cat /proc/meminfo`
+  end
+end
+
 # Get full path for open in browser of local file
 # @param file_name [String] name of file to load
 # @return [String] path to local file
