@@ -39,3 +39,11 @@ If you need to update stored chromedriver exe files to version `99.0.4844.51` ca
 ```shell
 rake update_chromedriver['99.0.4844.51']
 ```
+## Repos to update after release
+
+* [testing-documentserver](https://github.com/ONLYOFFICE-QA/testing-documentserver)
+* [testing-onlyoffice](https://github.com/ONLYOFFICE-QA/testing-onlyoffice)
+* [testing-site-onlyoffice](https://github.com/ONLYOFFICE-QA/testing-site-onlyoffice)
+* [testing-docspace](https://github.com/ONLYOFFICE-QA/testing-docspace)
+* [testing-helpcenter](https://github.com/ONLYOFFICE-QA/testing-helpcenter)
+* [testing-api.onlyoffice.com](https://github.com/ONLYOFFICE-QA/testing-api.onlyoffice.com)
