@@ -14,7 +14,7 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#action_on_locator_coordinates'
 
   it 'Single click on button' do
     webdriver.action_on_locator_coordinates(canvas_xpath, 50, 50)
-    expect(webdriver.alert_text).to eq('Single click')
+    expect(webdriver.alert_text).to eq('Single Click')
   end
 
   it 'Double click on button' do
@@ -22,6 +22,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#action_on_locator_coordinates'
                                             180,
                                             50,
                                             :double_click)
-    expect(webdriver.alert_text).to eq('Double click')
+    expect(webdriver.alert_text).to eq('Double Click')
   end
 end
