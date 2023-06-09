@@ -50,7 +50,7 @@ module OnlyofficeWebdriverWrapper
     # @param driver [Selenium::WebDriver] driver to use
     # @return [Void]
     def maximize_chrome(driver)
-      sleep 5
+      workaround_github_actions_start_problem()
       if headless.running?
         # Cannot use `driver.manage.window.maximize` in xvfb session
         # according to https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901#c16
@@ -58,6 +58,19 @@ module OnlyofficeWebdriverWrapper
       else
         driver.manage.window.maximize
       end
+    end
+
+    # Workaround for problem with starting Chrome in Github Actions
+    # Sometimes only in github actions the one of the errors is thrown:
+    # `from no such execution context: uniqueContextId not found`
+    # `from no such execution context: loader has changed while resolving nodes`
+    # `unknown error: cannot determine loading status`
+    def workaround_github_actions_start_problem
+      return unless ENV['GITHUB_ACTIONS']
+
+      OnlyofficeLoggerHelper.log('Github Actions detected. ' \
+                                 'Add additional timeout for browser start')
+      sleep 3
     end
   end
 end

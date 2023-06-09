@@ -6,6 +6,7 @@
 
 * Fix memory leak for unsupported browser
 * Fix minor headless leak in spec
+* Workaround for random test failures in Github Actions
 
 ### Changes
 
