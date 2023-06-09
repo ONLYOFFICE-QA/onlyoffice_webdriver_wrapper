@@ -10,6 +10,7 @@ require_relative 'helpers/firefox_helper'
 require_relative 'webdriver/click_methods'
 require_relative 'webdriver/element_getters'
 require_relative 'webdriver/get_text_methods'
+require_relative 'webdriver/scroll_methods'
 require_relative 'webdriver/select_list_methods'
 require_relative 'webdriver/wait_until_methods'
 require_relative 'webdriver/webdriver_alert_helper'
@@ -35,6 +36,7 @@ module OnlyofficeWebdriverWrapper
     include ChromeHelper
     include ClickMethods
     include GetTextMethods
+    include ScrollMethods
     include SelectListMethods
     include FirefoxHelper
     include RubyHelper
@@ -102,14 +104,6 @@ module OnlyofficeWebdriverWrapper
       return if SUPPORTED_BROWSERS.include?(browser)
 
       raise("Unknown Browser: #{browser}")
-    end
-
-    # Scroll list by pixel count
-    # @param [String] list_xpath how to detect this list
-    # @param [Integer] pixels how much to scroll
-    # @return [void]
-    def scroll_list_by_pixels(list_xpath, pixels)
-      execute_javascript("$(#{dom_element_by_xpath(list_xpath)}).scrollTop(#{pixels})")
     end
 
     # Open dropdown selector, like 'Color Selector', which has no element id

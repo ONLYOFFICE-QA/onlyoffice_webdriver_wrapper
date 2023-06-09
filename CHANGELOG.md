@@ -10,6 +10,7 @@
 ### Changes
 
 * Simplify taking screenshot code
+* Increase test coverage by adding several tests
 
 ## 1.18.0 (2023-06-02)
 
