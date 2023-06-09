@@ -50,6 +50,7 @@ module OnlyofficeWebdriverWrapper
     # @param driver [Selenium::WebDriver] driver to use
     # @return [Void]
     def maximize_chrome(driver)
+      sleep 5
       if headless.running?
         # Cannot use `driver.manage.window.maximize` in xvfb session
         # according to https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901#c16
