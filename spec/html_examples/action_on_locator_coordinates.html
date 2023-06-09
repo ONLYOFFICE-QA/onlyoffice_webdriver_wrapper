@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Canvas with Buttons</title>
+    <style>
+        canvas {
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="400" height="200"></canvas>
+
+<script>
+    // Get canvas element
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Draw buttons
+    function drawButton(text, x, y) {
+        ctx.fillStyle = 'lightgray';
+        ctx.fillRect(x, y, 100, 50);
+        ctx.fillStyle = 'black';
+        ctx.font = '16px Arial';
+        ctx.fillText(text, x + 10, y + 30);
+    }
+
+    // Add click event listeners
+    canvas.addEventListener('click', function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        if (x >= 10 && x <= 110 && y >= 10 && y <= 60) {
+            alert('Single Click');
+        }
+    });
+
+    canvas.addEventListener('dblclick', function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        if (x >= 120 && x <= 220 && y >= 10 && y <= 60) {
+            alert('Double Click');
+        }
+    });
+
+    // Draw buttons on the canvas
+    drawButton('Single Click', 10, 10);
+    drawButton('Double Click', 120, 10);
+</script>
+</body>
+</html>
