@@ -23,4 +23,11 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#download' do
     webdriver.open(local_file('test.docx'))
     expect(webdriver.wait_file_for_download(File.basename(docx_file))).to be_truthy
   end
+
+  it 'check that if now download started error will be correct' do
+    fake_file_name = 'fake_file.docx'
+    timeout = 5
+    expect { webdriver.wait_file_for_download(fake_file_name, timeout) }
+      .to raise_error(RuntimeError, /#{fake_file_name} not download for #{timeout} seconds/)
+  end
 end
