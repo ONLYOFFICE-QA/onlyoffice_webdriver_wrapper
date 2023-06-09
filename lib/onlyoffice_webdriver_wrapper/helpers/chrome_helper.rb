@@ -70,7 +70,7 @@ module OnlyofficeWebdriverWrapper
 
       OnlyofficeLoggerHelper.log('Github Actions detected. ' \
                                  'Add additional timeout for browser start')
-      sleep 3
+      sleep 5
     end
   end
 end
