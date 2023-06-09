@@ -40,6 +40,7 @@ module OnlyofficeWebdriverWrapper
       webdriver_options = { options: options,
                             service: chrome_service }
       driver = Selenium::WebDriver.for :chrome, webdriver_options
+      workaround_github_actions_start_problem
       maximize_chrome(driver)
       driver
     end
@@ -50,7 +51,6 @@ module OnlyofficeWebdriverWrapper
     # @param driver [Selenium::WebDriver] driver to use
     # @return [Void]
     def maximize_chrome(driver)
-      workaround_github_actions_start_problem()
       if headless.running?
         # Cannot use `driver.manage.window.maximize` in xvfb session
         # according to https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901#c16
