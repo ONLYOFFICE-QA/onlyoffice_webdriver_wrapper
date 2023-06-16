@@ -11,6 +11,7 @@
 
 * Simplify taking screenshot code
 * Increase test coverage by adding several tests
+* Calculate code coverage only for latest ruby
 
 ## 1.18.0 (2023-06-02)
 
