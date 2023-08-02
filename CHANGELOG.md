@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `115.0.5790.102`
+
 ### Fixes
 
 * Fix memory leak for unsupported browser
@@ -12,6 +16,8 @@
 * Simplify taking screenshot code
 * Increase test coverage by adding several tests
 * Calculate code coverage only for latest ruby
+* Remove chromedriver `112.0.5615.49`
+* Change links for downloading new versions of chromedriver
 
 ## 1.18.0 (2023-06-02)
 
