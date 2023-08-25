@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'net/protocol'
+
 module OnlyofficeWebdriverWrapper
   # Methods for working with alerts
   module WebdriverAlertHelper

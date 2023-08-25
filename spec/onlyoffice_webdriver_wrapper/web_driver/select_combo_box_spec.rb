@@ -25,8 +25,8 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#select_combo_box' do
 
   it 'select_combo_box fails if there is no such option' do
     fake_text = 'Fake-Entry'
-    expect { webdriver.select_combo_box('//select', 'Fake-Entry') }
+    expect { webdriver.select_combo_box('//select', fake_text) }
       .to raise_error(Selenium::WebDriver::Error::NoSuchElementError,
-                      "cannot locate element with text: \"#{fake_text}\"")
+                      /cannot locate element with text: "#{fake_text}"/)
   end
 end
