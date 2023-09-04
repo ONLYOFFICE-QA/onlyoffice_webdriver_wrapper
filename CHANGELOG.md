@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.19.0 (2023-09-04)
+
 ### New Features
 
 * Add chromedriver `115.0.5790.102`
