@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add new spec that calling `get_style_parameter`
+  do not override JavaScript variable `_`
+
 ## 1.19.0 (2023-09-04)
 
 ### New Features
