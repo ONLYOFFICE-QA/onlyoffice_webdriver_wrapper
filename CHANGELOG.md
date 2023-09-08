@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.19.1 (2023-09-08)
+
 ### New Features
 
 * Add new spec that calling `get_style_parameter`
