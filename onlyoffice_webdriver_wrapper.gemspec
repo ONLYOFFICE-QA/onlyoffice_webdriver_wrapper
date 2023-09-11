@@ -30,6 +30,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('page-object', '~> 2')
   # Do not use selenium-webdriver v4.12.0 because
   # of this bug: https://github.com/SeleniumHQ/selenium/issues/12659
-  s.add_runtime_dependency('selenium-webdriver', '~> 4', '!= 4.12.0')
+  s.add_runtime_dependency('selenium-webdriver', '~> 4')
   s.add_runtime_dependency('watir', '~> 7')
 end
