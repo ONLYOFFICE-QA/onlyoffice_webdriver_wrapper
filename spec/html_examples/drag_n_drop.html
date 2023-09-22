@@ -8,11 +8,9 @@
         #canvas-container {
             position: relative;
         }
-
         #myCanvas {
             border: 1px solid #000;
         }
-
         #rectangle {
             position: absolute;
             width: 100px;
@@ -29,6 +27,7 @@
 </div>
 <p>Rectangle Coordinates: <span id="coordinates"></span></p>
 <p>Drag and Drop in Progress: <span id="dragInProgress">No</span></p>
+<p>Center of Rectangle: <span id="centerCoordinates">X: 0, Y: 0</span></p>
 
 <script>
     const canvas = document.getElementById("myCanvas");
@@ -36,6 +35,7 @@
     const rectangle = document.getElementById("rectangle");
     const coordinates = document.getElementById("coordinates");
     const dragInProgress = document.getElementById("dragInProgress");
+    const centerCoordinates = document.getElementById("centerCoordinates");
 
     let isDragging = false;
     let offsetX, offsetY;
@@ -57,9 +57,17 @@
         rectangle.style.top = rectY + "px";
     }
 
-    // Initialize the rectangle's position
+    // Update the center coordinates of the rectangle
+    function updateCenterCoordinates() {
+        const centerX = rectX + 50; // Rectangle width divided by 2
+        const centerY = rectY + 25; // Rectangle height divided by 2
+        centerCoordinates.textContent = `X: ${centerX}, Y: ${centerY}`;
+    }
+
+    // Initialize the rectangle's position and center coordinates
     drawRectangle();
     updateRectanglePosition();
+    updateCenterCoordinates();
 
     // Mouse down event listener
     rectangle.addEventListener("mousedown", (e) => {
@@ -76,6 +84,7 @@
             rectY = e.clientY - offsetY;
             drawRectangle();
             updateRectanglePosition();
+            updateCenterCoordinates();
             coordinates.textContent = `X: ${rectX}, Y: ${rectY}`;
         }
     });
