@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable Rectangle</title>
+    <style>
+        #canvas-container {
+            position: relative;
+        }
+        #myCanvas {
+            border: 1px solid #000;
+        }
+        #rectangle {
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            background-color: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="myCanvas" width="400" height="200"></canvas>
+    <div id="rectangle"></div>
+</div>
+<p>Rectangle Coordinates: <span id="coordinates"></span></p>
+<p>Drag and Drop in Progress: <span id="dragInProgress">No</span></p>
+<p>Center of Rectangle: <span id="centerCoordinates">X: 0, Y: 0</span></p>
+
+<script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    const rectangle = document.getElementById("rectangle");
+    const coordinates = document.getElementById("coordinates");
+    const dragInProgress = document.getElementById("dragInProgress");
+    const centerCoordinates = document.getElementById("centerCoordinates");
+
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    // Initial position of the rectangle
+    let rectX = 0;
+    let rectY = 0;
+
+    // Function to draw the rectangle on the canvas
+    function drawRectangle() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "blue";
+        ctx.fillRect(rectX, rectY, 100, 50);
+    }
+
+    // Update the rectangle's position on the canvas
+    function updateRectanglePosition() {
+        rectangle.style.left = rectX + "px";
+        rectangle.style.top = rectY + "px";
+    }
+
+    // Update the center coordinates of the rectangle
+    function updateCenterCoordinates() {
+        const centerX = rectX + 50; // Rectangle width divided by 2
+        const centerY = rectY + 25; // Rectangle height divided by 2
+        centerCoordinates.textContent = `X: ${centerX}, Y: ${centerY}`;
+    }
+
+    // Initialize the rectangle's position and center coordinates
+    drawRectangle();
+    updateRectanglePosition();
+    updateCenterCoordinates();
+
+    // Mouse down event listener
+    rectangle.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - rectX;
+        offsetY = e.clientY - rectY;
+        dragInProgress.textContent = "Yes";
+    });
+
+    // Mouse move event listener
+    document.addEventListener("mousemove", (e) => {
+        if (isDragging) {
+            rectX = e.clientX - offsetX;
+            rectY = e.clientY - offsetY;
+            drawRectangle();
+            updateRectanglePosition();
+            updateCenterCoordinates();
+            coordinates.textContent = `X: ${rectX}, Y: ${rectY}`;
+        }
+    });
+
+    // Mouse up event listener
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+        dragInProgress.textContent = "No";
+    });
+</script>
+</body>
+</html>
