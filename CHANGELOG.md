@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.21.0 (2023-12-07)
+
 ### New Feature
 
 * Add chromedriver `120.0.6099.71`
