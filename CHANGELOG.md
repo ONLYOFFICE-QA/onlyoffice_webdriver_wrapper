@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `ruby-3.3` to CI
+
 ## 1.21.0 (2023-12-07)
 
 ### New Feature
