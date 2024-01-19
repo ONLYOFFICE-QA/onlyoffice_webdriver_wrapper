@@ -33,3 +33,14 @@ task :update_chromedriver, [:version] do |_, args|
   sh('unzip -o /tmp/chromedriver-mac-x64.zip -d /tmp')
   sh("cp /tmp/chromedriver-mac-x64/chromedriver #{dir_for_exe}/chromedriver_mac")
 end
+
+desc 'Update Geckodriver exe'
+task :update_geckodriver, [:version] do |_, args|
+  dir_for_exe = "#{Dir.pwd}/lib/onlyoffice_webdriver_wrapper/helpers/bin"
+  archive_name = "geckodriver-v#{args[:version]}-linux64.tar.gz"
+
+  url = "https://github.com/mozilla/geckodriver/releases/download/v#{args[:version]}/#{archive_name}"
+  sh("wget #{url} -O /tmp/#{archive_name}")
+  sh("tar xvf /tmp/#{archive_name} -C /tmp")
+  sh("cp /tmp/geckodriver #{dir_for_exe}/")
+end
