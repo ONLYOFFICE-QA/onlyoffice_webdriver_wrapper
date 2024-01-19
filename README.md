@@ -40,6 +40,12 @@ If you need to update stored chromedriver exe files to version `99.0.4844.51` ca
 rake update_chromedriver['99.0.4844.51']
 ```
 
+## Update version of geockdriver
+
+```shell
+rake update_geckodriver['0.34.0']
+```
+
 ## Repos to update after release
 
 * [testing-documentserver](https://github.com/ONLYOFFICE-QA/testing-documentserver)
