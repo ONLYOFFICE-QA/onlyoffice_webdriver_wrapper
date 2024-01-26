@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
     'rubygems_mfa_required' => 'true'
   }
   s.files = Dir['lib/**/*']
-  s.license = 'AGPL-3.0'
+  s.license = 'AGPL-3.0-or-later'
   s.add_runtime_dependency('headless', '~> 2')
   s.add_runtime_dependency('onlyoffice_file_helper', '< 3')
   s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')

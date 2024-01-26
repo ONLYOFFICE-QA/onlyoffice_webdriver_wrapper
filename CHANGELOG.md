@@ -12,6 +12,10 @@
 
 * Update `geckodriver` from `v0.31.0` to `v0.34.0`
 
+### Fixes
+
+* Fix `gem` license name warning
+
 ## 1.21.0 (2023-12-07)
 
 ### New Feature
