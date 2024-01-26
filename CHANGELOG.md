@@ -14,7 +14,8 @@
 
 ### Fixes
 
-* Fix `gem` license name warning
+* Fix `gem build` license name warning
+* Fix `gem build` warning related to duplicate metadata
 
 ## 1.21.0 (2023-12-07)
 
