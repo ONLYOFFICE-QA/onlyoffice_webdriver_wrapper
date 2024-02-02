@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Migrate to `codecov-4` CI action
+
 ## 1.22.0 (2024-01-26)
 
 ### New Features
