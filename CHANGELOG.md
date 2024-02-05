@@ -8,11 +8,8 @@
 
 ### Changes
 
-* Remove chromedriver `116.0.5845.96`
-
-### Changes
-
 * Migrate to `codecov-4` CI action
+* Remove chromedriver `116.0.5845.96`
 
 ## 1.22.0 (2024-01-26)
 
