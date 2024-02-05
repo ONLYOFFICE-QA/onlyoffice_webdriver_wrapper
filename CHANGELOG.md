@@ -2,9 +2,14 @@
 
 ## master (unreleased)
 
+### New Feature
+
+* Add chromedriver `121.0.6167.85`
+
 ### Changes
 
 * Migrate to `codecov-4` CI action
+* Remove chromedriver `116.0.5845.96`
 
 ## 1.22.0 (2024-01-26)
 
