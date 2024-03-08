@@ -134,7 +134,7 @@ GEM
       regexp_parser (>= 1.2, < 3)
       selenium-webdriver (~> 4.2)
     websocket (1.2.10)
-    yard (0.9.34)
+    yard (0.9.36)
     yml_reader (0.7)
 
 PLATFORMS
@@ -151,7 +151,7 @@ DEPENDENCIES
   rubocop-rake (~> 0)
   rubocop-rspec (~> 2)
   simplecov-cobertura (~> 2)
-  yard (~> 0, >= 0.9.20)
+  yard (~> 0)
 
 BUNDLED WITH
    2.5.5
