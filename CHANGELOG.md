@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.24.0 (2024-03-13)
+
 ### New Feature
 
 * Add chromedriver `122.0.6261.128`
