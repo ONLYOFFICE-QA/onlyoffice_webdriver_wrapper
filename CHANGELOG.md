@@ -2,6 +2,15 @@
 
 ## master (unreleased)
 
+### New Feature
+
+* Add chromedriver `122.0.6261.128`
+
+### Changes
+
+* Remove chromedriver `119.0.6045.105`
+* Change links for downloading new versions of chromedriver
+
 ## 1.23.0 (2024-02-05)
 
 ### New Feature
