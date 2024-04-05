@@ -10,6 +10,8 @@
 
 * Remove chromedriver `120.0.6099.71`
 * Fix test suite to be compatible with `chromedriver-123`
+* `WebDriver#click_on_locator` new parameter `after_timeout`
+* Reduce complexity of some Webdriver typing methods
 
 ## 1.24.0 (2024-03-13)
 

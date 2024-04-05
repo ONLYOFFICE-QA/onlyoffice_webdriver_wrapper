@@ -50,21 +50,12 @@ module OnlyofficeWebdriverWrapper
         end
       end
 
-      if click_on_it
-        click_on_locator(xpath_name)
-        sleep 0.2
-      end
+      click_on_locator(xpath_name, after_timeout: 0.2) if click_on_it
 
       if (@browser != :chrome && !by_action) || by_element_send_key
         element.send_keys text_to_send
-      elsif text_to_send != ''
-        if text_to_send.is_a?(String)
-          text_to_send.chars.each do |symbol|
-            @driver.action.send_keys(symbol).perform
-          end
-        else
-          webdriver_bug_8179_workaround(text_to_send)
-        end
+      else
+        send_text_by_chars(text_to_send)
       end
     rescue Selenium::WebDriver::Error::JavascriptError
       webdriver_error(Selenium::WebDriver::Error::InvalidElementStateError,
@@ -172,6 +163,21 @@ module OnlyofficeWebdriverWrapper
 
       key_modifiers.each do |modifier|
         @driver.action.key_up(modifier).perform
+      end
+    end
+
+    # Send text by chars
+    # @param [String] text_to_send text to type
+    # @return [void]
+    def send_text_by_chars(text_to_send)
+      return if text_to_send == ''
+
+      if text_to_send.is_a?(String)
+        text_to_send.chars.each do |symbol|
+          @driver.action.send_keys(symbol).perform
+        end
+      else
+        webdriver_bug_8179_workaround(text_to_send)
       end
     end
   end

@@ -14,7 +14,8 @@ module OnlyofficeWebdriverWrapper
     # @param xpath_name [String] xpath to click
     # @param by_javascript [True, False] should be clicked by javascript
     # @param count [Integer] count of clicks
-    def click_on_locator(xpath_name, by_javascript = false, count: 1)
+    # @param after_timeout [Integer] timeout after click
+    def click_on_locator(xpath_name, by_javascript = false, count: 1, after_timeout: 0)
       element = get_element(xpath_name)
       return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
 
@@ -22,7 +23,10 @@ module OnlyofficeWebdriverWrapper
         execute_javascript("#{dom_element_by_xpath(xpath_name)}.click();")
       else
         begin
-          count.times { element.click }
+          count.times do
+            element.click
+            sleep(after_timeout)
+          end
         rescue Selenium::WebDriver::Error::ElementNotInteractableError => e
           webdriver_error(e.class,
                           'Selenium::WebDriver::Error::ElementNotInteractableError: ' \
