@@ -66,6 +66,9 @@ module OnlyofficeWebdriverWrapper
           webdriver_bug_8179_workaround(text_to_send)
         end
       end
+    rescue Selenium::WebDriver::Error::JavascriptError
+      webdriver_error(Selenium::WebDriver::Error::InvalidElementStateError,
+                      "Invalid state of element: #{xpath_name}")
     end
 
     # Type text to input
