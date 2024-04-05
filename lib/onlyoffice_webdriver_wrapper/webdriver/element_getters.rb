@@ -22,7 +22,7 @@ module OnlyofficeWebdriverWrapper
       @driver.find_elements(:xpath, xpath_name).each do |element|
         return element if element.displayed?
       end
-    rescue Selenium::WebDriver::Error::InvalidSelectorError
+    rescue Selenium::WebDriver::Error::InvalidSelectorError, Selenium::WebDriver::Error::JavascriptError
       webdriver_error(Selenium::WebDriver::Error::InvalidSelectorError,
                       "Invalid Selector: get_element_by_display('#{xpath_name}')")
     end
