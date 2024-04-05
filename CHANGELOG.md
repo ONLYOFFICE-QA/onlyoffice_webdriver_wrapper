@@ -9,6 +9,7 @@
 ### Changes
 
 * Remove chromedriver `120.0.6099.71`
+* Fix test suite to be compatible with `chromedriver-123`
 
 ## 1.24.0 (2024-03-13)
 
