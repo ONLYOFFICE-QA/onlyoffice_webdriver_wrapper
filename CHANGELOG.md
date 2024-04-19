@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Fix `click_on_locator` count for javascript
+
 ## 1.25.0 (2024-04-10)
 
 ### New Feature

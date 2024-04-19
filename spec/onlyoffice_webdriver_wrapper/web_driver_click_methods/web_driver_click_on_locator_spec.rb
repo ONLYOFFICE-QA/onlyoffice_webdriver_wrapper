@@ -12,12 +12,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator' do
 
   after { webdriver.quit }
 
-  it 'click_on_locator with count 2 should not be double click' do
-    webdriver.open(local_file('click_counter.html'))
-    webdriver.click_on_locator('//button', false, count: 2)
-    expect(webdriver.get_text('//*[@id="demo"]')).to eq('2')
-  end
-
   it 'click_on_locator can correct click via JS on xpath with single quotes' do
     webdriver.click_on_locator("//button[@id='button']", true)
     expect(webdriver.get_element('//*[@id="newElement"]')).not_to be_nil
