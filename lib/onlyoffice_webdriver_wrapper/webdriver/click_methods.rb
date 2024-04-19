@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
 
     # Click on locator
     # @param xpath_name [String] xpath to click
-    # @param by_javascript [True, False] should be clicked by javascript
+    # @param by_javascript [True, False] should be clicked by javascript or by webdriver action
     # @param count [Integer] count of clicks
     # @param after_timeout [Integer] timeout after click
     def click_on_locator(xpath_name, by_javascript = false, count: 1, after_timeout: 0)

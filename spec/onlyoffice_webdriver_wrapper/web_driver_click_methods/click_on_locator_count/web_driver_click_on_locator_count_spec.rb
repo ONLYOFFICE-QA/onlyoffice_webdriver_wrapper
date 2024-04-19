@@ -19,11 +19,11 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#click_on_locator count' do
 
   it 'A lot of click correctly counted by action' do
     webdriver.click_on_locator('//button', false, count: click_count)
-    expect(webdriver.get_text('//*[@id="demo"]')).to eq('10')
+    expect(webdriver.get_text('//*[@id="demo"]')).to eq(click_count.to_s)
   end
 
   it 'A lot of click correctly counted by javascript' do
     webdriver.click_on_locator('//button', true, count: click_count)
-    expect(webdriver.get_text('//*[@id="demo"]')).to eq('10')
+    expect(webdriver.get_text('//*[@id="demo"]')).to eq(click_count.to_s)
   end
 end
