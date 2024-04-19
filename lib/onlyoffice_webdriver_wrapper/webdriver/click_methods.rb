@@ -19,21 +19,23 @@ module OnlyofficeWebdriverWrapper
       element = get_element(xpath_name)
       return webdriver_error("Element with xpath: #{xpath_name} not found") if element.nil?
 
-      if by_javascript
-        execute_javascript("#{dom_element_by_xpath(xpath_name)}.click();")
-      else
-        begin
-          count.times do
-            element.click
-            sleep(after_timeout)
-          end
-        rescue Selenium::WebDriver::Error::ElementNotInteractableError => e
-          webdriver_error(e.class,
-                          'Selenium::WebDriver::Error::ElementNotInteractableError: ' \
-                          "element not visible for xpath: #{xpath_name}")
-        rescue StandardError => e
-          webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
+      click_function = if by_javascript
+                         -> { execute_javascript("#{dom_element_by_xpath(xpath_name)}.click();") }
+                       else
+                         -> { element.click }
+                       end
+
+      begin
+        count.times do
+          click_function.call
+          sleep(after_timeout)
         end
+      rescue Selenium::WebDriver::Error::ElementNotInteractableError => e
+        webdriver_error(e.class,
+                        'Selenium::WebDriver::Error::ElementNotInteractableError: ' \
+                        "element not visible for xpath: #{xpath_name}")
+      rescue StandardError => e
+        webdriver_error(e.class, "UnknownError #{e.message} #{xpath_name}")
       end
     end
 
