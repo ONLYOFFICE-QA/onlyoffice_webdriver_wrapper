@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `124.0.6367.78`
+
+### Changes
+
+* Remove chromedriver `121.0.6167.85`
+
 ### Fixes
 
 * Fix `click_on_locator` count for javascript
