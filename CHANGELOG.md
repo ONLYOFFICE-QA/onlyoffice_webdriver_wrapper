@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-## 1.26.0 (2024-05-22)
+## 1.27.0 (2024-05-22)
 
 ### New Features
 
