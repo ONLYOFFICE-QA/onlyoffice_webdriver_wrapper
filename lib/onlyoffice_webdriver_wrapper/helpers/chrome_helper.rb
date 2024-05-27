@@ -37,6 +37,7 @@ module OnlyofficeWebdriverWrapper
       switches = add_useragent_to_switches(DEFAULT_CHROME_SWITCHES)
       options = Selenium::WebDriver::Chrome::Options.new(args: switches,
                                                          prefs: prefs)
+      options.add_argument("--unsafely-treat-insecure-origin-as-secure=#{ENV['PortalIP']}") if ENV['PortalIP']
       webdriver_options = { options: options,
                             service: chrome_service }
       driver = Selenium::WebDriver.for :chrome, webdriver_options
