@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Replace `yahoo` url to `example.com` in `switch_to_popup_spec`
+
 ## 1.27.0 (2024-05-22)
 
 ### New Features
