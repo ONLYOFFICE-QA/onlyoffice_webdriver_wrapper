@@ -6,6 +6,7 @@ gemspec
 
 group :test do
   gem 'rspec', '~> 3'
+  gem 'rspec-retry', '~> 0'
   gem 'simplecov-cobertura', '~> 2', require: false
 end
 

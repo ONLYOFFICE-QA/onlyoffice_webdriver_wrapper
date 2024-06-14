@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Introduce `rspec-retry` to gem spec, to handle flaky tests
+
 ## 1.27.0 (2024-05-22)
 
 ### New Features

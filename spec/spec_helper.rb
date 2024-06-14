@@ -8,6 +8,13 @@ if ENV['CI']
   SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 end
 require 'onlyoffice_webdriver_wrapper'
+require 'rspec/retry'
+
+RSpec.configure do |config|
+  config.default_retry_count = 3
+  config.display_try_failure_messages = true
+  config.verbose_retry = true
+end
 
 # Get full path for open in browser of local file
 # @param file_name [String] name of file to load
