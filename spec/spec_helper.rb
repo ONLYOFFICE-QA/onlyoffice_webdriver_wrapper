@@ -12,6 +12,7 @@ require 'rspec/retry'
 
 RSpec.configure do |config|
   config.default_retry_count = 3
+  config.default_sleep_interval = 15
   config.display_try_failure_messages = true
   config.verbose_retry = true
 end
