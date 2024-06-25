@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `126.0.6478.126`
+
+### Changes
+
+* Remove chromedriver `123.0.6312.86`
+
 ### Fixes
 
 * Replace `yahoo` url to `example.com` in `switch_to_popup_spec`
