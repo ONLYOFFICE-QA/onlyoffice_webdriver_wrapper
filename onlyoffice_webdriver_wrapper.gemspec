@@ -22,13 +22,13 @@ Gem::Specification.new do |s|
   }
   s.files = Dir['lib/**/*']
   s.license = 'AGPL-3.0-or-later'
-  s.add_runtime_dependency('headless', '~> 2')
-  s.add_runtime_dependency('onlyoffice_file_helper', '< 3')
-  s.add_runtime_dependency('onlyoffice_logger_helper', '~> 1')
-  s.add_runtime_dependency('onlyoffice_s3_wrapper', '>= 0.5.0', '< 3')
-  s.add_runtime_dependency('page-object', '~> 2')
+  s.add_dependency('headless', '~> 2')
+  s.add_dependency('onlyoffice_file_helper', '< 3')
+  s.add_dependency('onlyoffice_logger_helper', '~> 1')
+  s.add_dependency('onlyoffice_s3_wrapper', '>= 0.5.0', '< 3')
+  s.add_dependency('page-object', '~> 2')
   # Do not use selenium-webdriver v4.12.0 because
   # of this bug: https://github.com/SeleniumHQ/selenium/issues/12659
-  s.add_runtime_dependency('selenium-webdriver', '~> 4', '!= 4.12.0')
-  s.add_runtime_dependency('watir', '~> 7')
+  s.add_dependency('selenium-webdriver', '~> 4', '!= 4.12.0')
+  s.add_dependency('watir', '~> 7')
 end
