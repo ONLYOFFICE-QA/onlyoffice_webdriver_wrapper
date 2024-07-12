@@ -11,6 +11,7 @@
 ### Changes
 
 * Remove chromedriver `123.0.6312.86`
+* Fix `rubocop-1.65.0` cop `Gemspec/AddRuntimeDependency`
 
 ### Fixes
 
