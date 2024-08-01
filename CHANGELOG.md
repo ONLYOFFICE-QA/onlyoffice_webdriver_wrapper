@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `127.0.6533.88`
+
+### Changes
+
+* Remove chromedriver `124.0.6367.78`
+
 ## 1.28.0 (2024-06-25)
 
 ### New Features
