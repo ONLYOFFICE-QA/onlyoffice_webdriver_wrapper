@@ -4,6 +4,6 @@ module OnlyofficeWebdriverWrapper
   # Module for storing version data
   module Version
     # @return [String] Current stable version of gem
-    STRING = '1.28.0'
+    STRING = '1.29.0'
   end
 end
