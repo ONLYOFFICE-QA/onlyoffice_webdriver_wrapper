@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.29.0 (2024-08-01)
+
 ### New Features
 
 * Add chromedriver `127.0.6533.88`
