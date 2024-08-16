@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Update `geckodriver` from `v0.34.0` to `v0.35.0`
+
 ## 1.29.0 (2024-08-01)
 
 ### New Features
