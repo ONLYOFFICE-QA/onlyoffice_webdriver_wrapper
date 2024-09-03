@@ -2,9 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `128.0.6613.86`
+
 ### Changes
 
 * Update `geckodriver` from `v0.34.0` to `v0.35.0`
+* Remove chromedriver `125.0.6422.76`
 
 ## 1.29.0 (2024-08-01)
 
