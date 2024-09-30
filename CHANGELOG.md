@@ -5,6 +5,8 @@
 ### New Features
 
 * Add chromedriver `129.0.6668.70`
+* Added "--unsafely-treat-insecure-origin-as-secure" flag to chrome startup
+to download files via http without confirmation
 
 ### Changes
 
