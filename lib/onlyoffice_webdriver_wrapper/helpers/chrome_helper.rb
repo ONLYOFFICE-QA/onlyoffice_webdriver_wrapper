@@ -11,6 +11,7 @@ module OnlyofficeWebdriverWrapper
     DEFAULT_CHROME_SWITCHES = %w[--kiosk-printing
                                  --disable-gpu
                                  --disable-popup-blocking
+                                 --ignore-certificate-errors
                                  --disable-infobars
                                  --no-sandbox
                                  test-type].freeze
