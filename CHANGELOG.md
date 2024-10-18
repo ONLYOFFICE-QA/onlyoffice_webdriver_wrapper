@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fix
+
+* Fix running CI on `ubuntu-latest` which is Ubuntu 24 now
+
 ## 1.31.0 (2024-09-30)
 
 ### New Features
