@@ -19,7 +19,10 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -y install google-chrome-stable
       - name: Install dependencies
-        run: sudo apt -y install ffmpeg
+        run: |
+          sudo apt -y install \
+                      ffmpeg \
+                      imagemagick
       - name: Set up Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
