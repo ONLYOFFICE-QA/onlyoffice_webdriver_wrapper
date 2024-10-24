@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `130.0.6723.69`
+
+### Changes
+
+* Remove chromedriver `127.0.6533.88`
+
 ### Fix
 
 * Fix running CI on `ubuntu-latest` which is Ubuntu 24 now
