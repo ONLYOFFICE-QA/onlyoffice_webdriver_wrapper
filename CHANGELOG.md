@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.32.0 (2024-10-24)
+
 ### New Features
 
 * Add chromedriver `130.0.6723.69`
