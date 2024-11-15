@@ -34,7 +34,7 @@ jobs:
           bundle exec rake
       - name: Check that code 100% documented
         run: yardoc . | grep -q '100.00% documented'
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: matrix.ruby == '3.3'
         with:
           fail_ci_if_error: true
