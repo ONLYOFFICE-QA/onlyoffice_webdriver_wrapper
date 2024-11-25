@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.33.0 (2024-11-25)
+
 ### New Features
 
 * Add chromedriver `131.0.6778.85`
