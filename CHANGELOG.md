@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Changes
+
+* Drop `ruby-3.0` support, since it's EOLed
+
 ## 1.33.0 (2024-11-25)
 
 ### New Features
