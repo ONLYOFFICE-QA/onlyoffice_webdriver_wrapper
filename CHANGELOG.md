@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add `ruby-3.4` to CI
+
 ### Changes
 
 * Drop `ruby-3.0` support, since it's EOLed
