@@ -9,6 +9,7 @@
 ### Changes
 
 * Drop `ruby-3.0` support, since it's EOLed
+* Fix minor code issue found by `rubocop-1.70.0`
 
 ## 1.33.0 (2024-11-25)
 

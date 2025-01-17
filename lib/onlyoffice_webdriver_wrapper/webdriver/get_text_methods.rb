@@ -12,7 +12,7 @@ module OnlyofficeWebdriverWrapper
 
       element = get_element(xpath_name)
       webdriver_error("get_text(#{xpath_name}, #{wait_until_visible}) not found element by xpath") if element.nil?
-      if element.tag_name == 'input' || element.tag_name == 'textarea'
+      if %w[input textarea].include?(element.tag_name)
         element.attribute('value')
       else
         element.text
