@@ -5,11 +5,13 @@
 ### New Features
 
 * Add `ruby-3.4` to CI
+* Add chromedriver `132.0.6834.83`
 
 ### Changes
 
 * Drop `ruby-3.0` support, since it's EOLed
 * Fix minor code issue found by `rubocop-1.70.0`
+* Remove chromedriver `129.0.6668.70`
 
 ## 1.33.0 (2024-11-25)
 
