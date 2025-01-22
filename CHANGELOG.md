@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.34.0 (2025-01-22)
+
 ### New Features
 
 * Add `ruby-3.4` to CI
