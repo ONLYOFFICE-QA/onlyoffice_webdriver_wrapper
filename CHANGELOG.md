@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.35.0 (2025-02-05)
+
 ### New Features
 
 * Add chromedriver `133.0.6943.53`
