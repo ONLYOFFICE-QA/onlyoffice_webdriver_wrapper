@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+### Fixes
+
+* Run `rubocop` in CI through `bundle exec`
+
 ## 1.35.0 (2025-02-05)
 
 ### New Features
