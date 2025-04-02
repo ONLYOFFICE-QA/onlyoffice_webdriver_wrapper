@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `135.0.7049.42`
+
+### Changes
+
+* Remove chromedriver `131.0.6778.85`
+
 ### Fixes
 
 * Run `rubocop` in CI through `bundle exec`
