@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.36.0 (2025-04-02)
+
 ### New Features
 
 * Add chromedriver `135.0.7049.42`
