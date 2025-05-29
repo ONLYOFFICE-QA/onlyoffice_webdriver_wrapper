@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.37.0 (2025-05-29)
+
 ### New Features
 
 * Add chromedriver `137.0.7151.55`
