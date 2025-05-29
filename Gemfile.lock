@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    onlyoffice_webdriver_wrapper (1.36.0)
+    onlyoffice_webdriver_wrapper (1.37.0)
       headless (~> 2)
       onlyoffice_file_helper (< 3)
       onlyoffice_logger_helper (~> 1)
@@ -163,4 +163,4 @@ DEPENDENCIES
   yard (~> 0, >= 0.9.20)
 
 BUNDLED WITH
-   2.6.3
+   2.6.9
