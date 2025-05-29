@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+### New Features
+
+* Add chromedriver `137.0.7151.55`
+
+### Changes
+
+* Remove chromedriver `132.0.6834.83`
+
 ## 1.36.0 (2025-04-02)
 
 ### New Features
