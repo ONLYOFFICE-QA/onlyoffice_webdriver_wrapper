@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   }
   s.files = Dir['lib/**/*']
   s.license = 'AGPL-3.0-or-later'
-  s.add_dependency('headless', '~> 2')
+  s.add_dependency('headless', '>= 2', '< 4')
   s.add_dependency('onlyoffice_file_helper', '< 3')
   s.add_dependency('onlyoffice_logger_helper', '~> 1')
   s.add_dependency('onlyoffice_s3_wrapper', '>= 0.5.0', '< 3')
