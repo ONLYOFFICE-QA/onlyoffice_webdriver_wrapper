@@ -28,6 +28,7 @@ module OnlyofficeWebdriverWrapper
 
     alias get_url current_url
     extend Gem::Deprecate
+
     deprecate :get_url, 'current_url', 2069, 1
 
     # Refresh current page

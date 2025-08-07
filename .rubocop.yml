@@ -11,3 +11,6 @@ AllCops:
   TargetRubyVersion: 3.1
   Exclude:
     - lib/onlyoffice_webdriver_wrapper/helpers/headless_helper/headless_patch.rb
+
+Naming/PredicateMethod:
+  Enabled: false
