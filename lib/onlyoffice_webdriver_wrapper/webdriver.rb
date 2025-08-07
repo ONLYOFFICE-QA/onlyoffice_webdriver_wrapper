@@ -55,6 +55,7 @@ module OnlyofficeWebdriverWrapper
     include WebdriverTabHelper
     include WebdriverUserAgentHelper
     include WebdriverBrowserLogHelper
+
     # @return [Integer] Default timeout for waiting to file to download
     TIMEOUT_FILE_DOWNLOAD = 100
     # @return [Array<Symbol>] list of supported browsers
@@ -202,6 +203,7 @@ module OnlyofficeWebdriverWrapper
     alias get_page_source page_source
 
     extend Gem::Deprecate
+
     deprecate :get_page_source, 'page_source', 2069, 1
 
     # Raise an error, making a screenshot before it

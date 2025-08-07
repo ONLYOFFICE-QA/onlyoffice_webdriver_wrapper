@@ -12,6 +12,7 @@ module OnlyofficeWebdriverWrapper
     include HeadlessVideoRecorder
     include RealDisplayTools
     include RubyHelper
+
     # @return [Headless] instance of headless object
     attr_accessor :headless_instance
     # @return [Integer] x resolution of virtual screen
