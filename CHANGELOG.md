@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.38.0 (2025-08-11)
+
 ### New Features
 
 * Add chromedriver `139.0.7258.66`
