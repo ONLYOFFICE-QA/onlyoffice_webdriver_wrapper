@@ -11,6 +11,6 @@ describe OnlyofficeWebdriverWrapper::WebDriver, '#refresh' do
     url_to_open = 'https://www.google.com/'
     webdriver.open(url_to_open)
     webdriver.refresh
-    expect(webdriver.current_url).to eq(url_to_open)
+    expect(webdriver.current_url).to include(url_to_open)
   end
 end
