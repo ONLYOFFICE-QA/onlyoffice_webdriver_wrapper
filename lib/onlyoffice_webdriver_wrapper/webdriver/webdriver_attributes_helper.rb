@@ -52,7 +52,7 @@ module OnlyofficeWebdriverWrapper
     # @return [Integer] index of element or `0` if not found
     def get_index_of_elements_with_attribute(xpath, attribute, value, only_visible = true)
       get_elements(xpath, only_visible).each_with_index do |element, index|
-        return (index + 1) if get_attribute(element, attribute).include?(value)
+        return index + 1 if get_attribute(element, attribute).include?(value)
       end
       0
     end
