@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.40.0 (2025-11-19)
+
 ### New Features
 
 * Add chromedriver `142.0.7444.175`
