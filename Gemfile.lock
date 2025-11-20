@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    onlyoffice_webdriver_wrapper (1.39.0)
+    onlyoffice_webdriver_wrapper (1.40.0)
       headless (>= 2, < 4)
       onlyoffice_file_helper (< 3)
       onlyoffice_logger_helper (~> 1)
@@ -85,7 +85,7 @@ GEM
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.4)
+    rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
