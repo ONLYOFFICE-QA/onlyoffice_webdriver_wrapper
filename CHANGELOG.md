@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.41.0 (2026-01-16)
+
 ### New Features
 
 * Add chromedriver `143.0.7499.192`
