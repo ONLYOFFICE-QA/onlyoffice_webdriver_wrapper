@@ -14,3 +14,6 @@ AllCops:
 
 Naming/PredicateMethod:
   Enabled: false
+
+RSpec/LeakyLocalVariable:
+  Enabled: false
