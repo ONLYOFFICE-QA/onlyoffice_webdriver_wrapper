@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.43.0 (2026-04-09)
+
 ### New Features
 
 * Add chromedriver `147.0.7727.56`
