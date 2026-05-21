@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.44.0 (2026-05-21)
+
 ### New Features
 
 * Add chromedriver `148.0.7778.178`
