@@ -4,7 +4,7 @@
 
 ### New Features
 
-* Add chromedriver `149.0.7827.22`
+* Add chromedriver `148.0.7778.178`
 
 ### Changes
 
