@@ -12,7 +12,7 @@ jobs:
           - ruby: head
             allow-failures: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Update to current stable google-chrome
         run: |
           wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
